@@ -20,7 +20,7 @@ case "js":
 //default: 
   //默认Content-Type为text/html
 }
-
+header("Cache-Control: no-cache");
 echo $body;
 sleep($sleep);
 ?>

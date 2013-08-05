@@ -1,0 +1,57 @@
+﻿body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+form,fieldset,input,textarea,p,blockquote,th,td {
+padding: 0;
+margin: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+fieldset,img {
+border: 0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+font-weight: normal;
+font-style: normal;
+}
+ol,ul {
+list-style: none;
+}
+caption,th {
+text-align: left;
+}
+h1,h2,h3,h4,h5,h6 {
+font-weight: normal;
+font-size: 100%;
+}
+q:before,q:after {
+content:'';
+}
+abbr,acronym { border: 0;
+}
+/*********** register *************/
+.bar_left_1,.title_bg_1,.bar_right_1,.bar_bottom_left,.bar_bottom_middle,.bar_bottom_right{display:none}
+.bar_middle_1{border:none}
+
+.reg_btn{display:inline-block;cursor:pointer;}
+
+
+/*********** login *************/
+.login_in #topline, 
+.login_in #userlabel, 
+.login_in #keywordline,
+.login_in #rememberid,
+.login_in #dotline,
+.login_in #forgerkeyword,
+.login_in #regbtn,
+.login_in #span_save {display:none}
+
+.s_login_btn{display:inline-block;width:100px;height:100px;cursor:pointer;}
+
+
+
+
+
+
+
+

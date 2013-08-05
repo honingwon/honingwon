@@ -32,7 +32,7 @@ if(!feof($file))
 	if($account == '')
 	{
 		echo ';$("form").hide()';
-		echo ';$("body").append("<h1 style=\"width:500px;color:#fff;background:#000\">has no acc left</h1>")';
+		echo ';$("body").append("<h1>has no acc left</h1>")';
 	}
 	
 }

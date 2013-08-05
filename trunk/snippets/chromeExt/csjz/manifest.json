@@ -1,0 +1,20 @@
+{
+  "name": "csjz",
+  "version": "1.0",
+
+  "content_scripts": [
+    {
+      "matches": [
+		"http://reg.qule.com/*",
+		"http://www.baidu.com/*",
+		"http://login.qule.com/*",
+		"http://api.qule.com/login/*"
+		],
+      "js": ["jq.js", "main.js"],
+	  "css": ["main.css"]
+    }
+  ],
+
+  
+  "manifest_version": 2
+}

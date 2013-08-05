@@ -1,11 +1,11 @@
 <?php
+//写入帐号
 $account = $_GET["account"];
 echo "account:".$account."<br>";
 
 if($account == "")exit();
 
 $content = file_get_contents("a.txt");
-
 echo "content:".file_get_contents("a.txt")."<br>";
 echo "find:".stristr($content,$account)."<br>";
 

@@ -148,41 +148,67 @@ Call getLoginAlertHwnd()
 If (LoginAlertHwnd > 0) Then 
 	Call Plugin.Bkgnd.KeyPress(LoginAlertHwnd, 13)
 	Delay CLTD
-End If
-
-TracePrint "等待页面跳转"
-//等待页面跳转
-Delay CLTD * 2
-
-TracePrint "游戏资源加载时间很长，有网络延迟 BSRVD * 7"
-//游戏资源加载时间很长，有网络延迟
-Delay BSRVD * 7
-
-Call getGameAlertHwnd()
-
-//如果出现‘请从官网登录游戏’警告
-If (GameAlertHwnd > 0) Then 
-	Call Plugin.Bkgnd.KeyPress(GameAlertHwnd, 13)
+	Call RunApp("notepad++")
+	Delay CLTD * 2
+	Dim NotepadHwnd,NotepadEditHwnd
+	NotepadHwnd = Plugin.Window.Find("Notepad++", 0)
+	TracePrint "NotepadHwnd"&NotepadHwnd
+	NotepadEditHwnd = Plugin.Window.FindEx(NotepadHwnd, 0, "Scintilla", 0)
+	TracePrint "NotepadEditHwnd"&NotepadEditHwnd
+	Call Plugin.Bkgnd.LeftClick(NotepadEditHwnd, 152, 9)
 	Delay CLTD
-Else
-	//进入游戏场景,获取【动态变化着】chrome游戏界面句柄
-	Call getChromeGameHwnd()
-	
-	//点击人物名字输入框
-	Call Plugin.Bkgnd.LeftClick(ChromeGameHwnd, NAME_CLICK_POS_X, NAME_CLICK_POS_Y)
+	Call PressKeyRepeatedly(NotepadEditHwnd, 8, 10, 200)
+	Call PressKeyRepeatedly(NotepadEditHwnd, 46, 1, 200)
+	Call Plugin.Window.Active(NotepadHwnd)
 	Delay CLTD
-	
-	//ctrl+v
 	KeyDown "Ctrl", 1
 	Delay CLTD
-	KeyPress "V", 1
+	KeyPress "S", 1
 	Delay CLTD
 	KeyUp "Ctrl", 1
 	Delay CLTD
+	KeyDown "Alt", 1
+	Delay CLTD
+	KeyPress "F4", 1
+	Delay CLTD
+	KeyUp "Alt", 1
+	Delay CLTD	
+Else 
+
+	TracePrint "等待页面跳转"
+	//等待页面跳转
+	Delay CLTD * 2
 	
-	//创建
-	Call Plugin.Bkgnd.LeftClick(ChromeGameHwnd, BTN_CREATE_X, BTN_CREATE_Y)
-	Delay BSRVD * 5
+	TracePrint "游戏资源加载时间很长，有网络延迟 BSRVD * 10"
+	//游戏资源加载时间很长，有网络延迟
+	Delay BSRVD * 10
+	
+	Call getGameAlertHwnd()
+	
+	//如果出现‘请从官网登录游戏’警告
+	If (GameAlertHwnd > 0) Then 
+		Call Plugin.Bkgnd.KeyPress(GameAlertHwnd, 13)
+		Delay CLTD
+	Else
+		//进入游戏场景,获取【动态变化着】chrome游戏界面句柄
+		Call getChromeGameHwnd()
+		
+		//点击人物名字输入框
+		Call Plugin.Bkgnd.LeftClick(ChromeGameHwnd, NAME_CLICK_POS_X, NAME_CLICK_POS_Y)
+		Delay CLTD
+		
+		//ctrl+v
+		KeyDown "Ctrl", 1
+		Delay CLTD
+		KeyPress "V", 1
+		Delay CLTD
+		KeyUp "Ctrl", 1
+		Delay CLTD
+		
+		//创建
+		Call Plugin.Bkgnd.LeftClick(ChromeGameHwnd, BTN_CREATE_X, BTN_CREATE_Y)
+		Delay BSRVD * 2
+	End If
 End If
 
 //关闭当前tab

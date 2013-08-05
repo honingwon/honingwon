@@ -9,7 +9,7 @@ StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
 MacroID=ae4c6bec-b566-4965-9ada-c632003f1898
-Description=createRole
+Description=csCreateRole
 Enable=0
 AutoRun=0
 [Repeat]
@@ -154,9 +154,9 @@ TracePrint "等待页面跳转"
 //等待页面跳转
 Delay CLTD * 2
 
-TracePrint "游戏资源加载时间很长，有网络延迟 BSRVD * 5"
+TracePrint "游戏资源加载时间很长，有网络延迟 BSRVD * 7"
 //游戏资源加载时间很长，有网络延迟
-Delay BSRVD * 5
+Delay BSRVD * 7
 
 Call getGameAlertHwnd()
 
@@ -182,7 +182,7 @@ Else
 	
 	//创建
 	Call Plugin.Bkgnd.LeftClick(ChromeGameHwnd, BTN_CREATE_X, BTN_CREATE_Y)
-	Delay BSRVD * 2
+	Delay BSRVD * 5
 End If
 
 //关闭当前tab

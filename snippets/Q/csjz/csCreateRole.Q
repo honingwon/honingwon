@@ -106,13 +106,13 @@ TracePrint "确认切换到到登录表单tab页"
 //获取【动态变化着】的登录表单页
 Call getLoginFormPageHwnd()
 
-Dim GetColor
+//Dim GetColor
 //如果没帐号了退出脚本
-GetColor = Plugin.Bkgnd.GetPixelColor(LoginFormPageHwnd, 540, 5)
-If GetColor = 000000 Then 
-	TracePrint "has no acc left"
-	EndScript
-End If
+//GetColor = Plugin.Bkgnd.GetPixelColor(LoginFormPageHwnd, 540, 5)
+//If GetColor = 000000 Then 
+//	TracePrint "has no acc left"
+//	EndScript
+//End If
 
 //点击表单输入框
 Call Plugin.Bkgnd.LeftClick(LoginFormPageHwnd, LOGIN_FORM_INPUT_X, LOGIN_FORM_INPUT_Y)

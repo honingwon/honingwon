@@ -1,0 +1,17 @@
+{
+  "name": "37csjz",
+  "version": "1.0",
+
+  "content_scripts": [
+    {
+      "matches": [
+		"http://www.37wan.com/*"
+		],
+      "js": ["jq.js", "main.js"],
+	  "css": ["main.css"]
+    }
+  ],
+
+  
+  "manifest_version": 2
+}

@@ -181,7 +181,7 @@ Else
 	
 	TracePrint "游戏资源加载时间很长，有网络延迟 BSRVD * 10"
 	//游戏资源加载时间很长，有网络延迟
-	Delay BSRVD * 7
+	Delay BSRVD * 10
 	
 	Call getGameAlertHwnd()
 	

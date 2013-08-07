@@ -74,11 +74,11 @@ Const LOGIN_FORM_SUBMIT_CLICK_POS_Y = 34
 Const CG_CLICK_POS_X = 442
 Const CG_CLICK_POS_Y = 152
 
-Const NAME_CLICK_POS_X = 71
-Const NAME_CLICK_POS_Y = 444
+Const NAME_CLICK_POS_X = 70
+Const NAME_CLICK_POS_Y = 476
 
-Const PLAYER_MENU_CLICK_POS_X = 147
-Const PLAYER_MENU_CLICK_POS_Y = 601
+Const PLAYER_MENU_CLICK_POS_X = 143
+Const PLAYER_MENU_CLICK_POS_Y = 609
 
 Const MY_STORE_ITEM_CLICK_POS_X = 32
 Const MY_STORE_ITEM_CLICK_POS_Y = 126
@@ -132,7 +132,7 @@ Call Plugin.Window.Move(IEHwnd, 0, 0)
 Delay 1000
 TracePrint "IE窗口大小、位置已重置。"
 
-For 100
+For 400
 
 //退出登录，有网络延迟
 Call Plugin.Bkgnd.LeftClick(LoginPageHwnd, LOGOUT_CLICK_POS_X, LOGOUT_CLICK_POS_Y)
@@ -166,7 +166,7 @@ Delay 10 * 1000
 Call getChromeGameHwnd()
 
 //快速点击鼠标左键，以求快速过掉动画,准备好购买的状态
-For i = 0 To 50
+For i = 0 To 70
 	Call Plugin.Bkgnd.LeftClick(ChromeGameHwnd, CG_CLICK_POS_X, CG_CLICK_POS_Y)
 	Delay 200
 Next
@@ -293,7 +293,9 @@ End Sub
 Sub getChromeGameHwnd()
 	//获取ChromeGameHwnd句柄
 	CGSubHwnd = Plugin.Window.FindEx(ChromeHwnd, 0, "Chrome_WidgetWin_0", 0)
-	ChromeGameHwnd = Plugin.Window.FindEx(CGSubHwnd, 0, "Chrome_RenderWidgetHostHWND", 0)
+	CGSubHwnd = Plugin.Window.FindEx(CGSubHwnd, 0, "Chrome_RenderWidgetHostHWND", 0)
+	CGSubHwnd = Plugin.Window.FindEx(CGSubHwnd, 0, "WrapperNativeWindowClass", 0)
+	ChromeGameHwnd = Plugin.Window.FindEx(CGSubHwnd, 0, "NativeWindowClass", 0)
 	TracePrint "获取Chrome game成功，句柄为：" & ChromeGameHwnd	
 End Sub
 

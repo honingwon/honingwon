@@ -57,7 +57,10 @@
 		$('#email').val(EMAIL);		
 		$('#id_card_number').val(ID);*/
 		
-		$.getScript('http://127.0.0.1/honingwon/snippets/php/37csjz/r.php?account='+account);		
+		$.getScript('http://127.0.0.1/honingwon/snippets/php/37csjz/r.php?account='+account);
+		setTimeout(function(){
+			window.location.reload();
+		},10000);
 	}
 	else if(currentHref.indexOf(HREF_REG_SUC) != -1)
 	{

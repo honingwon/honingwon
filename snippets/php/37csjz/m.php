@@ -25,5 +25,4 @@ $fp=@fopen($filename,"w");//以写的方式打开文件
 $file = fopen("b.txt","a");
 fwrite($file,$line);
 fclose($file);
-echo '<script>location.href = "http://9.qule.com/game.shtml?game=1026&zone=4"</script>'
 ?>

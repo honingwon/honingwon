@@ -5,7 +5,8 @@
   "content_scripts": [
     {
       "matches": [
-		"http://www.37wan.com/*"
+		"http://www.37wan.com/*",
+		"http://anhei.37wan.com/*"
 		],
       "js": ["jq.js", "main.js"],
 	  "css": ["main.css"]

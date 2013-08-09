@@ -11,9 +11,9 @@
 	var ACCOUNT_LENGTH_MAX = 20;
 	
 	var HREF_REG = 'www.37wan.com/users/register.php';
-	var HREF_REG_SUC = '';
-	var HREF_LOGGIN = '';
-	var HREF_LOGGIN_BACK = '';
+	var HREF_REG_SUC = 'reg_suc';
+	var HREF_LOGGIN = 'anhei.37wan.com/404.html';
+	var HREF_LOGGIN_BACK = 'anhei.37wan.com/game_login.php';
 	var HREF_GAME = '';
 	
 	var MSG_ALL_FILLED = 'all filled!';
@@ -48,19 +48,19 @@
 	{
 		console.log(MSG_ALL_FILLED);
 		
-		var account = getRandomString(ACCOUNT_LENGTH);
+		//var account = getRandomString(ACCOUNT_LENGTH);
 		
-		$('#login_account').val(account);
+		//$('#login_account').val(account);
 		/*$('#password').val(KEY);
 		$('#password1').val(KEY);
 		$('#name').val(NAME);
 		$('#email').val(EMAIL);		
 		$('#id_card_number').val(ID);*/
 		
-		$.getScript('http://127.0.0.1/honingwon/snippets/php/37csjz/r.php?account='+account);
-		setTimeout(function(){
-			window.location.reload();
-		},10000);
+		//$.getScript('http://127.0.0.1/honingwon/snippets/php/37csjz/r.php?account='+account);
+		//setTimeout(function(){
+		//	window.location.reload();
+		//},10000);
 	}
 	else if(currentHref.indexOf(HREF_REG_SUC) != -1)
 	{
@@ -69,12 +69,14 @@
 	else if(currentHref.indexOf(HREF_LOGGIN) != -1)
 	{
 		console.log(MES_LOGIN);
+		
+		$.getScript('http://127.0.0.1/honingwon/snippets/php/37csjz/login.php');
 	}
 	else if(currentHref.indexOf(HREF_LOGGIN_BACK) != -1)
 	{	
-		console.log(MES_LOGIN_SUC);		
+		console.log(MES_LOGIN_SUC);	
+		$.getScript('http://127.0.0.1/honingwon/snippets/php/37csjz/m.php');
 	}
-	
 })(document);
 
 

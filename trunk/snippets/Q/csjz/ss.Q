@@ -26,19 +26,17 @@ SetupOCXFile=
 UserVar BSRVD = 1000 "网络延迟"
 Const CLTD = 500
 
-Dim MainHwnd, iehwnd, gameHwnd
-Dim SubHwnd
+Dim MainHwnd, pageHwnd, gameHwnd
+Dim tmpSubHwnd
 
-//IE主窗口
-MainHwnd = Plugin.Window.Find("IEFrame", 0)
-Call Plugin.Window.Size(MainHwnd, 1100, 800)
+//主窗口
+MainHwnd = Plugin.Window.Find("Chrome_WidgetWin_1", "朋友网（腾讯朋友） - 应用 - Google Chrome")
+Call Plugin.Window.Size(MainHwnd, 1100, 700)
 Delay CLTD
-//获取game句柄
-SubHwnd = Plugin.Window.FindEx(MainHwnd, 0, "Frame Tab", 0)
-SubHwnd = Plugin.Window.FindEx(SubHwnd, 0, "TabWindowClass", 0)
-SubHwnd = Plugin.Window.FindEx(SubHwnd, 0, "Shell DocObject View", 0)
-iehwnd = Plugin.Window.FindEx(SubHwnd, 0, "Internet Explorer_Server", 0)
-TracePrint iehwnd
+
+tmpSubHwnd = Plugin.Window.FindEx(MainHwnd, 0, "Chrome_WidgetWin_0", 0)
+pageHwnd = Plugin.Window.FindEx(tmpSubHwnd, 0, "Chrome_RenderWidgetHostHWND", 0)
+TracePrint pageHwnd
 
 Dim times
 times = 0
@@ -46,8 +44,8 @@ times = 0
 Rem start
 
 //start
-Call Plugin.Bkgnd.LeftClick(iehwnd, 329, 492)
-Delay BSRVD * 12
+Call Plugin.Bkgnd.LeftClick(pageHwnd, 339, 500)
+Delay BSRVD * 9
 
 TracePrint "game loaded"
 
@@ -60,40 +58,44 @@ Delay CLTD
 Call Plugin.Bkgnd.KeyPress(gameHwnd, 67)
 Delay CLTD
 
-Call Plugin.Bkgnd.LeftClick(gameHwnd, 306,161)
+Call Plugin.Bkgnd.LeftClick(gameHwnd, 300, 101)
 Delay CLTD
 
-Call Plugin.Bkgnd.LeftClick(gameHwnd, 486,409)
+Call Plugin.Bkgnd.LeftClick(gameHwnd, 488, 352)
 Delay CLTD
 
-/*MoveTo 648, 340
-MoveTo 829, 340
-MoveTo 648, 428
-MoveTo 829, 428*/
+/*MoveTo 647, 278
+MoveTo 827, 280
+MoveTo 647, 367
+MoveTo 828, 370
+MoveTo 649, 457
+MoveTo 826, 457*/
 
-Call Plugin.Bkgnd.LeftClick(gameHwnd, 648, 340)
+Call Plugin.Bkgnd.LeftClick(gameHwnd, 826, 457)
 Delay CLTD
 
 Call Plugin.Bkgnd.KeyPress(gameHwnd, 8)
 Delay CLTD
 
-Call Plugin.Bkgnd.SendString(gameHwnd, "11")
+Call Plugin.Bkgnd.SendString(gameHwnd, "1")
 Delay CLTD
 
-//MoveTo 715, 339
-//MoveTo 891, 339
-//MoveTo 713, 424
-//MoveTo 885, 429
+/*MoveTo 703, 280
+MoveTo 893, 277
+MoveTo 713, 365
+MoveTo 892, 368
+MoveTo 709, 455
+MoveTo 885, 454*/
 
-Call Plugin.Bkgnd.LeftClick(gameHwnd, 715, 339)
+Call Plugin.Bkgnd.LeftClick(gameHwnd, 885, 454)
 Delay CLTD
 
-Call Plugin.Bkgnd.LeftClick(gameHwnd, 515,393)
+Call Plugin.Bkgnd.LeftClick(gameHwnd, 515,333)
 Delay CLTD
 
 Delay BSRVD
 
-Call Plugin.Bkgnd.LeftClick(iehwnd, 1071,16)
+Call Plugin.Bkgnd.LeftClick(pageHwnd, 1069, 14)
 Delay CLTD * 2
 
 times = times + 1
@@ -102,11 +104,10 @@ TracePrint  times
 
 Goto start
 
-
-//Call Plugin.Web.Refresh(0)
-
 Function getGameHwnd()
-	getGameHwnd = Plugin.Window.FindEx(iehwnd, 0, "MacromediaFlashPlayerActiveX", 0)
+	tmpSubHwnd = Plugin.Window.FindEx(pageHwnd, 0, "WrapperNativeWindowClass", 0)
+	getGameHwnd = Plugin.Window.FindEx(tmpSubHwnd, 0, "NativeWindowClass", 0)
+	TracePrint "获取Chrome game成功，句柄为：" & getGameHwnd	
 End Function
 
 Sub OnScriptExit()

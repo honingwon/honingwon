@@ -1,2 +1,3 @@
 sszt0 : sszt_topbar_ËÎÌו 
 sszt1 : sszt_smallMap_ËÎÌו 
+sszt2 : sszt_followTask_ËÎÌו 

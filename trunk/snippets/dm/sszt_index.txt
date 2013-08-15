@@ -1,0 +1,2 @@
+sszt0 : sszt_topbar_ËÎÌו 
+sszt1 : sszt_smallMap_ËÎÌו 

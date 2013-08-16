@@ -94,10 +94,17 @@ Do While True
 	TracePrint "loopCounter " & loopCounter
 	
 	Delay INTERVAL
-	
+	 
 Loop
 
-ExitScript
+ExitScript 
+
+Sub speak(word)
+	dm.KeyPress 13
+	Delay CLTD
+	dm.SendString hwnd, word
+	Delay CLTD
+End Sub
 
 Sub dealXuewei()
 	TracePrint "’“µΩ°æ—®Œª°ø"

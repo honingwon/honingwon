@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=42f23db2-cca9-4b5f-91ea-2163e8bc605f
 Description=xuewei
-Enable=1
+Enable=0
 AutoRun=0
 [Repeat]
 Type=0

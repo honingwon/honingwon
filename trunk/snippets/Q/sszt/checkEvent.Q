@@ -28,16 +28,35 @@ UEsDBBQAAgAIAORbEEMXKfEXygAAAPgAAAAPABEAeHVld2VpQWxlcnQuYm1wVVQNAAemDQ5SAPsMUqUN
 
 [Script]
 Const RESOURCE_PATH = "c:\sszt\"
+Const VER = "3.1215"
+
+Set ws = createobject("Wscript.Shell")
+ws.run "regsvr32 atl.dll /s"
+Set ws = nothing
 
 PutAttachment RESOURCE_PATH, "*.*"
 PutAttachment ".\Plugin", "RegDll.dll"
 Call Plugin.RegDll.Reg(RESOURCE_PATH & "dm.dll")
 //创建dm对象
 Set dm = createobject("dm.dmsoft")
+
+If dm.Ver() <> VER Then 
+	Set dm = nothing
+	Set ws = createobject("Wscript.Shell")
+	ws.run "regsvr32 " & RESOURCE_PATH & "dm.dll /s"
+	Set ws = nothing
+	Delay 1500
+	
+	Set dm = createobject("dm.dmsoft")
+	If dm.Ver() <> need_ver Then 
+		MessageBox "插件版本错误,当前使用的版本是:" & ver & ",插件所在目录是:" & dm.GetBasePath()
+		MessageBox "请关闭程序,重新打开本程序再尝试"
+		EndScript
+	End If
+End If
+
 Call dm.SetPath(RESOURCE_PATH)
 TracePrint dm.Ver()
-TracePrint dm.GetBasePath()
-ExitScript
 
 Const CLTD = 500
 Const INTERVAL = 1000

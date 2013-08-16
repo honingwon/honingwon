@@ -23,20 +23,32 @@ SetupOCXFile=
 [Comment]
 
 [Attachment]
-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
+UEsDBBQAAgAIADhIEEOvEGPnvQAAAPgAAAAPABEAZnJpZW5kQWxlcnQuYm1wVVQNAAdY6g1SqdANUqHQDVJz8v3BAAFmQKwBxBxQzMggARY/BMRC3BAMAwbRc60SZgGRT+mWhL6joY07gCJ8ugUW2WvcS9Z7V+8LaTqa2Hs+vvUQUByInMt3ARFEMHP2LSAJ1AgkE6ddhqDiRXeBCCgC1Fu99C5QZd6i+0CVdWteAxGQUTj7BlBc3KsXKN63++uU/d8haPXl/2kzz8hHzfJu2tu29TUQTdv7fuO1H1MPf1Fyq29e/8Qgdbl79VagdiAbKGucNlPEsYaBAQBQSwMEFAACAAgArkgQQ1xjREyaAAAA+AAAAA4AEQBza2lsbEFsZXJ0LmJtcFVUDQAHQ+sNUiHPDVIhzw1Sc/L9wQABZkCsAcQcUMzIIAEWPwTEQtwQjASaI5SACMhoff4fiAyi0w211YFkjJVQk7cAXDx0zQklQWaDtIpII4EqLy4jBa6AzmlAxCOvkuHMB+TW+gu0BggU2PPZqbI7qfMC1XSFSgJJIAKaA0RABlANkNHmw9UULAFkQ1CVDz9ECijeHS0PlAK6ByIOJ4HiECkIgmgEMhgYAFBLAwQUAAIACACuRhBDFynxF8oAAAD4AAAADwARAHh1ZXdlaUFsZXJ0LmJtcFVUDQAHo+gNUnDQDVJt0A1Sc/L9wQABZkCsAcQcUMzIIAEWPwTEQtwQDAN57tzeNrJK4uwx8zf0vv4PRG657U4abNVhypaSDEA2UCR3xwlhE3ugms50pYoorWgdSTMNUaBeoEhlSuCkLPcJKcIVjjJL24uuHNgwvaNm7azSBQ22QG6uCwdQFigIQlfPH9q+au/sgilVMdXJTkCRl09u5XUvmb72GFAKyAVKARX/eH1p6dr1VXP2tKw6DSSB7MPrKyemGQLV2OZOCmtelNCxImHSNiAJtAjoHgYGAFBLAQIXCxQAAgAIADhIEEOvEGPnvQAAAPgAAAAPAAkAAAAAAAAAIACAgQAAAABmcmllbmRBbGVydC5ibXBVVAUAB1jqDVJQSwECFwsUAAIACACuSBBDXGNETJoAAAD4AAAADgAJAAAAAAAAACAAgIH7AAAAc2tpbGxBbGVydC5ibXBVVAUAB0PrDVJQSwECFwsUAAIACACuRhBDFynxF8oAAAD4AAAADwAJAAAAAAAAACAAgIHSAQAAeHVld2VpQWxlcnQuYm1wVVQFAAej6A1SUEsFBgAAAAADAAMA0QAAANoCAAAAAA==
 
 
 [Script]
 Const RESOURCE_PATH = "c:\sszt"
+Const CLTD = 500
+Const INTERVAL = 1000
 
 Dim timerScriptLoad, timerScriptExit, workingTime
+
+Dim loopCounter
+loopCounter = 0
+
 Dim hwnd, dm_ret
+
 Dim gameTopLeftX, gameTopLeftY, gameBottomRightX, gameBottomRightY
 Dim gameWidth, gameHeight
-Dim checkEventRectTopLeftX, checkEventRectTopLeftY, checkEventRectBottomRightX, checkEventRectBottomRightY
-Dim checkEventRetX,checkEventRetY
 
-//PutAttachment RESOURCE_PATH, "*.bmp"'释放字库，全部TXT格式文件
+Dim checkEventRectTopLeftX, checkEventRectTopLeftY, checkEventRectBottomRightX, checkEventRectBottomRightY
+Dim checkEventRetX, checkEventRetY
+
+Dim rolePanelPosX, rolePanelPosY
+Dim xueweiStudyBtnPosX, xueweiStudyBtnPosY
+
+
+PutAttachment RESOURCE_PATH, "*.bmp"
 
 timerScriptLoad = Plugin.Sys.GetTime()
 
@@ -51,35 +63,90 @@ dm_ret = dm.BindWindow(hwnd,"dx2","windows","windows",0)
 If dm_ret = 0 Then 
 	MessageBox "绑定失败"
 End If
-//dm_ret = dm.Capture(0,0,2000,2000,"screen.bmp")
-//ExitScript
 
 //获取game客户区
 dm_ret = dm.GetClientRect(hwnd, gameTopLeftX, gameTopLeftY, gameBottomRightX, gameBottomRightY)
 gameWidth = gameBottomRightX - gameTopLeftX
 gameHeight = gameBottomRightY - gameTopLeftY
-TracePrint gameWidth & "|" & gameHeight & "|" & gameTopLeftX & "," & gameTopLeftY & "," & gameBottomRightX & "," & gameBottomRightY
+//TracePrint gameWidth & "|" & gameHeight & "|" & gameTopLeftX & "," & gameTopLeftY & "," & gameBottomRightX & "," & gameBottomRightY
 
-//////
+Call getRolePanelPos()
 Call getCheckEventRect()
-Call checkEvent("xueweiAlert.bmp")
-If checkEventRetX >= 0 and checkEventRetY >= 0 Then
-    TracePrint "找到【穴位】"
-    TracePrint checkEventRetX & "&" &  checkEventRetY
-End If
+
+Do While True
+
+	If loopCounter Mod 5 = 0 Then 
+		Call checkEvent("xueweiAlert.bmp")
+		Call dealCheckEventResult("xueweiAlert")
+		Call checkEvent("friendAlert.bmp")
+		Call dealCheckEventResult("friendAlert")
+		
+	End If
+	
+	loopCounter = loopCounter + 1
+	TracePrint "loopCounter " & loopCounter
+	
+	Delay INTERVAL
+	
+Loop
 
 ExitScript
+
+Sub dealXuewei()
+	TracePrint "找到【穴位】"
+    TracePrint checkEventRetX & "&" & checkEventRetY
+    dm.MoveTo checkEventRetX, checkEventRetY
+    dm.LeftClick
+    Delay CLTD
+    dm.MoveTo xueweiStudyBtnPosX, xueweiStudyBtnPosY
+    dm.LeftClick
+    Delay CLTD
+    dm.KeyPress 27
+    Delay CLTD
+End Sub
+
+Sub dealFriend()
+	TracePrint "找到【好友】"
+    TracePrint checkEventRetX & "&" & checkEventRetY
+    dm.MoveTo checkEventRetX, checkEventRetY
+    dm.LeftClick
+    Delay CLTD
+    /*dm.MoveTo xueweiStudyBtnPosX, xueweiStudyBtnPosY
+    dm.LeftClick
+    Delay CLTD*/
+    dm.KeyPress 27
+    Delay CLTD
+End Sub
+
+Sub dealCheckEventResult(typeStr)
+	If checkEventRetX >= 0 and checkEventRetY >= 0 Then 
+		If typeStr = "xueweiAlert" Then 		
+			Call dealXuewei()
+		End If	
+		If typeStr = "friendAlert" Then
+			Call dealFriend()
+		End If
+    	
+	End If
+End Sub
+
+Sub checkEvent(picPath)
+	dm_ret = dm.FindPic(checkEventRectTopLeftX,checkEventRectTopLeftY,checkEventRectBottomRightX,checkEventRectBottomRightY,picPath,"000000",0.9,0,checkEventRetX,checkEventRetY)
+End Sub
 
 Sub getCheckEventRect()
 	checkEventRectTopLeftX = 0
 	checkEventRectTopLeftY = gameHeight - 153	
 	checkEventRectBottomRightX = gameWidth
 	checkEventRectBottomRightY = gameHeight - 133
-	TracePrint checkEventRectTopLeftX & "," & checkEventRectTopLeftY & "," & checkEventRectBottomRightX & "," & checkEventRectBottomRightY
+	//TracePrint checkEventRectTopLeftX & "," & checkEventRectTopLeftY & "," & checkEventRectBottomRightX & "," & checkEventRectBottomRightY
 End Sub
 
-Sub checkEvent(picPath)
-	dm_ret = dm.FindPic(checkEventRectTopLeftX,checkEventRectTopLeftY,checkEventRectBottomRightX,checkEventRectBottomRightY,picPath,"000000",0.9,0,checkEventRetX,checkEventRetY)
+Sub getRolePanelPos()
+	rolePanelPosX = Int(gameWidth / 2 - 459)
+	rolePanelPosY = Int(gameHeight / 2 - 445 / 2)
+	xueweiStudyBtnPosX = rolePanelPosX + 366
+	xueweiStudyBtnPosY = rolePanelPosY + 296
 End Sub
 
 Sub OnScriptExit()

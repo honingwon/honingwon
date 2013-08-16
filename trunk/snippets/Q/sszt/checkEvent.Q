@@ -47,6 +47,9 @@ Dim checkEventRetX, checkEventRetY
 Dim rolePanelPosX, rolePanelPosY
 Dim xueweiStudyBtnPosX, xueweiStudyBtnPosY
 
+Dim addFriendPanelPosX, addFriendPanelPosY
+Dim addFriendBtnPosX, addFriendBtnPosY
+
 
 PutAttachment RESOURCE_PATH, "*.bmp"
 
@@ -71,6 +74,7 @@ gameHeight = gameBottomRightY - gameTopLeftY
 //TracePrint gameWidth & "|" & gameHeight & "|" & gameTopLeftX & "," & gameTopLeftY & "," & gameBottomRightX & "," & gameBottomRightY
 
 Call getRolePanelPos()
+Call getAddFriendPanelPos()
 Call getCheckEventRect()
 
 Do While True
@@ -79,8 +83,11 @@ Do While True
 		Call checkEvent("xueweiAlert.bmp")
 		Call dealCheckEventResult("xueweiAlert")
 		Call checkEvent("friendAlert.bmp")
-		Call dealCheckEventResult("friendAlert")
-		
+		Call dealCheckEventResult("friendAlert")		
+	End If
+	
+	If loopCounter Mod 60 = 0 Then 
+		Call speak("1")
 	End If
 	
 	loopCounter = loopCounter + 1
@@ -111,9 +118,9 @@ Sub dealFriend()
     dm.MoveTo checkEventRetX, checkEventRetY
     dm.LeftClick
     Delay CLTD
-    /*dm.MoveTo xueweiStudyBtnPosX, xueweiStudyBtnPosY
+    dm.MoveTo addFriendBtnPosX, addFriendBtnPosY
     dm.LeftClick
-    Delay CLTD*/
+    Delay CLTD
     dm.KeyPress 27
     Delay CLTD
 End Sub
@@ -140,6 +147,13 @@ Sub getCheckEventRect()
 	checkEventRectBottomRightX = gameWidth
 	checkEventRectBottomRightY = gameHeight - 133
 	//TracePrint checkEventRectTopLeftX & "," & checkEventRectTopLeftY & "," & checkEventRectBottomRightX & "," & checkEventRectBottomRightY
+End Sub
+
+Sub getAddFriendPanelPos()
+	addFriendPanelPosX = Int(gameWidth / 2 - 206)
+	addFriendPanelPosY = Int(gameHeight / 2 - 226)
+	addFriendBtnPosX = addFriendPanelPosX + 97
+	addFriendBtnPosY = addFriendPanelPosY + 282
 End Sub
 
 Sub getRolePanelPos()

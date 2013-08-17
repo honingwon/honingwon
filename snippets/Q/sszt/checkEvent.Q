@@ -9,7 +9,7 @@ StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
 MacroID=42c41d07-2c0c-4aaa-8d29-4bbc7f8ba1e9
-Description=checkEvent
+Description=checkEvent_自动备份
 Enable=0
 AutoRun=0
 [Repeat]
@@ -74,6 +74,9 @@ Dim osType,wordLib
 Dim gameTopLeftX, gameTopLeftY, gameBottomRightX, gameBottomRightY
 Dim gameWidth, gameHeight
 
+Dim NPCTaskPanelRectLTX,NPCTaskPanelRectLTY,NPCTaskPanelRectRBX,NPCTaskPanelRectRBY
+Dim acceptTaskBtnX, acceptTaskBtnY, completeTaskBtnX, completeTaskBtnY
+
 Dim checkEventRectTopLeftX, checkEventRectTopLeftY, checkEventRectBottomRightX, checkEventRectBottomRightY
 Dim checkEventRetX, checkEventRetY
 Dim checkOnlineGiftRectTopLeftX, checkOnlineGiftRectTopLeftY, checkOnlineGiftRectBottomRightX, checkOnlineGiftRectBottomRightY
@@ -113,8 +116,13 @@ Call getRolePanelPos()
 Call getAddFriendPanelPos()
 Call getCheckEventRect()
 Call getCheckOnlineGiftPos()
+Call getNPCTaskPanelPos()
 
 Do While True
+
+Loop
+
+Do While False
 
 	If loopCounter Mod 5 = 0 Then 
 		Call checkEvent("xueweiAlert.bmp")
@@ -236,6 +244,17 @@ Sub getRolePanelPos()
 	rolePanelPosY = Int(gameHeight / 2 - 445 / 2)
 	xueweiStudyBtnPosX = rolePanelPosX + 366
 	xueweiStudyBtnPosY = rolePanelPosY + 296
+End Sub
+
+Sub getNPCTaskPanelPos()
+	/*NPCTaskPanelRectLTX = -269,-100 
+	NPCTaskPanelRectLTY = -269,-100 
+	NPCTaskPanelRectRBX = 266,98 
+	NPCTaskPanelRectRBY = 266,98 */
+	acceptTaskBtnX = Int(gameWidth / 2 + 190)
+	acceptTaskBtnY = Int(gameWidth / 2 + 61)
+	completeTaskBtnX = acceptTaskBtnX
+	completeTaskBtnY = acceptTaskBtnY
 End Sub
 
 Sub OnScriptExit()

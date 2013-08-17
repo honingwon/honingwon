@@ -27,6 +27,9 @@ UEsDBBQAAgAIAORbEEMXKfEXygAAAPgAAAAPABEAeHVld2VpQWxlcnQuYm1wVVQNAAemDQ5SAPsMUqUN
 
 
 [Script]
+UserVar IfAutoMainTask = 0 "是否自动主线任务"
+UserVar IfCheckEvent = 0 "是否检测游戏事件"
+
 Const RESOURCE_PATH = "c:\sszt\"
 Const VER = "3.1215"
 
@@ -65,8 +68,8 @@ Const INTERVAL = 1000
 
 Dim timerScriptLoad, timerScriptExit, workingTime
 
-Dim loopCounter
-loopCounter = 0
+Dim checkEventLoopCounter,autoMainTaskLoopCounter
+checkEventLoopCounter = autoMainTaskLoopCounter = 0
 
 Dim hwnd, dm_ret
 Dim osType,wordLib
@@ -118,30 +121,35 @@ Call getCheckEventRect()
 Call getCheckOnlineGiftPos()
 Call getNPCTaskPanelPos()
 
-Do While True
 
-Loop
+If AutoMainTask = 1 Then 
+	Do While True
 
-Do While False
+	Loop
+End If
 
-	If loopCounter Mod 5 = 0 Then 
-		Call checkEvent("xueweiAlert.bmp")
-		Call dealCheckEventResult("xueweiAlert")
-		Call checkEvent("friendAlert.bmp")
-		Call dealCheckEventResult("friendAlert")
-		Call checkOnlineGiftEvent()
-	End If
-	
-	If loopCounter Mod 35 = 0 Then 
-		Call speak("求皮鞭，求蜡烛。++++++")
-	End If
-	
-	loopCounter = loopCounter + 1
-	TracePrint "loopCounter " & loopCounter
-	
-	Delay INTERVAL
-	 
-Loop
+If IfCheckEvent Then
+	Do While False
+		If checkEventLoopCounter Mod 5 = 0 Then 
+			Call checkEvent("xueweiAlert.bmp")
+			Call dealCheckEventResult("xueweiAlert")
+			Call checkEvent("friendAlert.bmp")
+			Call dealCheckEventResult("friendAlert")
+			Call checkOnlineGiftEvent()
+		End If
+		
+		If checkEventLoopCounter Mod 35 = 0 Then 
+			Call speak("求皮鞭，求蜡烛。++++++")
+		End If
+		
+		checkEventLoopCounter = checkEventLoopCounter + 1
+		TracePrint "checkEventLoopCounter " & checkEventLoopCounter
+		
+		Delay INTERVAL	
+	Loop
+End If
+
+
 
 ExitScript 
 

@@ -9,7 +9,7 @@ StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
 MacroID=42c41d07-2c0c-4aaa-8d29-4bbc7f8ba1e9
-Description=checkEvent_自动备份
+Description=checkEvent
 Enable=0
 AutoRun=0
 [Repeat]

@@ -1,4 +1,4 @@
 sszt0 : sszt_topbar
 sszt1 : sszt_smallMap
 sszt2 : sszt_followTask
-sszt3 : sszt_npcTaskPanel
+sszt3 : sszt_npcTaskPanel£¬sszt_skillPanel,sszt_getAndUsePanel

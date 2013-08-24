@@ -1,18 +1,93 @@
+Dim errorCode : errorCode = 0
+
+'register DM
+Const RESOURCE_PATH = "c:\ahsg\"
+Const VER = "3.1215"
+
+Set ws = createobject("Wscript.Shell")
+ws.run "regsvr32 atl.dll /s"
+Set ws = nothing
+
+PutAttachment RESOURCE_PATH, "dm.dll"
+PutAttachment ".\Plugin", "RegDll.dll"
+Call Plugin.RegDll.Reg(RESOURCE_PATH & "dm.dll")
+//创建dm对象
+Set dm = createobject("dm.dmsoft")
+
+If dm.Ver() <> VER Then 
+	Set dm = nothing
+	Set ws = createobject("Wscript.Shell")
+	ws.run "regsvr32 " & RESOURCE_PATH & "dm.dll /s"
+	Set ws = nothing
+	Delay 1500
+	
+	Set dm = createobject("dm.dmsoft")
+	If dm.Ver() <> need_ver Then 
+		MessageBox "插件版本错误,当前使用的版本是:" & ver & ",插件所在目录是:" & dm.GetBasePath()
+		MessageBox "请关闭程序,重新打开本程序再尝试"
+		errorCode = 1000
+		EndScript
+	End If
+End If
+
+Call dm.SetPath(RESOURCE_PATH)
+TracePrint dm.Ver()
+
+
+
+
+
 Const CLTD = 500
 Const BSVRD = 1000
 Const INTERVAL = 1000
+
 'type value
 Const MAP_TYPE_WILD = "mapTypeWild"
 Const MAP_TYPE_COPY = "mapType"
+
+Const PLAYER_STATE_STOP = "playerStateStop"
+Const PLAYER_STATE_WALK = "playerStateWalk"
+
 'feather pic
 Const FEATHER_PIC_COPY = "copy.bmp"
 
-Dim currentMapType : currentMapType = MAP_TYPE_WILD
+'definition
+Dim hwnd
+Dim clientRectWidth, clientRectHeight
+Dim currentMapType, playerState
+
+'init data
+initClientData()
+initMapData(MAP_TYPE_WILD)
+initPlayerState(PLAYER_STATE_STOP)
+
 '死亡后返回死亡点继续挂机打怪(适用于野外)
 Do While True
 
 Loop
 
+Sub initClientData()
+	hwnd = dm.GetMousePointWindow()
+	
+	dim clientTopLeftX, clientTopLeftY, clientBottomRightX, clientBottomRightY
+	dm_ret = dm.GetClientRect(hwnd, clientTopLeftX, clientTopLeftY, clientBottomRightX, clientBottomRightY)
+	clientRectWidth = clientBottomRightY - clientTopLeftX
+	clientRectHeight = clientBottomRightY - clientTopLeftY
+	TracePrint "client rect info:" & clientRectWidth & "|" & clientRectHeight & "|" & clientTopLeftX & "," & clientTopLeftY & "," & clientBottomRightX & "," & clientBottomRightY
+End Sub
+
+Sub initMapData(mapType)
+	currentMapType = mapType
+End Sub
+
+Sub initPlayerState(state)
+	playerState = state
+End Sub
+
+//考虑到地图全部无法加载的情况
+//取任意量两点
+Function isWalking()
+End Function
 
 Function getMapType()
     Dim ret

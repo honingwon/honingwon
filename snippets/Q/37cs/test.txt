@@ -31,7 +31,8 @@ If dm.Ver() <> VER Then
 End If
 
 Call dm.SetPath(RESOURCE_PATH)
-TracePrint dm.Ver()
+TracePrint "dm ver:" + dm.Ver()
+exitscript
 
 
 

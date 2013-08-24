@@ -48,12 +48,95 @@ If dm.Ver() <> VER Then
     Delay 1500
     Set dm = createobject("dm.dmsoft")
     If dm.Ver() <> need_ver Then 
-        MessageBox "插件版本错误,当前使用的版本是:" & ver & ",插件所在目录是:" & dm.GetBasePath()
-        MessageBox "请关闭程序,重新打开本程序再尝试"
+        //MessageBox "插件版本错误,当前使用的版本是:" & ver & ",插件所在目录是:" & dm.GetBasePath()
+        //MessageBox "请关闭程序,重新打开本程序再尝试"
         errorCode = 1000
         EndScript
     End If
 End If
 Call dm.SetPath(RESOURCE_PATH)
 TracePrint "dm ver:" + dm.Ver()
+
+
+Const CLTD = 500
+Const BSVRD = 1000
+Const INTERVAL = 1000
+
+'type value
+Const MAP_TYPE_WILD = "mapTypeWild"
+Const MAP_TYPE_COPY = "mapType"
+
+Const PLAYER_STATE_STOP = "playerStateStop"
+Const PLAYER_STATE_WALK = "playerStateWalk"
+
+'feather pic
+Const FEATHER_PIC_COPY = "copy.bmp"
+
+'definition
+Dim hwnd, dm_ret
+Dim clientTopLeftX, clientTopLeftY, clientBottomRightX, clientBottomRightY
+Dim clientRectWidth, clientRectHeight
+Dim currentMapType, playerState
+
+'init data
+Call initClientData()
 ExitScript
+Call initMapData(MAP_TYPE_WILD)
+Call initPlayerState(PLAYER_STATE_STOP)
+
+'死亡后返回死亡点继续挂机打怪(适用于野外)
+Do While True
+
+Loop
+
+Sub initClientData()
+	hwnd = dm.GetMousePointWindow()
+	//后台绑定
+	hwnd = dm.GetMousePointWindow()
+	dm_ret = dm.BindWindow(hwnd,"dx2","windows","windows",0)
+	If dm_ret = 0 Then 
+		//MessageBox "绑定失败"
+		errorCode = 1001
+		ExitScript
+	End If
+	
+	dm_ret = dm.GetClientRect(hwnd, clientTopLeftX, clientTopLeftY, clientBottomRightX, clientBottomRightY)
+	clientRectWidth = clientBottomRightY - clientTopLeftX
+	clientRectHeight = clientBottomRightY - clientTopLeftY
+	TracePrint "client rect info:" & clientRectWidth & "|" & clientRectHeight & "|" & clientTopLeftX & "," & clientTopLeftY & "," & clientBottomRightX & "," & clientBottomRightY
+End Sub
+
+Sub initMapData(mapType)
+	currentMapType = mapType
+End Sub
+
+Sub initPlayerState(state)
+	playerState = state
+End Sub
+
+//取任意量两点
+Function isWalking()
+End Function
+
+Function getMapType()
+    Dim ret
+    If isCopyFeaturePicFound() Then
+        ret = MAP_TYPE_COPY
+    Else
+        ret = MAP_TYPE_WILD
+    End If
+    getMapType = ret
+End Function
+
+Function isCopyFeaturePicFound()
+    Dim ret : ret = False
+	'FEATHER_PIC_COPY
+    isCopyFeaturePicFound = ret
+End Function
+
+Sub OnScriptExit()
+	dm_ret = dm.UnBindWindow()
+	If errorCode > 0 Then 
+		MessageBox errorCode
+	End If
+End Sub

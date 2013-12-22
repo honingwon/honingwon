@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Backbone.js market</title>
+</head>
+
+<body>
+
+<div id="market-app">
+
+	<header>
+		<h1>Market</h1>
+		<input id="get-goods" type="button" value="get goods"/>
+	</header>
+	
+	<ul id="goods"></ul>
+	
+	<div id="shopping-cart">
+		<ul id="shopping-cart-goods"></ul>
+	</div>
+
+	<footer>      
+	</footer>
+</div>
+
+<script src="../sea-modules/seajs/seajs/2.1.1/sea.js"></script>
+
+<script>
+seajs.config({
+	base: "../sea-modules/",
+	alias: {
+		"$": "jquery/jquery/1.10.1/jquery.js",
+		"json": "gallery/json/1.0.3/json.js",
+		"underscore": "gallery/underscore/1.5.2/underscore.js",
+		"backbone": "gallery/backbone/1.1.0/backbone.js",
+		"localStorage":"500mi/backbone.localStorage/1.0.0/backbone.localStorage.js"
+	}
+});
+  
+seajs.use("500mi/todos/1.0.0/main");
+
+</script>
+
+<!-- Templates -->
+
+<script type="text/template" id="item-template">
+<div class="view">
+  <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+  <label><%- title %></label>
+  <a class="destroy"></a>
+</div>
+<input class="edit" type="text" value="<%- title %>" />
+</script>
+
+<script type="text/template" id="stats-template">
+<% if (done) { %>
+  <a id="clear-completed">Clear <%= done %> completed <%= done == 1 ? 'item' : 'items' %></a>
+<% } %>
+<div class="todo-count"><b><%= remaining %></b> <%= remaining == 1 ? 'item' : 'items' %> left</div>
+</script>
+</body>
+</html>

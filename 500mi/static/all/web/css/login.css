@@ -1,0 +1,28 @@
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0}
+body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53;*line-height:1.5}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+ul,ol{list-style:none}
+
+body{ background:#f3f3f3;}
+
+.login{ width:800px; margin:120px auto 30px; overflow:hidden; zoom:1; border:1px solid #e0e0e0; background:#fff; border-radius:4px; box-shadow:0px 2px 0px rgba(0,0,0,0.05); font-family:Microsoft Yahei; }
+	.web-info{ float:left; padding:30px 0 0 30px; width:450px;}
+		.web-info h2{ text-indent:-2000em; display:block; width:200px; height:38px; background:url(../images/logo.png) no-repeat;}
+		.web-info p{ margin:12px 0 20px; color:#aaa; font-family:tahoma;}
+		.web-info dl{ margin:12px 0 20px; height:125px; line-height:1.8; color:#666;}
+		.web-info dd{}
+		.web-info ul{ margin-top:0px; overflow:hidden; zoom:1;}
+		.web-info ul li{ float:left; padding:5px 0 0 40px; width:160px; color:#666; background:url(../images/icons.png) no-repeat -4px 0;}
+		.web-info ul li.i2{ background-position:-4px -44px;}
+	.form-login{ float:right; padding:20px 20px 30px 30px; width:250px; background:#fdfdfd; border-left:1px solid #e0e0e0;}
+		.form-login h2{ color:#f96; font:800 16px/1 Microsoft Yahei; padding:0 0 10px 0; margin-bottom:5px; border-bottom:1px solid #f2f2f2;}
+		.form-login label{ display:block; padding:10px 0 4px; color:#666;}
+		.form-login .input{ border:1px solid #ccc; padding:4px 5px; font:500 14px/1.5 Tahoma,Microsoft Yahei; width:220px; box-shadow:inset 2px 2px 0px rgba(0,0,0,0.05);}	
+		.form-login .rememb{ margin:10px auto;}
+		.form-login .rememb input{ margin-right:5px;}
+		.form-login .rememb label{ display:inline-block;}
+		.form-login .error{ display:inline-block; width:100px; text-align:right; margin-left:10px; color:#f20;}
+		.form-login .btn button{ display:inline-block; cursor:pointer; margin:0 auto; width:230px; height:32px; text-align:center; font:800 14px/25px Microsoft Yahei; color:#333; border-radius:4px; border:1px solid #e6a400; background:url(../images/bar.png) repeat-x 0 -208px;box-shadow:1px 1px 2px rgba(0,0,0,0.1); }
+		.form-login .btn button:hover{text-decoration:none; background-position:0 -238px;}
+		
+#footer{ text-align:center; color:#888;}

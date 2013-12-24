@@ -53,6 +53,9 @@ define(function(require){
 		//选择进货数量不保存		
 		var GoodsList = Backbone.Collection.extend({
 		
+			//url
+			url : "/500mi/data/goods_list.json",
+		
 			//列表的模型
 			model: Goods,
 
@@ -72,6 +75,7 @@ define(function(require){
 			
 			//缓存单个商品的模版函数
 			//template: _.template($('#goods-template').html()),
+			template: _.template('<input type="text"/>'),
 			
 			//dom events
 			events: {
@@ -126,9 +130,18 @@ define(function(require){
 				this.listenTo(currPageGoods, 'all', this.render);
 			},
 			
+			addOne: function(goods){
+				var view = new GoodsView({model: goods});
+				this.$("#goods-list").append(view.render().el);
+				console.log(goods)
+			},
+			
 			getData : function(){
-				currPageGoods.url = '/500mi/goods.json';
-				currPageGoods.fetch();
+				currPageGoods.fetch({
+					success: function(model,resp,option){
+						//console.log(currPageGoods);
+					}
+				});
 			}
 		});
 		

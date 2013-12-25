@@ -1,0 +1,16 @@
+[
+	{
+	  "barcode": 1000,
+	  "name": "王老吉",
+	  "imgSrc": "/500mi/img/1.jpg",
+	  "price": 1,
+	  "unitName": "箱"
+	},
+	{
+	  "barcode": 1001,
+	  "name": "加多宝",
+	  "imgSrc": "/500mi/img/2.jpg",
+	  "price": 2,
+	  "unitName": "盒"
+	}
+]

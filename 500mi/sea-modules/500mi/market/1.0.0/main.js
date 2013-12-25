@@ -66,7 +66,14 @@ define(function(require){
 		});
 		
 		//创建当前页的商品列表
-		window.currPageGoods = new GoodsList;
+		var currPageGoods = new GoodsList;
+		
+		var Market = Backbone.Model.extend({
+			
+			//url
+			url: "url",
+			
+		});
 		
 		//单个商品视图
 		//------------
@@ -131,7 +138,8 @@ define(function(require){
 			el: $("#market-app"),
 			
 			events : {
-				"click #get-goods": "getData"
+				"click #get-goods": "getData",
+				"click #page a": "getData"
 			},
 			
 			initialize: function() {

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Backbone.js market</title>
+<link href="css/base.css" rel="stylesheet"></link>
 </head>
 
 <body>
@@ -14,7 +15,7 @@
 		<input id="get-goods" type="button" value="get goods"/>
 	</header>
 	
-	<ul id="goods-list"></ul>
+	<ul id="goods-list" class="Commodity"></ul>
 	
 	<div id="shopping-cart">
 		<ul id="shopping-cart-goods"></ul>
@@ -43,7 +44,26 @@ seajs.use("500mi/market/1.0.0/main");
 
 <!-- Templates -->
 
-<script type="text/template" id="item-template">
+<script type="text/template" id="goods-template">
+
+<div class="item-box">
+	<div class="code" title="条形码"><%- barcode %></div>
+	<img src="<%- imgSrc %>">
+	<div class="price"><em>￥<%- price %>/<%- unitName %></em><span>216G*6盒</span></div>
+	<div class="title" title="<%- name %>"><%- name %></div>
+	<div class="inforBar">
+		<p><span class="b-tong" title="统一配送">统</span><span class="b-tui" title="过期可退">退</span></p>
+		<a href="javascript:;" class="b-favorite">收藏到货架</a>
+	</div>
+	<div class="bar">
+		<div class="op-amount">
+			<input type="text" maxlength="4" value="<%- amount %>">
+			<a class="btn-plus" href="javascript:;" title="增加物品"></a>
+			<a class="btn-minus" href="javascript:;" title="减少物品"></a>
+		</div>
+		<a class="b-blue" href="javascript:;" >进货</a>
+	</div>
+</div>
 
 </script>
 </body>

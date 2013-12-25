@@ -1,0 +1,70 @@
+.confirmBody{ border-top:1px solid #ff9350; margin:10px auto; padding-top:15px; }
+	.confirmBody .head{ margin:20px auto; padding:5px 10px; border-bottom:1px solid #e0e0e0;}
+	.confirmBody .head h2{ font:800 16px/2 Microsoft Yahei; color:#777; display:inline; margin-right:20px;}
+	.confirmBody .head span{ color:#777;}
+	
+	.flow-steps{ margin:auto; overflow:hidden; zoom:1;}
+		.flow-steps ol{ width:1000px; margin:0 auto;}
+		.flow-steps li{ position:relative; float:left; width:250px;}
+		.flow-steps li h4{ display:block; text-align:center; color:#555; font-weight:500; padding-bottom:5px;}
+		.flow-steps li div{ display:block; height:34px; padding-top:8px; overflow:hidden; text-align:center; color:#fff; background:url(../images/confirmStep.png) no-repeat; font-weight:800;box-sizing:border-box;-moz-box-sizing:border-box; /* Firefox */-webkit-box-sizing:border-box; /* Safari */}
+		.flow-steps li div.mid{ background-position:0 -34px;}
+		.flow-steps li div.last{ background-position:0 -102px;}
+		.flow-steps li.select h4{ color:#999; }
+		.flow-steps li.select div{ text-indent:-2000em;}
+		.flow-steps li.select div.mid{ background-position:0 -68px;}
+	
+	.select-address{}
+		.select-address li{ position:relative; padding:5px 10px 5px 40px; color:#444;}
+		.select-address li input{ vertical-align:text-bottom; margin-right:5px;}
+		.select-address li em{ font-weight:800; margin-right:5px;}
+		.select-address li .s-tel{ color:#777;}
+		.select-address li .s-edit{ display:none;}
+		.select-address li.select{ font-size:14px; font-weight:800; padding:10px 10px 10px 40px; background:#fff5cc; border:1px solid #ffe580; box-shadow:5px 5px 1px rbga(0,0,0,0.1);}
+		.select-address li.select .s-edit{ font-size:12px; font-weight:500; display:block; position:absolute; right:20px; top:10px;}
+		
+	.order-table{ width:100%;}
+		.order-table th{ padding:5px 10px; border-bottom:2px solid #f60; border-right:2px solid #fff; text-align:left; color:#777; font-weight:500;}
+		.order-table th.s-code{ width:110px;}
+		.order-table th.s-sp{ width:60px; text-align:right;}
+		.order-table th.s-amount{ width:60px; text-align:center;}
+		.order-table th.s-price{ width:70px; text-align:right;}
+		.order-table th.s-agio{ width:60px; text-align:right;}
+		.order-table th.s-total{ width:80px; text-align:right;}
+		
+		.order-table .supplier{ background:#fff8f2; border-bottom:1px solid #f3d7bb; color:#444;}
+		.order-table .supplier .s-1{ margin-right:20px; color:#069; font-weight:800;}
+		.order-table .other{ background:#f6f6f6; border-bottom:1px solid #e0e0e0; color:#444;}
+		.order-table .other .msg{ float:left;}
+		.order-table .other .total{ float:right;}
+		.order-table .other .total em{ display:inline-block; width:80px; text-align:right; }
+		.order-table .other input{ width:250px;}
+		
+		.order-table td{ padding:7px 10px;}		
+		.order-table .item { border-bottom:1px solid #e0e0e0;}
+		.order-table .item:hover{ background:#f9f9f9;}
+		.order-table .item .s-code{ color:#666;}
+		.order-table .item .s-sp{ color:#666; text-align:right;}
+		.order-table .item .s-amount{ text-align:center;}
+		.order-table .item .s-price{ text-align:right;}
+		.order-table .item .s-agio{ color:#090; text-align:right;}
+		.order-table .item .s-total{ text-align:right;}
+		
+		
+		.order-table .statistics .delivery em{ font:500 14px/1.5 Tahoma;}
+		.order-table .statistics .total{ float:right; line-height:2;}
+		.order-table .statistics .total em{ display:inline-block; width:85px; text-align:right; font:800 12px/1.5 Tahoma; color:#f60;}
+		.order-table .statistics .amout{ float:right; margin-right:20px; line-height:2;}
+		.order-table .statistics .amout em{ font-weight:800; margin-right:5px;}
+		.order-table .actualPaid { text-align:right;}
+		.order-table .actualPaid em{font:900 22px/1.5 Tahoma; color:#f30;}
+		.order-table .submit{ border-top:1px dotted #ccc; text-align:right;}
+		.order-table .submit td{ padding-top:20px;}
+		.order-table .submit .return{ float:left; display:inline-block; width:150px; height:40px; font:600 15px/40px Microsoft Yahei; color:#666; text-align:center; border:1px solid #e0e0e0; border-radius:3px; background:url(../images/bar.png) repeat-x 0 -80px;}
+		.order-table .submit .return:hover{ text-decoration:none; border:1px solid #ccc; background-position:0 -88px;}
+		.order-table .submit button{ float:right; vertical-align:middle; width:150px; height:40px; font:900 15px/1.5 Microsoft Yahei; border:0; cursor:pointer;}
+		
+.confirmHellp{ margin:20px auto auto; border:1px solid #e0e0e0; padding:10px 5px; overflow:hidden; zoom:1;}
+	.confirmHellp .block{ border-right:1px solid #ececec; color:#666; float:left; width:320px; height:220px; padding:5px 10px;box-sizing:border-box;-moz-box-sizing:border-box; /* Firefox */-webkit-box-sizing:border-box; /* Safari */}
+	.confirmHellp .block h3{ border-bottom:1px dotted #ccc; display:block; padding-bottom:8px; margin-bottom:8px; color:#444;}
+	.confirmHellp .last{ border-right:0;}

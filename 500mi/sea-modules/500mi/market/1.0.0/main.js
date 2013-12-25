@@ -7,6 +7,7 @@ define(function(require){
 	$(function(){
 	
 		// 商品模型 goods Model
+		// 只fetch，不save
 		// --------------------
 		
 		//基本的商品模型，包括条形码，名称，图片地址，单价，单位，选择进货数量		
@@ -15,25 +16,28 @@ define(function(require){
 			//商品缺省属性
 			defaults: function() {
 				return {
-					barcode: "none",
-					name: "none",
-					imgSrc: "none",
+					id : 0,
+					barcode: 0,
+					name: "",
+					imgSrc: "",
 					price: 0,
-					unitName: "none",
+					unitName: "",
 					amount: 1
 				};
 			},
 			
 			//设置进货数量
 			setAmount: function(value) {
-				this.save({amount: value});
+				var currAmount = value;
+				if(currAmount < 1) currAmount = 1;
+				this.set({amount: currAmount});
 			},
 			
 			//进货数量增加1
 			increase: function() {
 				var currAmount = this.get("amount");
 				currAmount++;
-				this.save({amount: currAmount});
+				this.set({amount: currAmount});
 			},
 			
 			//进货数量减少1
@@ -41,8 +45,8 @@ define(function(require){
 				var currAmount = this.get("amount");
 				currAmount--;
 				if(currAmount < 1) currAmount = 1;
-				this.save({amount: currAmount});
-			},
+				this.set({amount: currAmount});
+			}
 			
 		});
 		
@@ -50,19 +54,19 @@ define(function(require){
 		//-------------------------
 		
 		//商品列表数据来自服务器端。
-		//选择进货数量不保存		
+		//选择进货数量为临时量不save		
 		var GoodsList = Backbone.Collection.extend({
 		
 			//url
 			url : "/500mi/data/goods_list.json",
 		
 			//列表的模型
-			model: Goods,
+			model: Goods
 
 		});
 		
 		//创建当前页的商品列表
-		var currPageGoods = new GoodsList;
+		window.currPageGoods = new GoodsList;
 		
 		//单个商品视图
 		//------------
@@ -74,8 +78,7 @@ define(function(require){
 			tagName: "li",
 			
 			//缓存单个商品的模版函数
-			//template: _.template($('#goods-template').html()),
-			template: _.template('<input type="text"/>'),
+			template: _.template($('#goods-template').html()),
 			
 			//dom events
 			events: {
@@ -88,14 +91,13 @@ define(function(require){
 			
 			//商品视图监听其模型数据，在模型改变时重新渲染。
 			initialize: function(){
+				//只有选择进货数量时才会触发change
 				this.listenTo(this.model, 'change', this.render);
-				this.listenTo(this.model, 'destroy', this.remove);
 			},
 			
 			render: function(){
 				this.$el.html(this.template(this.model.toJSON()));
 				this.input = this.$("input[type='text']");
-				this.input.val(this.model.get('amount'));
 				return this;
 			},
 			
@@ -109,8 +111,16 @@ define(function(require){
 			
 			setAmount : function(){
 				var value = this.input.val();
-				this.model.save({amount: value});
+				this.model.setAmount(value);
 			},
+			
+			favoriteIt: function() {
+				console.log(this.model)
+			},
+			
+			buyIt: function() {
+				console.log(this.model)
+			}
 		});
 		
 		//app
@@ -127,20 +137,36 @@ define(function(require){
 			initialize: function() {
 				this.listenTo(currPageGoods, 'add', this.addOne);
 				//this.listenTo(currPageGoods, 'reset', this.addAll);
-				this.listenTo(currPageGoods, 'all', this.render);
+				//this.listenTo(currPageGoods, 'all', this.render);
 			},
 			
 			addOne: function(goods){
 				var view = new GoodsView({model: goods});
 				this.$("#goods-list").append(view.render().el);
-				console.log(goods)
+				
 			},
 			
 			getData : function(){
+				$("#market-app").addClass("loading-goods");				
+				$("#goods-list").html('');
+				currPageGoods.set([]);
 				currPageGoods.fetch({
-					success: function(model,resp,option){
-						//console.log(currPageGoods);
-					}
+					data : {
+						page : 5,
+						t : (new Date()).getTime()
+					},
+					success: function(model, response, options){
+						$("#market-app").removeClass("loading-goods");
+						//console.log(model);
+						//console.log(response);
+						//console.log(options);
+					},
+					error: function(model, response, options){
+						$("#market-app").removeClass("loading-goods");
+						//console.log(model);
+						//console.log(response);
+						//console.log(options);
+					},
 				});
 			}
 		});

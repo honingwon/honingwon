@@ -2,12 +2,13 @@ define(function(require){
 	var $ = require("$");
 	var Backbone = require("backbone");
 	var _ = require("underscore");
+	require("localStorage");
+	require("common");
 	
 	// Load the application once the DOM is ready, using `jQuery.ready`:
 	$(function(){
 	
 		// 商品模型 goods Model
-		// 只fetch，不save
 		// --------------------
 		
 		//基本的商品模型，包括条形码，名称，图片地址，单价，单位，选择进货数量		
@@ -27,27 +28,31 @@ define(function(require){
 			},
 			
 			//设置进货数量
-			setAmount: function(value) {
+			setAmount: function(value,save) {
 				var currAmount = value;
 				if(currAmount < 1) currAmount = 1;
-				this.set({amount: currAmount});
+				save ? this.save({amount: currAmount}) : this.set({amount: currAmount});
 			},
 			
 			//进货数量增加1
-			increase: function() {
+			increase: function(save) {
 				var currAmount = this.get("amount");
 				currAmount++;
-				this.set({amount: currAmount});
+				save ? this.save({amount: currAmount}) : this.set({amount: currAmount});
 			},
 			
 			//进货数量减少1
-			decrease: function(){
+			decrease: function(save){
 				var currAmount = this.get("amount");
 				currAmount--;
 				if(currAmount < 1) currAmount = 1;
-				this.set({amount: currAmount});
-			}
+				save ? this.save({amount: currAmount}) : this.set({amount: currAmount});
+			},
 			
+			//计算价钱
+			calc : function(){
+				return this.get('price') * this.get('amount');				
+			}			
 		});
 		
 		//商品集合 goods collection
@@ -65,8 +70,31 @@ define(function(require){
 
 		});
 		
+		//购物车商品集合
+		//--------------
+		var Cart = Backbone.Collection.extend({
+		
+			// Reference to this collection's model.
+			model: Goods,
+			
+			// Save all of the cart items under the `"cart"` namespace.
+			localStorage: new Backbone.LocalStorage("cart"),
+			
+			//计算总价格
+			calc: function(){
+				var total = 0;
+				this.each(function(goods){
+					total += goods.calc();					
+				});
+				return total;
+			}
+		});
+		
 		//创建当前页的商品列表
 		var currPageGoods = new GoodsList;
+		
+		//创建cart
+		var cart = new Cart;
 		
 		var Market = Backbone.Model.extend({
 			
@@ -83,7 +111,7 @@ define(function(require){
 		
 		var market = new Market;
 		//market.on('all',function(m){console.log(m)})
-		//currPageGoods.on('all',function(m){console.log(m)})
+		cart.on('all',function(m){console.log(m)})
 		
 		//单个商品视图
 		//------------
@@ -136,7 +164,13 @@ define(function(require){
 			},
 			
 			buyIt: function() {
-				console.log(this.model)
+				if(!_.include(cart.localStorage.records, this.model.id.toString()))
+					cart.create(_.clone(this.model.attributes));
+				else
+				{	
+					var cartItem = cart.get(this.model.id);
+					cartItem.setAmount(parseInt(cartItem.get("amount")) + parseInt(this.input.val()),true);
+				}
 			}
 		});
 		
@@ -153,8 +187,32 @@ define(function(require){
 			},
 			
 			initialize: function() {
-				this.listenTo(currPageGoods, 'add', this.addOne);
+				this.listenTo(currPageGoods, 'add', this.addToGoodsList);
 				this.listenTo(market, 'sync', this.marketUpdate);
+				
+				this.listenTo(cart, 'add', this.addToCart);
+				this.listenTo(cart, 'all', this.renderCart);
+				
+				cart.fetch();
+			},
+			
+			addToCart: function(){
+			
+			},
+			
+			renderCart: function(){
+			
+				//更新购物车物品件数
+				this.$('.cartNumber').text(cart.length);
+				if(cart.length > 0)
+					this.$('.tradeCart .empty').hide();
+				else
+					this.$('.tradeCart .empty').show();
+				
+				//更新总价格
+				console.log(cart.calc());
+				this.$('.tradeCart .op-settlement em').text('￥'+cart.calc());
+				//更新其他
 			},
 			
 			changePage: function(e){
@@ -170,7 +228,7 @@ define(function(require){
 				$('#page').html(market.get('page'));
 			},
 			
-			addOne: function(goods){
+			addToGoodsList: function(goods){
 				var view = new GoodsView({model: goods});
 				this.$("#goods-list").append(view.render().el);				
 			},

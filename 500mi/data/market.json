@@ -1,6 +1,6 @@
 {
 	"crumb":[
-		{"name": "全部商品","cateId":},
+		{"name": "全部商品","cateId":1},
 		{"name": "食品冲调","cateId":2}
 	],
 	"cateList": [

@@ -2,6 +2,7 @@ define(function(require){
 	var _ = require("underscore");
 	var Backbone = require("backbone");
 	var $ = require("$");
+	var JSON = require("json");
 
 	/**
 	 * Backbone localStorage Adapter

@@ -71,9 +71,19 @@ define(function(require){
 		var Market = Backbone.Model.extend({
 			
 			//url
-			url: "url",
+			url : "/500mi/data/market.json",
+			query : {
+				page : 1,
+				cateId: 0,
+				brand: 'noname',
+				t : (new Date()).getTime()
+			}
 			
 		});
+		
+		var market = new Market;
+		//market.on('all',function(m){console.log(m)})
+		//currPageGoods.on('all',function(m){console.log(m)})
 		
 		//单个商品视图
 		//------------
@@ -133,53 +143,56 @@ define(function(require){
 		//app
 		//---
 		
-		var AppView = Backbone.View.extend({
+		var MarketView = Backbone.View.extend({
 		
-			el: $("#market-app"),
+			el: $("#market"),
 			
 			events : {
 				"click #get-goods": "getData",
-				"click #page a": "getData"
+				"click #page a": "changePage"
 			},
 			
 			initialize: function() {
 				this.listenTo(currPageGoods, 'add', this.addOne);
-				//this.listenTo(currPageGoods, 'reset', this.addAll);
-				//this.listenTo(currPageGoods, 'all', this.render);
+				this.listenTo(market, 'sync', this.marketUpdate);
+			},
+			
+			changePage: function(e){
+				console.log(e);
+			},
+			
+			marketUpdate: function(market){
+				
+				currPageGoods.set([]);
+				//set商品集合
+				currPageGoods.set(market.get('goodsList'),{});
+				
+				$('#page').html(market.get('page'));
 			},
 			
 			addOne: function(goods){
 				var view = new GoodsView({model: goods});
-				this.$("#goods-list").append(view.render().el);
-				
+				this.$("#goods-list").append(view.render().el);				
 			},
 			
-			getData : function(){
-				$("#market-app").addClass("loading-goods");				
+			getData : function(){				
+				$("#market").addClass("loading-goods");
 				$("#goods-list").html('');
-				currPageGoods.set([]);
-				currPageGoods.fetch({
-					data : {
-						page : 5,
-						t : (new Date()).getTime()
-					},
+				$("#page").html('');
+				
+				market.fetch({
+					data : market.query,
 					success: function(model, response, options){
-						$("#market-app").removeClass("loading-goods");
-						//console.log(model);
-						//console.log(response);
-						//console.log(options);
+						$("#market").removeClass("loading-goods");
 					},
 					error: function(model, response, options){
-						$("#market-app").removeClass("loading-goods");
-						//console.log(model);
-						//console.log(response);
-						//console.log(options);
-					},
+						$("#market").removeClass("loading-goods");
+					}
 				});
 			}
 		});
 		
-		var App = new AppView;
+		var Market = new MarketView;
 		
 	});
 });

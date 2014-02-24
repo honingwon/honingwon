@@ -1,0 +1,30 @@
+{
+	"crumb":[
+		{"name": "全部商品","cateId":1},
+		{"name": "食品冲调","cateId":2}
+	],
+	"cateList": [
+		{"name": "瓜子","cateId":100},
+		{"name": "花生","cateId":200}
+	],
+	"brandList" : ["华味亨","康师傅"],
+	"goodsList": [
+		{
+		  "barcode": 1000,
+		  "name": "王老吉",
+		  "imgSrc": "/500mi/app/img/1.jpg",
+		  "price": 100,
+		  "unitName": "箱",
+		  "id": 10000
+		},
+		{
+		  "barcode": 1001,
+		  "name": "加多宝",
+		  "imgSrc": "/500mi/app/img/2.jpg",
+		  "price": 200,
+		  "unitName": "盒",
+		  "id": 10001
+		}
+	],
+	"page": "<span class='p-total'>共2905个商品</span><div class='p-pages'><a href='javascript:;'>上一页</a><a href='javascript:;' class='select'>1</a><a href='javascript:;'>2</a><a href='javascript:;'>3</a><a href='javascript:;'>4</a><a href='javascript:;'>5</a><span>...</span><a href='javascript:;'>12</a><a href='javascript:;'>13</a><a href='javascript:;'>下一页</a></div>"
+}

@@ -1,0 +1,27 @@
+<?php
+	/*
+		* here are some functions that packet basic pChart funtion :
+		* DrawBackground($pChartDataSet,$width,$heigh);  /Draw a default area to work
+	*/
+	
+	// hearder files
+	include_once("pChart/pData.class");   
+	include_once("pChart/pChart.class");	
+	
+	function DrawBackground($pChartDataSet,$width,$heigh,$WithMargin=FALSE,$SkipLabels=1)
+	{
+		$pChartGraph = new pChart($width,$heigh);
+		$pChartGraph->setColorPalette(0,255,25,25);
+		$pChartGraph->setColorPalette(1,25,155,225);
+	  	$pChartGraph->setFontProperties("Fonts/tahoma.ttf",8);   
+	  	$pChartGraph->setGraphArea(70,30,$width + 70 - 90,$heigh + 30 - 80);   
+	  	$pChartGraph->drawFilledRoundedRectangle(7,7,$width + 7 - 21,$heigh + 7 - 34,5,240,240,240);   
+	  	$pChartGraph->drawRoundedRectangle(5,5,$width + 7 - 21 + 2,$heigh + 7 - 34 + 2,5,230,230,230);   
+	  	$pChartGraph->drawGraphArea(255,255,255,TRUE);
+	  	$pChartGraph->setFontProperties("Fonts/msyh.ttf",8);   
+	  	$pChartGraph->drawScale($pChartDataSet->GetData(),$pChartDataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2,$WithMargin,$SkipLabels);
+	  	$pChartGraph->drawGrid(4,TRUE,230,230,230,50);
+	  	return $pChartGraph;
+	}
+
+?>

@@ -9,6 +9,16 @@
 <title>500</title>
 <link href="css/base.css" rel="stylesheet"/>
 <link href="css/tradeConfirm.css" rel="stylesheet"/>
+<?php 
+if(isset($_POST['cartdata']))
+{
+	echo '<script>var CART_DATA = '.$_POST['cartdata'].'</script>';
+}
+else
+{
+	echo '<script>location.href="/view/cst/index.php"</script>';
+}
+?>
 </head>
 
 <body>
@@ -38,27 +48,32 @@
             </ol>
         </div>
 		<div class="head"><h2>选择收货地址</h2><span></span></div>
-		<ul class="select-address" id="select-address">
-            <!--<li class="select">
-                <label>
-                    <input type="radio" name="r-address">
-                    <em>汪星人杂货店</em> 
-                    <span class="s-address">杭州市滨江区 闲林大道爵士风情小区大门口旁</span>
-                    <span class="s-tel">13868029449</span>
-                    <a class="s-edit" href="javascript:;">修改地址</a>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="radio" name="r-address">
-                    <em>汪星人杂货店</em> 
-                    <span class="s-address">杭州市滨江区 闲林大道爵士风情小区大门口旁</span>
-                    <span class="s-tel">13868029449</span>
-                    <a class="s-edit" href="javascript:;">修改地址</a>
-                </label>
-            </li>-->
-        </ul>
-		
+		<ul class="select-address" id="select-address"></ul>
+		<div class="head"><h2>进货清单确认</h2><span>享全部商品满 500元免运费, 0~500元需 10 元运费(补贴物流商)</span></div>
+		<table class="order-table">
+            <thead>
+                <tr>
+                    <th class="s-code">条形码</th>
+                    <th class="s-title">商品名称</th>
+                    <th class="s-sp">规格</th>
+                    <th class="s-amount">数量</th>
+                    <th class="s-price">单价(元)</th>
+                    <th class="s-agio">优惠(元)</th>
+                    <th class="s-total">小计(元)</th>
+                </tr>
+            </thead>
+            <tbody id="goodList">
+				<tr class="item">
+                    <td class="s-code">16922939231823</td>
+                    <td class="s-title">旺旺碎冰冰桃子味</td>
+                    <td class="s-sp">78ml*4</td>
+                    <td class="s-amount">5</td>
+                    <td class="s-price">56.00</td>
+                    <td class="s-agio">0.00</td>
+                    <td class="s-total">56.00</td>
+                </tr>
+			</tbody>
+		</table>
 	</div>
 	
 	

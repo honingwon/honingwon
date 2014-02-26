@@ -171,7 +171,10 @@ define(function(require,exports,module){
 					cart.each(function(goods){
 						var dataItem = {};
 						dataItem.id = goods.get('id');
+						dataItem.goods_name = goods.get('goods_name');
 						dataItem.amount = goods.get('amount');
+						dataItem.goods_barcode = goods.get('goods_barcode');
+						dataItem.goods_active_price = goods.get('goods_active_price');						
 						data.push(dataItem);
 					});				
 					this.$data.val(JSON.stringify(data));

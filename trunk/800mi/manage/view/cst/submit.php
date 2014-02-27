@@ -62,17 +62,34 @@ else
                     <th class="s-total">小计(元)</th>
                 </tr>
             </thead>
-            <tbody id="goodList">
-				<tr class="item">
-                    <td class="s-code">16922939231823</td>
-                    <td class="s-title">旺旺碎冰冰桃子味</td>
-                    <td class="s-sp">78ml*4</td>
-                    <td class="s-amount">5</td>
-                    <td class="s-price">56.00</td>
-                    <td class="s-agio">0.00</td>
-                    <td class="s-total">56.00</td>
+            <tbody id="goodList"></tbody>
+			<tfoot>
+                <tr class="statistics">
+                    <td colspan="3">
+                        <!--<p class="delivery">配送时间：<em>2013-12-20 17:00:00</em></p>-->
+                    </td>
+                    <td colspan="4">                	
+                        <div class="total">
+                            <p>总计:<em id="total">0</em></p>
+                            <p>运费:<em>0</em></p>
+                        </div>
+                        <div class="amout">
+                            <em id="amount">0</em>件商品
+                        </div>
+                    </td>
                 </tr>
-			</tbody>
+                <tr class="actualPaid">
+                    <td colspan="7">
+                        实付款：<em id="total2"><!--¥219.00--></em>
+                    </td>
+                </tr>
+                <tr class="submit">
+                    <td colspan="7">
+                        <a class="return" href="/view/cst/index.php">继续进货</a>
+                        <button id="submit" type="button" class="b-blue">提交订单</button>
+                    </td>
+                </tr>
+            </tfoot>
 		</table>
 	</div>
 	

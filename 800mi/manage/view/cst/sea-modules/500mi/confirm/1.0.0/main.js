@@ -32,4 +32,37 @@ define(function(require){
 		},
 		error: function(e) {alert("链接错误");}
 	});
+	
+	//构建商品列表 
+	
+	(function(root){
+		var CART_ITEM_TEMPLATE = 
+			'<tr class="item">'+
+				'<td class="s-code"><%- goods_barcode %></td>'+
+				'<td class="s-title"><%- goods_name %></td>'+
+				'<td class="s-sp"></td>'+
+				'<td class="s-amount"><%- amount %></td>'+
+				'<td class="s-price"><%- goods_active_price %></td>'+
+				'<td class="s-agio">0.00</td>'+
+				'<td class="s-total"><%- total %></td>'+
+			'</tr>';
+		var template = _.template(CART_ITEM_TEMPLATE);
+		var html = '',totalAmount = 0,totalPrice = 0,totalPrice2 = 0;
+		_.each(CART_DATA,function(dataItem){
+			dataItem.total = dataItem.amount * dataItem.goods_active_price;
+			html += template(dataItem);
+			totalAmount += dataItem.amount;
+			totalPrice += dataItem.total;
+		});
+		totalPrice2 = totalPrice;
+		$('#goodList').html(html);
+		$('#amount').html(totalAmount);
+		$('#total').html(totalPrice);
+		$('#total2').html(totalPrice2);
+		
+		$('#submit').on('click',function(){
+			alert(1);
+			return false;
+		});
+	})(window);
 });

@@ -52,13 +52,13 @@ WHERE a.purchase_id = b.purchase_id AND a.goods_id = c.goods_id AND b.account_id
     		return new ExcuteResult(ResultStateLevel::ERROR,"账号已登出，请重新登录","-1"); 
     	}
     	$account_id = $_SESSION['account_ID'];
-    	$purchaseID = sql_fetch_one_cell("SELECT IFNULL(MAX(purchase_id), 0) FROM bm_purchase_list;") + 1;
-    	$sql = "INSERT INTO bm_purchase_list() VALUE ('$purchaseID','$account_id','$storeID',now(),0,0,0,'$remark',); ";
+    	$purchaseID = sql_fetch_one_cell("SELECT IFNULL(MAX(purchase_id), 0) + 1 FROM bm_purchase_list;") ;
+    	$sql = "INSERT INTO bm_purchase_list() VALUE ('$purchaseID','$account_id','$storeID',now(),0,0,0,'$remark'); ";
     	$r = sql_insert($sql);
     	if($r != 0)
     		AddPurchaseInfo($purchaseID,$ary);
     	else
-    	  return new ExcuteResult(ResultStateLevel::EXCEPTION,"执行出错",$sql);
+    	  return new ExcuteResult(ResultStateLevel::EXCEPTION,"执行出错".$r,$sql);
     }
     
     //修改支付状态

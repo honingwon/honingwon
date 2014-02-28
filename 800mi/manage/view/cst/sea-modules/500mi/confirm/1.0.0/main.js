@@ -15,7 +15,7 @@ define(function(require){
 					dataItem = data[i];
 					str = (i==0 ? ' class="select"' : '');
 					str2 = (i==0 ? ' checked="checked"' : '');
-					html += ('<li'+str+'><label><input type="radio" name="r-address" '+str2+' /><em>');					
+					html += ('<li data-id="'+dataItem.shop_id+'" '+str+'><label><input type="radio" name="r-address" '+str2+' /><em>');					
 					html += dataItem.shop_name+'</em><span class="s-address">';
 					html += dataItem.shop_addr+'</span><span class="s-tel"> ';
 					html += dataItem.shop_phone+'</span>';
@@ -27,7 +27,7 @@ define(function(require){
 				$("#select-address label").on('click',function(){
 					$("#select-address li").removeClass('select');
 					$(this).parent().addClass('select');
-				})
+				});
 			}
 		},
 		error: function(e) {alert("链接错误");}
@@ -48,20 +48,46 @@ define(function(require){
 			'</tr>';
 		var template = _.template(CART_ITEM_TEMPLATE);
 		var html = '',totalAmount = 0,totalPrice = 0,totalPrice2 = 0;
+		var key='',value='',data='';
 		_.each(CART_DATA,function(dataItem){
+		
 			dataItem.total = dataItem.amount * dataItem.goods_active_price;
 			html += template(dataItem);
 			totalAmount += dataItem.amount;
 			totalPrice += dataItem.total;
+			
+			key += dataItem.id+',';
+			value += dataItem.amount+',';
 		});
+		
+		key = key.slice(0,key.length - 1);
+		value = value.slice(0,value.length - 1);
+		data = key+'|'+value;
+		
 		totalPrice2 = totalPrice;
 		$('#goodList').html(html);
 		$('#amount').html(totalAmount);
 		$('#total').html(totalPrice);
 		$('#total2').html(totalPrice2);
 		
+		console.log(data);
+		
 		$('#submit').on('click',function(){
-			alert(1);
+			var storeId = $("#select-address li.select").attr('data-id');
+			$.ajax({type: "post",url: "/view/model/BMManage/PurchaseManageMethod.php",dataType: "json",
+				data: {
+					"method":"Add",
+					"list":data,
+					"storeId":storeId,
+					"remark":'123',
+					},
+				success: function(result) {
+					if(result.Success){
+						alert('oooh')
+					}
+				},
+				error: function(e) {alert("链接错误");}
+			});
 			return false;
 		});
 	})(window);

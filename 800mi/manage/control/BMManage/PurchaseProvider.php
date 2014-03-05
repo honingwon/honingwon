@@ -53,10 +53,12 @@ WHERE a.purchase_id = b.purchase_id AND a.goods_id = c.goods_id AND b.account_id
     	}
     	$account_id = $_SESSION['account_ID'];
     	$purchaseID = sql_fetch_one_cell("SELECT IFNULL(MAX(purchase_id), 0) + 1 FROM bm_purchase_list;") ;
-    	$sql = "INSERT INTO bm_purchase_list() VALUE ('$purchaseID','$account_id','$storeID',now(),0,0,0,'$remark'); ";
-    	$r = sql_insert($sql);
-    	if($r != 0)
-    		AddPurchaseInfo($purchaseID,$ary);
+    	$sql = "INSERT INTO bm_purchase_list(purchase_id,account_id,shop_id,add_time,purchase_state,return_time,purchase_price,purchase_remark)" .
+    			" VALUES ('$purchaseID','$account_id','$storeID',UNIX_TIMESTAMP(),0,0,0,'$remark')";
+    	$r = sql_query($sql);
+    	if($r != 0){
+    		return self::AddPurchaseInfo($purchaseID,$ary);
+    	}    		
     	else
     	  return new ExcuteResult(ResultStateLevel::EXCEPTION,"执行出错".$r,$sql);
     }
@@ -72,7 +74,7 @@ WHERE a.purchase_id = b.purchase_id AND a.goods_id = c.goods_id AND b.account_id
 	}
 	
 	//在添加进货单后增加进货单明细此处设计到一个进货单回滚
-	private function AddPurchaseInfo($purchaseID,$ary=array())
+	public function AddPurchaseInfo($purchaseID,$ary=array())
 	{
 		$Time = time();
 		foreach (array_keys($ary) AS $k=>$v) {
@@ -82,10 +84,12 @@ WHERE a.purchase_id = b.purchase_id AND a.goods_id = c.goods_id AND b.account_id
  				" WHERE goods_id IN (" . implode(",",$attribute) . ") AND goods_state < 99;";
  		$r = sql_fetch_rows($sql);
  		$count = count($r);
+ 		$purchaseList = null;
  		for ($i = 0 ; $i < $count; $i++){
  			$row = $r[$i];
  			foreach (array_keys($ary) AS $k=>$v) {
  				if ($v == $row[0] and $ary[$v] <=  $row[2]){
+ 					
  					if ($row[1] == 0 or $row[1] <= $Time){
  						$price = $row[3];
  						$active_etime = 0;
@@ -95,26 +99,29 @@ WHERE a.purchase_id = b.purchase_id AND a.goods_id = c.goods_id AND b.account_id
  						$active_etime = $row[1];
  					}
  					$sql = "UPDATE bm_goods SET goods_number = goods_number - ".$ary[$v]." WHERE goods_id =  ".$row[0].";";
- 					$r = sql_query($sql);//即时更新物品库存数量
+ 					sql_query($sql);//即时更新物品库存数量
  					$purchaseList[] = "('$purchaseID','$row[0]','$ary[$v]','$active_etime','$price',0)";
  					break;
  				} 				
  			}
+ 		}
  			if ($purchaseList != null){
- 				$sql = "INSERT INTO goods_active_price(purchase_id,goods_id,goods_num,goods_active_etime,purchase_goods_price,purchase_state)VALUES " . implode(",",$purchaseList) . " ;";
- 				$r = sql_insert($sql);
+ 				$sql = "INSERT INTO bm_purchase_info(purchase_id,goods_id,goods_num,goods_active_etime,purchase_goods_price,purchase_state)VALUES " . implode(",",$purchaseList) . " ;";
+ 				$r = sql_query($sql);
+ 				//$r = 0;
  			}
- 			else
- 				$r = 0; 			
+ 			else{
+ 				$r = 0; 		
+ 			}
+ 			 					
  			if($r != 0){
     			return new ExcuteResult(ResultStateLevel::SUCCESS,"",$r[0]);
     		}
     		else{
     			$del = "DELETE FROM bm_purchase_list WHERE purchase_id =  ".$purchaseID.";"; 
     			$r = sql_query($del);
-    			return new ExcuteResult(ResultStateLevel::EXCEPTION,"执行出错",$sql);    			
-    		}    	  		
- 		}
+    			return new ExcuteResult(ResultStateLevel::EXCEPTION,"error",$sql);    			
+    		}   
 	}
  }
  

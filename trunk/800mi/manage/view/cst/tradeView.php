@@ -27,8 +27,7 @@ else
 	<?php   include_once("side.php");	?>	
 		
 		<div class="right-container">
-		test
-		
+			<div class="headerForm"><h2>进货交易</h2></div>		
 		</div>
 	</div>
 </div>

@@ -59,11 +59,11 @@ echo '</script>';
                <li class="select"><a href="javascript:;">全部商品</a></li>
             </ul>
             <div class="select-page">
-                <span class="p-total">共2905个商品</span>  
+                <!--<span class="p-total">共2905个商品</span>  
                 <div class="p-pages">                
                     <a href="javascript:;">上一页</a>
                     <a href="javascript:;">下一页</a>
-                </div>
+                </div>-->
             </div>
         </div><!-- filter-navForm end -->
         

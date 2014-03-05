@@ -83,7 +83,8 @@ define(function(require){
 					},
 				success: function(result) {
 					if(result.Success){
-						alert('oooh')
+						alert('订单提交成功');
+						location.href='/view/cst/index.php';
 					}
 				},
 				error: function(e) {alert("链接错误");}

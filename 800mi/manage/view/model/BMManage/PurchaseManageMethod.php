@@ -5,6 +5,13 @@
  	require_once(DATAMODEL . '/BMManage/PurchaseInfoMDL.php'); 
  	
  	
+// 	 		$ary = explode('|',"1,2,3|10,11,12");
+// 			$key = explode(',',$ary[0]);
+// 			$value = explode(',',$ary[1]);
+// 			$list = array_combine($key,$value); 			
+// 			$addResult = PurchaseProvider::getInstance()->AddPurchase("5","test",$list);
+// 			echo json_encode($addResult);
+ 	
  	 if(isset($_POST["method"])){
  		$methods = $_POST["method"];
  	}

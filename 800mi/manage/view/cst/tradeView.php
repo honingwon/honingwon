@@ -18,7 +18,7 @@ else
 </script>
 </head>
 
-<body id="page-myaddress">
+<body id="cutoverWidth">
 <div class="w_980">
 <?php   include_once("head.php");	?>	
 	
@@ -26,9 +26,24 @@ else
 	
 	<?php   include_once("side.php");	?>	
 		
-		<div class="right-container">
-			<div class="headerForm"><h2>进货交易</h2></div>		
+		<div class="right-container" style="width: 985px;">
+			<div class="headerForm"><h2>进货交易</h2></div>	
+			<table class="dataTab">
+				<thead>
+					<tr>
+                        <th width="35%">商品名称</th>
+                        <th width="12%">规格</th>
+                        <th width="7%" class="t-c">数量</th>
+                        <th width="12%">价格</td>
+                        <th width="9%">配送时间</td>
+                        <th width="9%" class="t-r">订单状态</th>
+                        <th width="11%" class="t-r">操作</th>
+					</tr>
+				</thead>
+				<tbody id="orderList"></tbody>
+			</table>			
 		</div>
+		
 	</div>
 </div>
 <?php 

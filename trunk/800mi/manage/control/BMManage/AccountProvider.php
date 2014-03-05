@@ -210,7 +210,7 @@ class AccountProvider
      */
     public function Login($Account,$PWD)
     { 
-    	$sql ="SELECT account_id,account_name FROM bm_account WHERE account = '".$Account."' AND account_pasword = '".md5($PWD)."' AND account_state != 99";
+    	$sql ="SELECT account_id,account_name,account_type FROM bm_account WHERE account = '".$Account."' AND account_pasword = '".md5($PWD)."' AND account_state != 99";
 		$r = sql_fetch_one($sql);
 		
     	if($r != ""){    		
@@ -220,6 +220,7 @@ class AccountProvider
 			}
 			$_SESSION['account_ID']   =  $r[0];
 			$_SESSION['user']   =  $r[1];//$accountMDL->acct_name;
+			$_SESSION['account_type'] = $r[2];
 			AddBMAccountEventLog("账号登陆：".$Account,1);
     		return new DataResult(ResultStateLevel::SUCCESS,"",NULL,NULL);
     	}

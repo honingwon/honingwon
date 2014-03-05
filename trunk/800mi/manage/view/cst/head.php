@@ -22,7 +22,7 @@
             <!--<a href="favorites.html" class="btn-favorites">我的货架<s></s></a>-->
             <i class="gap"></i>
             <div class="tradeCart">
-                <a href="tradeCart.html" class="btn-cart">进货清单<s></s></a>
+                <a href="javascript:;" class="btn-cart">进货清单<s></s></a>
                 <b id="cartNumber" class="cartNumber">0</b>
                 <div id="cart" class="s-tradeList">
 					<form action="submit.php" method="post" style="display:none">

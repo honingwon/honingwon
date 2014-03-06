@@ -1,4 +1,7 @@
 <?php
+	/*
+		卡审核
+	*/
 	include_once("../../common.php"); 
 	require_once(DATACONTROL . '/BMAccount/IsLogin.php'); 
  	require_once(DATACONTROL . '/BMAccount/CardApplyProvider.php'); 

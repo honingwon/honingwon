@@ -1,0 +1,22 @@
+@charset "utf-8";
+*{ margin:0px; padding:0px;}
+body { background-color:#fff; font:14px/24px "微软雅黑"; color:#444; text-align:center;}
+img{ border:none;}
+ul,li{ list-style:none;}
+a{ color:#444; text-decoration:none;}
+
+.top{ width:100%; height:340px; background:#202020 url("../images/login_01.png") repeat-x scroll 0 bottom; position:relative;}
+.top a.logo{ width:260px; height:128px; position:absolute; left:50%; margin-left:-130px; bottom:37px; background:url("../images/logo.png") no-repeat; display:block;}
+
+.main{ width:670px; margin:34px auto; text-align:left;}
+.main ul li{ width:335px; float:left; margin-bottom:18px;}
+.main ul li .errorTip{ margin-top:40px; width:274px; height:27px; padding-top:13px;  text-indent:-60px; color:#ff0000;}
+.main ul li label{ width:80px; text-align:right; display:inline-block;}
+.main ul li label.lab_pas{ text-align:left;}
+.main ul li .txt01{ width:212px; height:28px; border:none; background:url("../images/login_input.png") no-repeat; text-indent:4px; font:12px/28px Arial, Helvetica, sans-serif, "微软雅黑"; color:#555;}
+.main ul li .check_pas{ margin-left:85px; display:inline;}
+.main ul li.login{ text-align:right;}
+.main ul li .log,.main ul li .reg{ width:56px; height:25px; background:url("../images/login_btn01.png") no-repeat; border:none; margin-left:7px; font:12px/25px "微软雅黑"; color:#fff; vertical-align:middle; cursor:pointer;}
+.main ul li a.reg{ background:url("../images/login_btn01.png") no-repeat -62px 0; display:inline-block; margin-right:38px; color:#444; text-align:center;}
+.main ul li .log:hover{ background:url("../images/login_btn01.png") no-repeat -1px -34px;}
+.main ul li a.reg:hover{ background:url("../images/login_btn01.png") no-repeat -62px -34px;}

@@ -1,4 +1,7 @@
 <?php
+	/*
+		卡申请
+	*/
 	include_once("../../common.php");  
 	require_once(DATACONTROL . '/BMAccount/IsLogin.php');
  	require_once(DATACONTROL . '/BMAccount/CardTypeProvider.php'); 
@@ -28,6 +31,7 @@
 			$state 		= $_POST['s'];
  			echo json_encode(CardApplyProvider::getInstance()->GetCardFormListByState($state,$offer,$pageSize));
  			break;
+		//已申请卡的信息
  		case "cardInfo"://CardForm CardTypeInfo
  			$cardFormID = $_POST['ID'];
  			echo json_encode(CardApplyProvider::getInstance()->GetCardTypeInfoByCardFormID($cardFormID));

@@ -1,0 +1,9 @@
+#Thu Oct 18 16:21:46 CST 2012
+backend_version=R15B
+eclipse.preferences.version=1
+external_includes=
+external_modules=
+include_dirs=include
+nukeOutputOnClean=false
+output_dir=ebin
+source_dirs=src/db/erlydb;src/db/emongo;src/db/mysql;src/db/json;src/tools;src/tools/template;src/test;src/db;src/proto;src/pp;src/mod;src/lib;src/misc;src/fsm;src/data;src

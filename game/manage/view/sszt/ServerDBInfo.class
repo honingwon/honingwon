@@ -1,0 +1,58 @@
+<?php
+	/*
+		通过此类获得某服务器对应的数据库地址
+	*/
+	include_once("../../view/common.php");
+	
+	class ServerDBInfo
+	{
+		var $DBInfo;
+		
+		function ServerDBInfo()
+		{
+		/*
+			$fileName = "Cache/DBInfo".date("Y-m-d").".txt";
+			if(file_exists($fileName))
+			{
+				$file = fopen($fileName,"r");
+				$ary = split("##",fgets($file));
+				foreach($ary as $line)
+				{
+					$info = split("@@",$line);
+					$this->DBInfo[$info[0]] = $info[1];
+				}
+				fclose($file);
+			}
+			else
+			{
+		*/
+				$sql = "SELECT bm_ServerID,bm_ServerConnString FROM bm_gameserver WHERE bm_GameID = 1;";
+				$dbData = sql_fetch_rows($sql);
+
+				//$str = "";
+				for($i = 0;$i != count($dbData);$i++)
+				{
+					$row = $dbData[$i];
+					$this->DBInfo[$row[0]] = $row[1];
+					$line = $row[0]."@@".$row[1];
+					//$str .= "##".$line;
+				}
+				//$str = substr($str,2);
+				//$file = fopen($fileName,"w");
+				//fwrite($file,$str);
+				//fclose($file);
+			//}
+		}
+		
+		function getDBInfo($serverId)
+		{
+			if(isset($this->DBInfo[$serverId]))
+			{
+				$dbInfoStr = $this->DBInfo[$serverId];
+				$dbInfo = json_decode($dbInfoStr,true);
+				return $dbInfo;
+			}
+		}
+	}
+
+?>

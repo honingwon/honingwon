@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="34"
+					  initialize="skinnablecontainer1_initializeHandler(event)"
+					  >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.yans.maps.MapConfig;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			[Bindable]
+			private var _dataArr:ArrayCollection = new ArrayCollection(["100%","125%","150%","175%"]);
+
+			protected function mapScale_clickHandler(event:MouseEvent):void
+			{
+//				mapScale.selectedIndex
+			}
+
+			protected function skinnablecontainer1_initializeHandler(event:FlexEvent):void
+			{  
+			}
+			
+			private var _exportFile:ExportFile;
+			private var _newFileDialog:CreateNewFileDialog;
+			private var _cutMap:CutMap;
+			private var _ImportFile:ImportFile;
+			
+			protected function onNewMap(event:MouseEvent):void {
+				_newFileDialog = CreateNewFileDialog( PopUpManager.createPopUp(parentDocument as DisplayObject, CreateNewFileDialog as Class, true));
+				PopUpManager.centerPopUp(_newFileDialog);
+			}
+			
+//			protected function onCutMap(event:MouseEvent):void { 
+//				_cutMap = CutMap( PopUpManager.createPopUp(parentDocument as DisplayObject, CutMap as Class, true));
+//				PopUpManager.centerPopUp(_cutMap);
+//			}
+			
+			protected function onImport(event:MouseEvent):void {
+				_ImportFile = ImportFile( PopUpManager.createPopUp(parentDocument as DisplayObject, ImportFile as Class, true));
+				PopUpManager.centerPopUp(_ImportFile);
+			}
+			
+			protected function onExport(event:MouseEvent):void { 
+				_exportFile = ExportFile( PopUpManager.createPopUp(parentDocument as DisplayObject, ExportFile as Class, true));
+				PopUpManager.centerPopUp(_exportFile);
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<s:Button x="170" y="2" height="22" label="读取" click="onImport(event)"/>
+	<s:Button x="10" y="2" height="22" label="新建" click="onNewMap(event)"/>
+	<s:Button x="93" y="2" height="22" label="保存" click="onExport(event)"/>
+	
+	<s:Label x="250" y="7" height="22" text="x：" verticalAlign="middle"/>
+	<s:TextInput x="269" y="7" width="34" text="{MapConfig.mouseCurPoint.x}"/>
+	<s:Label x="311" y="7" height="22" text="y：" verticalAlign="middle"/>
+	<s:TextInput  x="331" y="7" width="45" text="{MapConfig.mouseCurPoint.y}"/>
+	
+	<s:Label x="386" y="7" height="22" text="地图名称：" verticalAlign="middle"/>
+	<s:TextInput id="mapName" x="452" y="7" width="82" text="{MapConfig.mapName}"/>
+	<s:TextInput id="mapID" x="566" y="7" width="36" text="{MapConfig.mapID}"/>
+	<s:Label x="617" y="11" width="334" height="14" color="#3DA9FD" text="{MapConfig.pathInfo}"/>
+	<s:Label x="542" y="12" text="id:" verticalAlign="middle"/>
+	<!--<s:DropDownList y="6" id="mapScale" prompt="缩放地图" click="mapScale_clickHandler(event)" dataProvider="{_dataArr}" right="10"></s:DropDownList>-->
+	
+</s:SkinnableContainer>

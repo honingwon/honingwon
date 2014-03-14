@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" name="地图编辑器"
+		 xmlns:s="library://ns.adobe.com/flex/spark" xmlns:map="sszt.map.editor.components.map.*" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 creationComplete="windowedapplication1_creationCompleteHandler(event)"
+		 >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.yans.GlobalAPI;
+			import com.yans.maps.MapConfig;
+			
+			import sszt.map.editor.components.map.CreateNewFileDialog;
+			import sszt.map.editor.components.map.CutMap;
+			import sszt.map.editor.components.map.ExportFile;
+			import sszt.map.editor.components.map.ImportFile;
+			
+			import flash.utils.getTimer;
+			
+			import flashx.textLayout.elements.BreakElement;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.components.Panel;
+			import spark.core.SpriteVisualElement;
+			[Bindable]
+			private var _dataArr:XML=new XML( 
+				<menu>  
+					<menuitem label="文件" data="file">
+					   <menuitem label="新建地图" data="map" />
+						   <!--menuitem label="地形" data="dixing"/>
+						   <menuitem label="原件" data="yuanjian"/>
+						   <menuitem label="地图" data="map"/>
+					   </menuitem--> 
+					   <menuitem label="保存(ctrl+s)" data="save"/>
+					   <!--menuitem label="另存为(ctrl+a)" data="saveAs"/>
+					   <menuitem label="导出(ctrl+o)" data="expot"/>
+					   <menuitem type="separator"/>
+					   <menuitem label="任务数据转换(ctrl+m)" data="changeData"/>
+					   <menuitem label="资源库管理" data="ManagerRes"/ --> 
+					   <menuitem label="切割地图" data="cutmap"/> 
+					   <menuitem label="导入(ctrl+i)" data="impot"/>
+					   <menuitem label="退出"/>
+					</menuitem>
+					<menuitem label="帮助" data="help">
+					   <menuitem label="帮助" data="helpMe"/>
+					   <menuitem label="关于" data="whatAboutWhat"/>
+					</menuitem>    
+				</menu>
+			);
+			
+			private var _newFileDialog:CreateNewFileDialog = new CreateNewFileDialog();
+			private var _exportFile:ExportFile = new ExportFile();
+			private var _importFile:ImportFile = new ImportFile();
+			private var _cutMap:CutMap = new CutMap;
+			
+			
+			[Bindable]
+			public var pathInfo:String = "";	//背景文件路径
+			[Bindable]
+			public var mapname:String = "";	//地图名称
+			[Bindable]
+			public var mapid:String = "";		//地图id
+			[Bindable]
+			public var saveState:String;	//保存状态
+			
+			public var mapHeight:Number = 0;		//地图高度
+			public var mapWidth:Number = 0;		//地图宽度
+			public var smallPixel:int = 25;	//格子高宽
+			
+			public var tuLayerArr:Array = [];
+			[Bindable]
+			public var showGrid:Boolean;
+			[Bindable]
+			public var showThing:Boolean;
+			[Bindable]
+			public var currentType:int = WALK;
+			public const BLANK:int = 0;
+			public const WALK:int = 1;
+			public const SAFE:int = 2;
+			public const TRANSPARENT:int = 4;
+			public var flag:int = 0;//标识是不是第一次点击可走区
+			public var flag2:int = 0;//标识是不是第一次点击画
+			public var file:File = new File();
+			[Bindable]
+			public var areaName:String = "";//鼠标滑过区域时状态栏的提示
+			public var drawType:int = 1;//绘制方式
+			public const RECT:int = 1;
+			public const PARA:int = 2;
+			public var curNPC:Object;
+			[Bindable]
+			public var npcID:String;
+			[Bindable]
+			public var npcType:String;
+			protected function menuBar_itemClickHandler(event:MenuEvent):void
+			{
+				var s:String = event.label; 
+				switch(s)
+				{
+					case "新建地图":
+						PopUpManager.centerPopUp(PopUpManager.createPopUp(this, CreateNewFileDialog, true));
+						
+						//						_newFileDialog = CreateNewFileDialog(PopUpManager.createPopUp(this,CreateNewFileDialog as Class,false));
+						//						PopUpManager.centerPopUp(_newFileDialog);
+						break;
+					case "切割地图":
+						PopUpManager.centerPopUp(PopUpManager.createPopUp(this, CutMap, true));
+						//						if(_cutMap) _cutMap = CutMap(PopUpManager.createPopUp(this,CutMap as Class,false));
+						//						PopUpManager.centerPopUp(_cutMap);
+						break;
+					case "保存(ctrl+s)":
+						if(MapConfig.mapID  == "") {
+							Alert.show("请输入地图ID");
+						}
+						else if(MapConfig.mapName == "") {
+							Alert.show("请输入地图名称");
+						}
+						else {
+							PopUpManager.centerPopUp(PopUpManager.createPopUp(this, ExportFile, true));
+							//							_exportFile = ExportFile(PopUpManager.createPopUp(this, ExportFile as Class, true));
+							//							PopUpManager.centerPopUp(_exportFile);
+						}
+						break; 
+					case "导入(ctrl+i)":
+						_importFile = ImportFile(PopUpManager.createPopUp(this, ImportFile as Class, true));
+						PopUpManager.centerPopUp(_importFile);
+						break;
+					case "导出(ctrl+o)":
+						break;
+					default:
+						break;
+				}
+			}
+			
+			
+			protected function windowedapplication1_creationCompleteHandler(event:Event):void
+			{
+//				GlobalAPI.setup(this);
+				this.addEventListener(KeyboardEvent.KEY_DOWN, keDownHandler);
+				this.addEventListener(Event.ADDED_TO_STAGE, on_add_to_stage);
+				
+				var filString:String;
+				GlobalAPI.fileManager.readTextFile(File.applicationDirectory.nativePath + "\\files.json", function(s:String):void {
+					if(s) {
+						MapConfig.files = JSON.parse(s) as Array;
+						MapConfig.addFile("", "", "");	
+					}
+				});
+			}
+			
+			private function on_add_to_stage(e:Event):void { 
+//				GlobalAPI.setup(stage);
+			}
+			
+			private function keDownHandler(ke:KeyboardEvent):void
+			{
+//				if(ke.ctrlKey)
+//				{
+//					switch(ke.charCode)
+//					{
+//						case 65://a另存为
+//							if(!_exportFile) _exportFile = ExportFile(PopUpManager.createPopUp(this, ExportFile as Class, true));
+//							PopUpManager.centerPopUp(_exportFile);
+//							break;
+//						case 83://s保存
+//							if(!_exportFile) _exportFile = ExportFile(PopUpManager.createPopUp(this, ExportFile as Class, true));
+//							PopUpManager.centerPopUp(_exportFile);
+//							break;
+//						case 73://i导入
+//							break;
+//						case 79://o导出
+//							break;
+//						case 110://n新建地图
+//							if(!_newFileDialog) _newFileDialog = CreateNewFileDialog(PopUpManager.createPopUp(this,CreateNewFileDialog as Class,false));
+//							PopUpManager.centerPopUp(_newFileDialog);
+//							break;
+//						default:
+//							trace("键盘输入", ke.charCode)
+//							break;
+//					}
+//				}
+				if(ke.keyCode == Keyboard.DELETE) imgContainer.removeSelectedItems();
+			}
+			
+			protected function windowedapplication1_closingHandler(event:Event):void
+			{
+				GlobalAPI.fileManager.writeTextFile(File.applicationDirectory.nativePath + "\\files.json", JSON.stringify(MapConfig.files));
+			}
+			
+		]]>
+	</fx:Script>
+	<s:VGroup gap="3" width="100%" height="100%">
+		<!--<mx:MenuBar x="0" y="0" width="100%" height="3%" id="menuBar" dataProvider="{_dataArr}" labelField="@label" showRoot="false" itemClick="menuBar_itemClickHandler(event)"></mx:MenuBar>-->
+		<s:HGroup width="100%" height="100%">
+			<map:ToolBar id="toolBar" />
+			<s:VGroup width="100%" height="100%">
+				<!--<component:FileInfo id="fileInfo" width="100%" />-->
+				<map:MapAtt id="mapAtt" width="100%" top="0" />
+				<map:ImageContainer id="imgContainer" name="imgContainer" height="100%" width="100%" top="{mapAtt.height}" bottom="{mainAttPanel.height}" />
+				<map:MainAttPanel id="mainAttPanel" bottom="0" width="100%"/>
+			</s:VGroup>
+			<s:VGroup width="200" height="100%">
+				<map:ResourceLib  id="resLib" width="100%" height="100%"/>
+				<!--<component:ThumbNail id="thumb" width="100%" height="25%"/>-->
+			</s:VGroup>
+			
+		</s:HGroup>
+		
+	</s:VGroup>
+	
+</s:Group>

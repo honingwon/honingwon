@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="286" height="176" title="保存地图">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.yans.GlobalAPI;
+			import com.yans.maps.MapConfig;
+			import com.yans.maps.consts.ItemType;
+			import com.yans.views.Item;
+			import com.yans.views.ItemDataVo;
+			
+			import flash.filesystem.FileStream;
+			import flash.utils.setTimeout;
+			
+			import flashx.textLayout.formats.Direction;
+			
+			import mx.controls.Alert;
+			import mx.core.ByteArrayAsset;
+			import mx.managers.PopUpManager;
+			
+			import spark.core.SpriteVisualElement;
+			
+			//			public static var SAVE_SUCCESS:String = "SAVE_SUCCESS";
+			//			public static var SAVING:String = "SAVING";
+			//			public static var SAVE_FALSE:String = "SAVE_FALSE";
+			
+			protected function btnSavePath_clickHandler(event:MouseEvent):void
+			{				
+				GlobalAPI.fileManager.browseDicrctoryForSave(function(path:String):void {
+					tiSavePath.text = path;
+				});
+			}
+			
+			//写入数据
+			private function exportData():void
+			{
+				var fs:FileStream = new FileStream();
+				var xmlData:String;
+				//客户端数据
+				//				this.parentDocument.file.nativePath = tiSavePath.text + "\\" + tiFolderName.text + "\\dzMap\\" + "client.dzm";
+				var fileName:String = tiSavePath.text + "\\mapData\\data.txt";
+				
+				var bytes:ByteArray = new ByteArray;
+				var tmp:ByteArray = getInfo();
+				bytes.writeBytes(tmp);
+				tmp = getClientGrid();
+				bytes.writeBytes(tmp);
+				bytes.compress();
+				GlobalAPI.fileManager.writeFile(fileName, bytes);
+				
+//				fileName = tiSavePath.text + "\\mapData\\s" + tiFolderName.text + ".txt";
+//				
+//				bytes.length = 0;
+//				tmp = getInfo();
+//				bytes.writeBytes(tmp);
+//				tmp = getServerGrid();
+//				bytes.writeBytes(tmp);
+//				bytes.compress();
+//				GlobalAPI.fileManager.writeFile(fileName, bytes);
+				
+				
+				//坐标数据
+				if(MapConfig.map.items && MapConfig.map.items.length)
+				{
+//					var collect:Dictionary = new Dictionary;
+//					var monster:Dictionary = new Dictionary;
+					
+					xmlData = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n";
+					xmlData += "<map id=\"" + MapConfig.map.id + "\">\r\n";
+					var item:Item, obj:Object;
+					for(var i:int = 0; i < MapConfig.map.items.length; i++)
+					{	
+						obj = MapConfig.map.items[i];
+						item = obj.item as Item;
+						if(item) {
+							xmlData += "<point id=\""+ item.id +"\" type=\""+ item.type +"\" x=\""+ item.x +"\" y=\""+ item.y +"\" path=\"" + item.vo.path + "\" />\r\n";
+							
+//							if(item.type == ItemType.MONSTER) {
+//								if(monster[item.id]==null) monster[item.id] = item.x + "," + item.y;
+//								else monster[item.id] += "|" + item.x + "," + item.y;
+//							}
+//							else if(item.type == ItemType.COLLECTION_POINT) {
+//								if(collect[item.id] ==null) collect[item.id] = item.x + "," + item.y;
+//								else collect[item.id] += "|" + item.x + "," + item.y;
+//							}
+//							xmlData += " />\r\n";
+						}
+					}
+					xmlData += "</map>\r\n";
+					fileName = tiSavePath.text + "\\mapData\\obj.xml";
+					GlobalAPI.fileManager.writeTextFile(fileName, xmlData);
+					
+					
+//					var serverContent:String = MapConfig.mapID + "," + MapConfig.mapName;
+//					serverContent += "怪物\r\n";
+//					for(var g:String in monster) {
+//						serverContent += g + ":" + monster[g] + "\r\n";
+//					}
+//					serverContent += "采集点\r\n";
+//					for(var j:String in collect) {
+//						serverContent += j + ":" + collect[j] + "\r\n";
+//					}
+//					fileName = tiSavePath.text + "\\mapData\\st" + tiFolderName.text + ".txt";
+//					GlobalAPI.fileManager.writeTextFile(fileName, serverContent);
+					
+				}
+				
+				trace("#切割地图", cutPic.selected);
+				if(cutPic.selected) {
+					var file:File = new File(tiSavePath.text + "\\" + tiFolderName.text);
+					if(!file.exists) file.createDirectory();
+					//按10%的地图算
+					var mapw:int = MapConfig.map.data.width * .1;
+					var maph:int = MapConfig.map.data.height * .1;					
+					GlobalAPI.imageManager.cut(MapConfig.map.data, file.nativePath, 60, 300, mapw, maph);
+				}
+				PopUpManager.removePopUp(_alert);
+				PopUpManager.removePopUp(this);
+				Alert.show("保存成功");
+			}
+			
+			private function getItems():ByteArray {
+				var items:ByteArray = new ByteArray;
+				if(MapConfig.map.items && MapConfig.map.items.length) {
+				}
+				return items;
+			}
+			private function getInfo():ByteArray {
+				var info:ByteArray = new ByteArray;
+				trace("开始写入地图数据", MapConfig.map.id, MapConfig.map.name, MapConfig.map.width, MapConfig.map.height, MapConfig.map.indexXLength, MapConfig.map.indexYLength);
+				info.writeUnsignedInt(int(MapConfig.mapID));
+				info.writeUTF(MapConfig.mapName);
+				info.writeUnsignedInt(MapConfig.map.width);
+				info.writeUnsignedInt(MapConfig.map.height);
+				info.writeShort(MapConfig.map.indexXLength);
+				info.writeShort(MapConfig.map.indexYLength);
+				info.position = 0;
+				return info;	
+			}
+			
+			private function getServerGrid():ByteArray {
+				var grids:ByteArray = new ByteArray;
+				var i:int, j:int ;
+				var output:String;
+				for(i = 0; i < MapConfig.map.indexXLength; i++) {
+					output = "";
+					if(null != MapConfig.map.source[i]) {
+						for(j = 0; j < MapConfig.map.indexYLength; j++) {
+							if(MapConfig.map.source[i][j]) {
+								grids.writeByte(MapConfig.WALKABLE); 
+							}
+							else {
+								grids.writeByte(MapConfig.BLOCK); 
+							}
+						}
+					}
+					else { 
+						for(j = 0; j < MapConfig.map.indexYLength; j++) {
+							grids.writeByte(MapConfig.BLOCK); 
+						}
+					} 
+				} 
+				grids.position = 0;
+				return grids; 
+			}
+			
+			
+			private function getClientGrid():ByteArray {
+				var grids:ByteArray = new ByteArray;
+				var i:int, j:int, type:int;
+				var output:String;
+				for(i = 0; i < MapConfig.map.indexYLength; i++) {
+					output = "";
+					if(null != MapConfig.map.source[i]) {
+						for(j = 0; j < MapConfig.map.indexXLength; j++) {
+							if(MapConfig.map.source[i][j]) {
+								grids.writeByte(MapConfig.map.source[i][j].getType());
+//								type = MapConfig.map.source[i][j].getType();
+//								output += type > 9 ? type + " ": type + "  ";
+							}
+							else {
+								grids.writeByte(MapConfig.BLOCK);
+//								output += MapConfig.BLOCK + "  "; 
+							}
+						}
+					}
+					else { 
+						for(j = 0; j < MapConfig.map.indexXLength; j++) {
+							grids.writeByte(MapConfig.BLOCK);
+//							output += MapConfig.BLOCK + "  "; 
+						}
+					}
+//					trace(output);
+				} 
+				grids.position = 0;
+				return grids;
+			}
+			
+			private var _alert:Alert;
+			protected function submit_clickHandler(event:MouseEvent):void
+			{
+				if(tiFolderName.text != "") {
+					_alert = Alert.show("正在导出");
+					setTimeout(function():void {
+						exportData();
+					}, 500);
+				}
+				else {
+					Alert.show("请输入文件夹名");
+				}
+				
+			}
+			
+			protected function cancel_clickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Button id="btnSavePath" click="btnSavePath_clickHandler(event)" x="11" y="10" width="83" height="32" label="保存目录"/>
+	<s:TextInput id="tiSavePath" x="102" y="10" width="175" height="32"/>
+	<s:TextInput id="tiFolderName" x="102" y="50" width="175" height="32" text="{MapConfig.mapID}" />
+	<s:Label x="18" y="58" fontSize="17" text="文件夹名"/>
+	<s:CheckBox id="cutPic" x="11" y="99" label="切割地图"/>
+	<s:Button id="submit" click="submit_clickHandler(event)" x="102" y="99" label="确定"/>
+	<s:Button id="cancel" click="cancel_clickHandler(event)" x="188" y="99" label="取消"/>
+</s:Panel>

@@ -1,0 +1,25 @@
+<member name="">
+	<member name="怪物">
+		<mem name="怪物1" type="1" id="1" intervalX="100" intervalY="100" data="/asset/objs/1.swf" />
+		<mem name="怪物1" type="1" id="2" intervalX="100" intervalY="100" data="/asset/objs/1.swf" />
+		<mem name="怪物2" type="1" id="3" intervalX="100" intervalY="100" data="/asset/objs/1.swf" />
+		<mem name="怪物2" type="1" id="4" intervalX="100" intervalY="100" data="/asset/objs/1.swf" />
+	</member>
+	<member name="NPC">
+		<mem name="仙人1" type="2" id="1" intervalX="100" intervalY="100" data="/asset/objs/5.swf" />
+		<mem name="功夫熊猫1" type="2" id="2" intervalX="100" intervalY="100" data="/asset/objs/5.swf" />
+		<mem name="仙人2" type="2" id="3" intervalX="100" intervalY="100" data="/asset/objs/5.swf" />
+		<mem name="功夫熊猫2" type="2" id="4" intervalX="100" intervalY="100" data="/asset/objs/5.swf" />
+	</member>
+	<member name="采集点">
+		<mem name="Point1" type="3" id="1" intervalX="100" intervalY="100" data="/asset/objs/6.swf" />
+		<mem name="Point2" type="3" id="2" intervalX="100" intervalY="100" data="/asset/objs/6.swf" />
+		<mem name="Point3" type="3" id="3" intervalX="100" intervalY="100" data="/asset/objs/6.swf" />
+		<mem name="Point4" type="3" id="4" intervalX="100" intervalY="100" data="/asset/objs/6.swf" />
+	</member>
+	<member name="跳转点">
+		<mem name="door1" type="4" id="1" intervalX="100" intervalY="100" data="/asset/objs/2.swf" />
+		<mem name="door2" type="4" id="2" intervalX="100" intervalY="100" data="/asset/objs/3.swf" />
+	</member>
+		
+</member>

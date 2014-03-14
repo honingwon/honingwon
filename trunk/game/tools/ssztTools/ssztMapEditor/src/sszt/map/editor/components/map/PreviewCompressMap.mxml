@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%" title="压缩图预览器(单击拖动查看, 双击关闭)">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			[Bindable]
+			public var imgSource:String = "preview.jpg";
+			protected function img_completeHandler(event:Event):void
+			{
+				var bp:Bitmap=dupeImage(img); 
+				img.source=bp;
+//				stage.addEventListener(MouseEvent.DOUBLE_CLICK, img_doubleClickHandler);
+			}
+			private function dupeImage(source:Image):Bitmap { 
+				var data:BitmapData = source.bitmapData; 
+				var bitmap:Bitmap = new Bitmap(data); 
+				return bitmap; 
+			} 
+			
+			protected function img_doubleClickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function img_mouseDownHandler(event:MouseEvent):void
+			{
+				img.startDrag();
+				stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			}
+			
+			private function onMouseUp(e:MouseEvent):void {
+				img.stopDrag();
+				stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			}
+			
+			public function reLoad():void {
+				img.source = imgSource;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Image id="img" x="0" y="0" width="100%" height="100%" complete="img_completeHandler(event)" source="{imgSource}"
+			 doubleClick="img_doubleClickHandler(event)" doubleClickEnabled="true"
+			  mouseDown="img_mouseDownHandler(event)"
+			 />
+</s:Panel>

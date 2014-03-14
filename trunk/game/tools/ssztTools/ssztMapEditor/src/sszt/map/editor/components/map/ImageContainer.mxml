@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 initialize="bordercontainer1_initializeHandler(event)" implements="com.yans.interfaces.IFish, com.yans.interfaces.ICommon"
+		 >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[ 
+			import com.yans.GlobalAPI;
+			import com.yans.maps.ColorConfig;
+			import com.yans.maps.MapConfig;
+			import com.yans.maps.consts.EditMode;
+			import com.yans.maps.consts.TileType;
+			import com.yans.maps.vo.DragVo;
+			import com.yans.views.IsoUtil;
+			import com.yans.views.Item;
+			import com.yans.views.ItemDataVo;
+			import com.yans.views.MapDataVo;
+			import com.yans.views.Point3D;
+			
+			import mx.events.DragEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			
+			import spark.core.SpriteVisualElement;
+			
+			private var _walkLayer:SpriteVisualElement = null;		//行走层
+			public var _gridLayer:SpriteVisualElement = null;	//格子框NPC
+			private var _range:SpriteVisualElement = null;	//圈定框
+			
+			private var _vo:MapDataVo;
+			private var items:Dictionary;
+			private var selectItems:Array;
+			private var _cellSprite:Sprite;
+			private var _itemSprite:Sprite;
+			private var initialiQueue:Array;		//待添加的格子
+//			private var _dragItem:Boolean;
+			
+			
+			protected function bordercontainer1_initializeHandler(event:FlexEvent):void
+			{
+				if(stage) onAddToStage(null);
+				else this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			
+				MapConfig.mapContainer = this;
+				
+				MapConfig.map = this._vo = new MapDataVo();			//地图信息
+				MapConfig.map.id = int(MapConfig.mapID);
+				MapConfig.map.name = MapConfig.mapName;
+				MapConfig.mapImg = img;
+				 
+
+				items = new Dictionary();
+				selectItems = [];
+				
+//				GlobalAPI.setup(this);
+				GlobalAPI.river.addFish(this);
+				
+			}
+			
+			private function onAddToStage(e:Event):void { 
+				_cellSprite = new Sprite;
+				_cellSprite.visible = MapConfig.showGrid;
+				_itemSprite = new Sprite;
+				_itemSprite.visible = MapConfig.showThing;
+								
+				_range = new SpriteVisualElement();
+				_range.name = "range";
+				imgContainer.addElement(_range);
+				
+				_range.addChild(_cellSprite); 
+				_range.addChild(_itemSprite);
+				
+				GlobalAPI.keyboardManager.getKeyListener().addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			}
+			
+			private function onKeyDown(e:KeyboardEvent):void {
+				if(e.keyCode == Keyboard.DELETE) {
+					removeSelectedItems();
+				}
+			}
+			
+			public function get vo():MapDataVo{
+				return (this._vo);
+			}
+			public function set vo(mapVo:MapDataVo):void{
+				this._vo = mapVo;
+				this.redrawMap(this._cellSprite.graphics);
+				this.redrawItem();
+			}
+			 
+			 
+			//移动地图上NPC得位置----------------------begin------------------------------------------------
+		
+			public function changeName(nameA:SpriteVisualElement, nameB:String):void
+			{
+				with(nameA)
+				{
+					getChildByName(curName).name = nameB;
+				}
+			}
+			public var curName:String = "";//当前选中的可移动的元素
+			private function gridLayerMouseMove(e:MouseEvent):void
+			{
+				with(_gridLayer)
+				{
+					getChildByName(curName).x = e.localX;
+					getChildByName(curName).y = e.localY;
+				}
+				
+			}
+			
+			private var tileStartPoint:Point, tileEndPoint:Point;
+			private var _leftMouseButtonDown:Boolean = false;
+			
+			protected function onContainerMouseDown(e:MouseEvent):void
+			{
+				tileStartPoint = new Point(img.mouseX, img.mouseY);
+				stage.addEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
+				_leftMouseButtonDown = true;
+				if(MapConfig.EDIT_MODE == EditMode.SELECT && !e.altKey && !e.shiftKey && !e.ctrlKey)
+				{
+					unSelectItems();
+				}
+			}
+			
+			private var currentPoint:Point;
+			
+			private function drawBord():void{
+				
+				_range.graphics.clear();
+				_range.graphics.lineStyle(1, ColorConfig.OPERATION_LINE_COLOR);
+				if(MapConfig.TILE_TYPE == TileType.RECT) {
+					_range.graphics.drawRect(tileStartPoint.x, this.tileStartPoint.y, (currentPoint.x - this.tileStartPoint.x), (currentPoint.y - this.tileStartPoint.y));	
+				}
+				else if(MapConfig.TILE_TYPE == TileType.DIAMOND) { 
+					var _local3:Array;
+					var _local4:Point;
+					var _local5:Point;
+					var _local6:Point;
+					var _local7:Point;
+					
+					_local3 = getRH4Point3D(this.tileStartPoint, currentPoint);
+					_local4 = IsoUtil.IsoToScreen(_local3[0]);
+					_local5 = IsoUtil.IsoToScreen(_local3[1]);
+					_local6 = IsoUtil.IsoToScreen(_local3[2]);
+					_local7 = IsoUtil.IsoToScreen(_local3[3]);
+					_range.graphics.moveTo(_local4.x, _local4.y);
+					_range.graphics.lineTo(_local5.x, _local5.y);
+					_range.graphics.lineTo(_local6.x, _local6.y);
+					_range.graphics.lineTo(_local7.x, _local7.y);
+					_range.graphics.lineTo(_local4.x, _local4.y);
+				} 
+				_range.graphics.endFill();
+			}
+			private function onContainerMouseMove(e:MouseEvent):void {
+				MapConfig.mouseCurPoint = new Point(img.mouseX, img.mouseY);;
+				if(!_leftMouseButtonDown) return;
+				var lastPoint:Point = currentPoint;
+				currentPoint = new Point(img.mouseX, img.mouseY);
+				if(e.altKey && MapConfig.EDIT_MODE == EditMode.SELECT && lastPoint)
+				{
+					moveSelectedItem(currentPoint.x - lastPoint.x, currentPoint.y - lastPoint.y);
+				}
+				else
+				{
+					drawBord();
+				}
+				
+				
+//				
+//				
+//				
+//				
+//				
+////				MapConfig.mousePoint = tileEndPoint = new Point( img.mouseX, img.mouseY);// e.localX, e.localY);
+////				trace(tileEndPoint, img.localToGlobal(tileEndPoint));
+//				
+//				
+//				if(_leftMouseButtonDown) {
+//					if(MapConfig.EDIT_MODE == EditMode.ELE && lastPoint)
+//					{
+//						moveSelectedItem(currentPoint.x - lastPoint.x, currentPoint.y - lastPoint.y);
+//						return;
+//					}
+//					
+////					if(_dragItem && lastPoint) {
+////						moveSelectedItem(currentPoint.x - lastPoint.x, currentPoint.y - lastPoint.y);
+////						return;
+////					}
+//					_range.graphics.clear();
+//					_range.graphics.lineStyle(1, ColorConfig.OPERATION_LINE_COLOR);
+//					if(MapConfig.TILE_TYPE == TileType.RECT) {
+//						_range.graphics.drawRect(tileStartPoint.x, this.tileStartPoint.y, (currentPoint.x - this.tileStartPoint.x), (currentPoint.y - this.tileStartPoint.y));	
+//					}
+//					else if(MapConfig.TILE_TYPE == TileType.DIAMOND) { 
+//						var _local3:Array;
+//						var _local4:Point;
+//						var _local5:Point;
+//						var _local6:Point;
+//						var _local7:Point;
+//						
+//						_local3 = getRH4Point3D(this.tileStartPoint, currentPoint);
+//						_local4 = IsoUtil.IsoToScreen(_local3[0]);
+//						_local5 = IsoUtil.IsoToScreen(_local3[1]);
+//						_local6 = IsoUtil.IsoToScreen(_local3[2]);
+//						_local7 = IsoUtil.IsoToScreen(_local3[3]);
+//						_range.graphics.moveTo(_local4.x, _local4.y);
+//						_range.graphics.lineTo(_local5.x, _local5.y);
+//						_range.graphics.lineTo(_local6.x, _local6.y);
+//						_range.graphics.lineTo(_local7.x, _local7.y);
+//						_range.graphics.lineTo(_local4.x, _local4.y);
+//					} 
+//					_range.graphics.endFill();
+//					
+//				}
+//				
+//				MapConfig.gridTip = ColorConfig.getStringByType(getItemType(Math.floor(currentPoint.x / MapConfig.TILE_SIZE), Math.floor(currentPoint.y / MapConfig.TILE_SIZE)));
+				
+			}
+			
+			
+			protected function onContainerMouseUp(e:MouseEvent):void {
+				_range.graphics.clear();
+				stage.removeEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
+				MapConfig.mousePoint = tileEndPoint = new Point(img.mouseX, img.mouseY);
+				//				trace("鼠标弹起:", MapConfig.mousePoint);
+				//imgContainer.removeEventListener(MouseEvent.MOUSE_MOVE, onContainerMouseMove);
+				_leftMouseButtonDown = false;
+				if(MapConfig.EDIT_MODE == EditMode.SELECT && !e.altKey)
+				{
+					this.doRectSelectItems(tileStartPoint, tileEndPoint);
+				}
+				else if(MapConfig.EDIT_MODE == EditMode.ELE && MapConfig.dragVo)
+				{
+					this.addNpcOrMonster(this.tileStartPoint, tileEndPoint);
+				}
+				else
+				{
+					this.drawTiles(this.tileStartPoint, tileEndPoint);
+				}
+				currentPoint = null;
+				tileStartPoint = null;
+				
+				//				if(MapConfig.EDIT_MODE == EditMode.SELECT) {
+				//					moveSelectedItem(tileEndPoint.x - currentPoint.x, tileEndPoint.y - currentPoint.y, true);
+				////					_dragItem = false;
+				//					return;
+				//				}
+				//				 
+				//				if(tileStartPoint) {
+				//					if ((((Math.abs((this.tileStartPoint.x - tileEndPoint.x)) < 20)) && ((Math.abs((this.tileStartPoint.y - tileEndPoint.y)) < 20)))) {
+				//						this.drawTiles(this.tileStartPoint, MapConfig.mousePoint);
+				//					} 
+				//					else {
+				//						this.drawTiles(this.tileStartPoint, tileEndPoint);
+				//					}
+				//				} 
+				
+				
+				
+			}
+			
+			private function getRH4Point3D(_arg1:Point, _arg2:Point):Array{
+				var _local3:Point3D = IsoUtil.ScreenToIso(_arg1);
+				var _local4:Point3D = IsoUtil.ScreenToIso(_arg2);
+				var _local5:Number = Math.min(_local3.x, _local4.x);
+				var _local6:Number = Math.min(_local3.z, _local4.z);
+				var _local7:Number = Math.max(_local3.x, _local4.x);
+				var _local8:Number = Math.max(_local3.z, _local4.z);
+				return ([new Point3D(_local5, 0, _local6), new Point3D(_local7, 0, _local6), new Point3D(_local7, 0, _local8), new Point3D(_local5, 0, _local8)]);
+			}
+			
+			private function getRH4Bounds(_arg1:Array):Array{
+				var _local2:Number = Math.min(_arg1[0].x, _arg1[1].x, _arg1[2].x, _arg1[3].x);
+				var _local3:Number = Math.max(_arg1[0].x, _arg1[1].x, _arg1[2].x, _arg1[3].x);
+				var _local4:Number = Math.min(_arg1[0].z, _arg1[1].z, _arg1[2].z, _arg1[3].z);
+				var _local5:Number = Math.max(_arg1[0].z, _arg1[1].z, _arg1[2].z, _arg1[3].z);
+				return ([_local2, _local3, _local4, _local5]);
+			}
+			
+			private function drawTiles(start_point:Point, end_point:Point):void{
+				var edit_mode:int = MapConfig.EDIT_MODE;
+				var draw_mode:int = MapConfig.DRAW_MODE;
+				var tile_type:int = MapConfig.TILE_TYPE;
+//				MapConfig.setState(this);
+				switch (edit_mode)
+				{
+					case EditMode.DRAW:
+						if (tile_type ==  0)
+						{
+							this.drawRectItems(start_point, end_point, draw_mode, this._cellSprite.graphics);
+						} 
+						else
+						{
+							this.drawRHItems(start_point, end_point, draw_mode, this._cellSprite.graphics);
+						};
+						return;
+					case EditMode.DELETE:
+						if (tile_type ==  0)
+						{
+							this.drawRectItems(start_point, end_point, MapConfig.BLOCK, this._cellSprite.graphics);
+						} 
+						else
+						{
+							this.drawRHItems(start_point, end_point, MapConfig.BLOCK, this._cellSprite.graphics);
+						};
+						return;
+				};
+			}
+			
+			private function drawRHItems(_arg1:Point, _arg2:Point, _arg3:int, _arg4:Graphics):void{
+				var _local22:int;
+				var _local23:ItemDataVo;
+				var _local24:int;
+				var _local25:int;
+				var _local26:Point;
+				var _local27:ItemDataVo;
+				var _local5:Array = [];
+				var _local6:Number = MapConfig.TILE_SIZE;
+				var _local7:Array = this.getRH4Point3D(_arg1, _arg2);
+				var _local8:Array = this.getRH4Bounds(_local7);
+				var _local9:Point = IsoUtil.IsoToScreen(_local7[0]);
+				var _local10:Point = IsoUtil.IsoToScreen(_local7[1]);
+				var _local11:Point = IsoUtil.IsoToScreen(_local7[2]);
+				var _local12:Point = IsoUtil.IsoToScreen(_local7[3]);
+				var _local13:Number = Math.min(_local9.x, _local10.x, _local11.x, _local12.x);
+				var _local14:Number = Math.min(_local9.y, _local10.y, _local11.y, _local12.y);
+				var _local15:Number = Math.max(_local9.x, _local10.x, _local11.x, _local12.x);
+				var _local16:Number = Math.max(_local9.y, _local10.y, _local11.y, _local12.y);
+				var _local17:Boolean;
+				var _local18:int = int((_local13 / _local6));
+				if ((_local18 < 0))
+				{
+					_local18 = 0;
+				};
+				var _local19:int = int((_local14 / _local6));
+				if ((_local19 < 0))
+				{
+					_local19 = 0;
+				};
+				var _local20:int = int((_local15 / _local6));
+				if ((_local20 >= this.vo.indexXLength))
+				{
+					_local20 = (this.vo.indexXLength - 1);
+				};
+				var _local21:int = int((_local16 / _local6));
+				if ((_local21 >= this.vo.indexYLength))
+				{
+					_local21 = (this.vo.indexYLength - 1);
+				};
+				if ((((_local18 == _local20)) && ((_local19 == _local21))))
+				{
+					_local22 = this.getItemType(_local18, _local19);
+					if (((!((_local22 == -1))) && (!((_local22 == _arg3)))))
+					{
+						_local17 = true;
+					};
+					_local23 = this.addItem(_local18, _local19, _arg3);
+					if (_local23 != null)
+					{
+						_local5.push(_local23);
+					};
+				} else
+				{
+					_local24 = _local19;
+					while (_local24 <= _local21)
+					{
+						_local25 = _local18;
+						for (;_local25 <= _local20;_local25++)
+						{
+							_local26 = new Point((_local25 * _local6), (_local24 * _local6));
+							if (!this.checkPointInRH(_local26, _local8))
+							{
+								_local26.x = (_local26.x + _local6);
+								if (!this.checkPointInRH(_local26, _local8))
+								{
+									_local26.y = (_local26.y + _local6);
+									if (!this.checkPointInRH(_local26, _local8))
+									{
+										_local26.x = (_local26.x - _local6);
+										if (!this.checkPointInRH(_local26, _local8)) continue;
+									};
+								};
+							};
+							_local22 = this.getItemType(_local25, _local24);
+							if (((!((_local22 == -1))) && (!((_local22 == _arg3)))))
+							{
+								_local17 = true;
+							};
+							_local23 = this.addItem(_local25, _local24, _arg3);
+							if (_local23 != null)
+							{
+								_local5.push(_local23);
+							};
+						};
+						_local24++;
+					};
+				};
+				if (!_local17)
+				{
+					for each (_local27 in _local5)
+					{
+						_local27.drawGraphics(_arg4);
+					};
+				} else
+				{
+					this.redrawMap(_arg4);
+				};
+			}
+			
+			private function checkPointInRH(_arg1:Point, _arg2:Array):Boolean{
+				var _local3:Point3D = IsoUtil.ScreenToIso(_arg1);
+				if ((((((((_local3.x < _arg2[0])) || ((_local3.x > _arg2[1])))) || ((_local3.z < _arg2[2])))) || ((_local3.z > _arg2[3]))))
+				{
+					return (false);
+				};
+				return (true);
+			}
+			
+			private function doRectSelectItems(_arg1:Point, _arg2:Point):void{
+				var _local8:Object;
+//				_arg1 = new Point(int((_arg1.x / MapConfig.TILE_SIZE)), int((_arg1.y / MapConfig.TILE_SIZE)));
+//				_arg2 = new Point(int((_arg2.x / MapConfig.TILE_SIZE)), int((_arg2.y / MapConfig.TILE_SIZE)));
+				var _local3:int = Math.min(_arg1.x, _arg2.x);
+				var _local4:int = Math.min(_arg1.y, _arg2.y);
+				var _local5:int = Math.max(_arg1.x, _arg2.x);
+				var _local6:int = Math.max(_arg1.y, _arg2.y);
+				for (_local8 in this.items)
+				{
+					if ((((((((_local8.item.x >= _local3)) && ((_local8.item.x <= _local5)))) && ((_local8.item.y >= _local4)))) && ((_local8.item.y <= _local6))))
+					{
+						this.doSelectItem(this.items[_local8]);
+					}
+				}
+				MapConfig.gridTip = getSelectItemPos();
+//				//选择一个的时候设置属性
+//				if(selectItems) {
+//					var item:Item = selectItems[0] as Item;
+//					if(selectItems.length == 1) {
+//						//MainAttPanel(this.parentApplication.mainAttPanel).currentState = "npc";
+//						MapConfig.setState(this);
+//						return;
+//					}
+//				}
+//				MapConfig.setState(this);
+			}
+			
+			private function getSelectItemPos():String
+			{
+				var i:int = 0;
+				var str:String ="";
+				for each (var item:Item in this.selectItems)
+				{
+					if(i != 0)
+					{
+						str += "|";
+					}
+					str += item.x +","+item.y;
+					i++;
+				}
+				return str;
+			}
+			
+			private function doSelectItem(_arg1:Item, _arg2:Boolean=true):void{
+				var _local3:Item;
+				if (MapConfig.EDIT_MODE != EditMode.SELECT)
+				{
+					return;
+				};
+				_arg1.select(this.selectItems);
+				
+				if(!_arg2)
+				{
+					MapConfig.gridTip = getSelectItemPos();
+				}
+				
+			}
+			
+			private function getObject(_arg1:Item):Object{
+				var _local2:Object;
+				for (_local2 in this.items)
+				{
+					if (this.items[_local2] == _arg1)
+					{
+						return (_local2);
+					};
+				};
+				return (null);
+			}
+			
+//			public function copySelectedItems():void{
+//				var _local2:Item;
+//				var _local3:int;
+//				var _local4:Item;
+//				var _local5:Item;
+//				var _local6:Object;
+//				var _local1:Array = [];
+//				for each (_local2 in this.selectItems)
+//				{
+//					_local5 = _local2.clone();
+//					_local6 = this.getObject(_local2);
+//					_local5.x = (((_local6.indexX + 1) * MapConfig.TILE_SIZE) + (MapConfig.TILE_SIZE / 2));
+//					_local5.y = (((_local6.indexY + 1) * MapConfig.TILE_SIZE) + (MapConfig.TILE_SIZE / 2));
+//					this._itemSprite.addChild(_local5);
+//					_local5.selectedHandler = this.doSelectItem;
+//					this.items[this.vo.addNpcOrMonster(_local5, (_local6.indexX + 1), (_local6.indexY + 1))] = _local5;
+//					_local1.push(_local5);
+//				};
+//				_local3 = 0;
+//				for each (_local4 in _local1)
+//				{
+//					if (_local3 == 0)
+//					{
+//						this.doSelectItem(_local4);
+//					} else
+//					{
+//						this.doSelectItem(_local4, false);
+//					};
+//					_local3++;
+//				};
+//			}
+			public function unSelectItems():void{
+				var _local1:Item;
+				for each (_local1 in this.items)
+				{
+					if (_local1.selected == true)
+					{
+						_local1.unselected(this.selectItems);
+					};
+				};
+			}
+			public function removeSelectedItems():void{
+				var _local1:Item;
+				for each (_local1 in this.selectItems)
+				{
+					this.removeSelectedItem(_local1);
+				};
+				this.selectItems.length = 0;
+			}
+			public function removeSelectedItem(_arg1:Item):void{
+				var _local2:Object;
+				for (_local2 in this.items)
+				{
+					if (this.items[_local2] == _arg1)
+					{
+						this.items[_local2] = null;
+						delete this.items[_local2];
+						this.vo.removeNpcOrMonster(_local2);
+					};
+				};
+				if (_arg1.parent != null)
+				{
+					_arg1.parent.removeChild(_arg1);
+				};
+			}
+			private function moveSelectedItem(_arg1:Number, _arg2:Number):void{
+				var item:Item;
+				var _local5:Object;
+				var itemX:int;
+				var itemY:int;
+				for each (item in this.selectItems)
+				{
+					item.x = int(item.x + _arg1);
+					item.y = int(item.y + _arg2);
+					if (item.x < 0)
+					{
+						item.x = 0;
+					};
+					if (item.y < 0)
+					{
+						item.y = 0;
+					};
+				};
+				MapConfig.gridTip = getSelectItemPos();
+			}
+			
+			private function drawRectItems(_arg1:Point, _arg2:Point, _arg3:int, _arg4:Graphics):void{
+				var _local12:int;
+				var _local13:int;
+				var _local14:ItemDataVo;
+				var _local15:ItemDataVo;
+				var _local5:Array = [];
+				_arg1 = new Point(int((_arg1.x / MapConfig.TILE_SIZE)), int((_arg1.y / MapConfig.TILE_SIZE)));
+				_arg2 = new Point(int((_arg2.x / MapConfig.TILE_SIZE)), int((_arg2.y / MapConfig.TILE_SIZE)));
+				var _local6:int = Math.min(_arg1.x, _arg2.x);
+				var _local7:int = Math.min(_arg1.y, _arg2.y);
+				var _local8:int = Math.max(_arg1.x, _arg2.x);
+				var _local9:int = Math.max(_arg1.y, _arg2.y);
+				if (this.vo != null)
+				{
+					if ((_local6 < 0))
+					{
+						_local6 = 0;
+					};
+					if ((_local7 < 0))
+					{
+						_local7 = 0;
+					};
+					if ((_local8 >= this.vo.indexXLength))
+					{
+						_local8 = (this.vo.indexXLength - 1);
+					};
+					if ((_local9 >= this.vo.indexYLength))
+					{
+						_local9 = (this.vo.indexYLength - 1);
+					};
+				};
+				var _local10:Boolean;
+				var _local11:int = _local7;
+				while (_local11 <= _local9)
+				{
+					_local12 = _local6;
+					while (_local12 <= _local8)
+					{
+						_local13 = this.getItemType(_local12, _local11);
+						if (((((!((_local13 == -1))) && (!((_local13 == 0))))) && (!((_local13 == _arg3)))))
+						{
+							_local10 = true;
+						};
+						_local14 = this.addItem(_local12, _local11, _arg3);
+						if (_local14 != null)
+						{
+							_local5.push(_local14);
+						};
+						_local12++;
+					};
+					_local11++;
+				};
+				//addItem(8, 4, 1).drawGraphics(_itemSprite.graphics);
+				if (!_local10)
+				{
+					for each (_local15 in _local5)
+					{
+						_local15.drawGraphics(_arg4);
+					};
+				} 
+				else
+				{
+					this.redrawMap(_arg4);
+				};
+			}
+			
+			
+			private function addItem(thX:int, thY:int, type:int):ItemDataVo{
+				var item:ItemDataVo;
+				var grids:Array = this.vo.source;
+				if(type == 0) {
+					
+				} 
+				else if((type & MapConfig.HALF_TRANSPARENT) > 0) {
+					type = MapConfig.HALF_TRANSPARENT;
+				}
+				else {
+					type = MapConfig.WALKABLE;
+				}
+				if ((grids[thY] == null))
+				{
+					grids[thY] = [];
+				};
+				if (grids[thY][thX] == null) {
+					item = new ItemDataVo();
+					item.indexX = thX;
+					item.indexY = thY;
+					item.x = (thX * MapConfig.TILE_SIZE);
+					item.y = (thY * MapConfig.TILE_SIZE);
+					item.setType(type);
+					grids[thY][thX] = item;
+//					initialiQueue.push(_local5);
+				} 
+				else
+				{
+					item = grids[thY][thX];
+					if (item.getType() == type) {
+						return (null);
+					};
+					item.setType(type);
+				};
+				return (item);
+			} 
+			
+			private function doRectAdd(_arg1:Point, _arg2:Point):void{
+				if(!MapConfig.dragVo) return;
+				var item:Item = new Item; 
+				if(MapConfig.dragVo && MapConfig.dragVo.id > 0) {
+					item.init(MapConfig.dragVo.id, MapConfig.dragVo.type, MapConfig.dragVo.path, [ 0, 0 ]);
+					item.selectedHandler = this.doSelectItem;
+				}
+				
+				
+				var minX:int = Math.min(_arg1.x, _arg2.x);
+				var minY:int = Math.min(_arg1.y, _arg2.y);
+				var maxX:int = Math.max(_arg1.x, _arg2.x);
+				var maxY:int = Math.max(_arg1.y, _arg2.y);
+				
+				for (var i:int = minX; i < maxX ; i = i+MapConfig.dragVo.intervalX)
+				{
+					for (var j:int = minY; j < maxY ;j = j+MapConfig.dragVo.intervalY)
+					{
+						var item1:Item = item.clone();
+						item1.x = i;
+						item1.y = j;
+						this._itemSprite.addChild(item1);
+						this.items[this.vo.addItem(item1)] = item1;
+						
+					}
+				}
+				
+				
+//				_arg1 = new Point(int((_arg1.x / MapConfig.TILE_SIZE)), int((_arg1.y / MapConfig.TILE_SIZE)));
+//				_arg2 = new Point(int((_arg2.x / MapConfig.TILE_SIZE)), int((_arg2.y / MapConfig.TILE_SIZE)));
+//				var _local6:int = Math.min(_arg1.x, _arg2.x);
+//				var _local7:int = Math.min(_arg1.y, _arg2.y);
+//				var _local8:int = Math.max(_arg1.x, _arg2.x);
+//				var _local9:int = Math.max(_arg1.y, _arg2.y);
+//				
+//				
+//				
+//				var _local2:Point = new Point(int((MapConfig.mousePoint.x / MapConfig.TILE_SIZE)), int((MapConfig.mousePoint.y / MapConfig.TILE_SIZE)));
+//				_arg1.x = ((_local2.x * MapConfig.TILE_SIZE) + (MapConfig.TILE_SIZE >> 1));
+//				_arg1.y = ((_local2.y * MapConfig.TILE_SIZE) + (MapConfig.TILE_SIZE >> 1));
+//				this._itemSprite.addChild(_arg1);
+//				_arg1.selectedHandler = this.doSelectItem;
+//				this.items[this.vo.addNpcOrMonster(_arg1, _local2.x, _local2.y)] = _arg1;
+////				trace((this.items.length + "lengthh"));
+//				this.doSelectItem(_arg1);
+			}
+			
+			private function redrawMap(grap:Graphics, rect:Rectangle=null):void{
+				var index:int;
+				var gridList:Array;
+				var innerIndex:int;
+				var itemVO:ItemDataVo;
+				var sources:Array = this.vo.source;
+				grap.clear();
+				if (rect == null)
+				{
+					index = 0;
+					while (index < sources.length)
+					{
+						gridList = sources[index];
+						if (gridList != null)
+						{
+							innerIndex = 0;
+							while (innerIndex < gridList.length)
+							{
+								itemVO = (gridList[innerIndex] as ItemDataVo);
+								if (itemVO != null)
+								{
+									itemVO.drawGraphics(grap);
+								};
+								innerIndex++;
+							};
+						};
+						index++;
+					};
+				};
+			}
+			
+			private function getItemType(_arg1:int, _arg2:int):int{
+				var _local3:Array = this.vo.source;
+				if ((_local3[_arg2] == null))
+				{
+					_local3[_arg2] = [];
+				};
+				if (_local3[_arg2][_arg1] == null)
+				{
+					return (-1);
+				};
+				return (_local3[_arg2][_arg1].getType());
+			}
+			
+			private var addItemList:Array = [];
+			private function redrawItem():void{
+				var obj:Object, item:Item;
+				for(var ob:Object in items) {
+					if(items[ob] && items[ob].parent) items[ob].parent.removeChild(items[ob]);
+					delete items[ob];
+				}
+//				while (this._itemSprite.numChildren) {
+//					this._itemSprite.removeChildAt(0);
+//				};
+				
+				for each (obj in this.vo.items) {
+					item = obj.item as Item;
+					//this._itemSprite.addChild(item);
+					addItemList.push(item);
+					trace("redraw", item.id, item.vo.name, item.type, item.x, item.y);
+					item.selectedHandler = this.doSelectItem;
+					this.items[obj] = item;
+				};
+			}
+			 
+			
+			//拖拽地图------------------------------------------------------------------begin 
+			private function dragMapS(e:MouseEvent):void
+			{  
+				imgContainer.startDrag();
+				stage.addEventListener(MouseEvent.RIGHT_MOUSE_UP, dragMapE);  
+			} 
+			 
+			private function dragMapE(e:MouseEvent):void
+			{
+				imgContainer.stopDrag(); 
+				stage.removeEventListener(MouseEvent.RIGHT_MOUSE_UP, dragMapE);
+			}
+
+			private function authorImageLoadComplete(event:Event):void{ 
+				var bp:Bitmap=dupeImage(img); 
+				img.source=bp;
+				
+				_cellSprite.graphics.clear();
+				trace("是否刷新地图数据", MapConfig.reflesh, MapConfig.map);
+				if(!MapConfig.reflesh || !MapConfig.map) {
+					MapConfig.map = this._vo = new MapDataVo();			//地图信息 
+					while(_itemSprite.numChildren) {
+						_itemSprite.removeChildAt(0);
+					}
+				}
+				else { 
+					redrawMap(_cellSprite.graphics);
+				}
+				this._vo.indexXLength = Math.ceil((bp.bitmapData.width / MapConfig.TILE_SIZE));
+				this._vo.indexYLength = Math.ceil((bp.bitmapData.height / MapConfig.TILE_SIZE));
+				this._vo.width = bp.bitmapData.width;
+				this._vo.height = bp.bitmapData.height;
+				
+				MapConfig.reflesh = false;
+				this._vo.name = MapConfig.mapName;
+				this._vo.id = int(MapConfig.mapID);
+				 
+				this._vo.data = bp.bitmapData; 
+				 
+			} 
+			private function dupeImage(source:Image):Bitmap { 
+				var data:BitmapData = source.bitmapData; 
+				var bitmap:Bitmap = new Bitmap(data); 
+				return bitmap; 
+			} 
+			
+			private function onContainerMouseWheel(e:MouseEvent):void { 
+				if(e.altKey && img.bitmapData) {
+					var t:Number = e.delta * 0.01;
+					MapConfig.scale = MapConfig.scale + t;
+					
+					if (MapConfig.scale > 1)
+					{
+						MapConfig.scale = 1;
+					}
+					else if (MapConfig.scale <= 0.3)
+					{
+						MapConfig.scale = 0.3;
+					}
+					
+					imgContainer.scaleX = MapConfig.scale;
+					imgContainer.scaleY = MapConfig.scale;
+					
+					
+				}
+			}
+			
+			
+			public function swim(times:int, dt:Number=0.04):void
+			{
+				var i:int = 0, len:int = 0;
+				//画格子
+				if(MapConfig.drawQueue) {
+					len = Math.min(MapConfig.drawQueue.length, MapConfig.DRAW_PER_TICK);
+					for(i = 0; i < len; i++) {
+						MapConfig.drawQueue[i].draw(_cellSprite.graphics);
+					}
+					MapConfig.drawQueue.splice(0, len);
+				}
+				if(addItemList.length) {
+					_itemSprite.addChild(addItemList.pop() as Item);
+				}
+			}
+			 
+//			protected function imgContainer_dragEnterHandler(event:DragEvent):void
+//			{  
+//				if(event.dragSource.hasFormat("format")) {
+//					DragManager.acceptDragDrop(Group(event.currentTarget));
+//					stage.addEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
+//					trace("开始接受拖拽");
+//				}
+//			}
+//			
+//			protected function img_dragExitHandler(event:DragEvent):void
+//			{
+//				stage.removeEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
+//				trace("结束接受拖拽");
+//			}
+//			
+//			protected function imgContainer_dragDropHandler(event:DragEvent):void
+//			{
+//				var vo:DragVo = event.dragSource.dataForFormat("format") as DragVo;
+//				if(vo && vo.id > 0) {
+//					var item:Item = new Item; 
+//					item.init(vo.id, vo.type, vo.path, [ 0, 0 ]);
+//					addNpcOrMonster(item);
+//					MapConfig.setState(this, item);
+//				} 
+//			}
+			
+			private function addNpcOrMonster(_arg1:Point, _arg2:Point):void {
+				setTimeout(this.doRectAdd, 50,_arg1,_arg2); 
+			}
+			
+			
+			public function dispose():void {
+			}
+			
+			public function init(data:Object = null):void { 
+				vo = data as MapDataVo;
+			}
+			
+		]]>
+	</fx:Script> 
+	<s:Scroller id="scroller"  width="100%" height="100%">
+		<s:Group horizontalScrollPosition="0" verticalScrollPosition="0" >
+			<s:Group id="imgContainer" mouseDown="onContainerMouseDown(event)" mouseMove="onContainerMouseMove(event)"
+					 rightMouseDown="dragMapS(event)" mouseWheel="onContainerMouseWheel(event)" 
+					 >
+				<s:Image id="img" complete="authorImageLoadComplete(event)" source="{MapConfig.pathInfo}"
+						 />
+			</s:Group>
+		</s:Group>
+	</s:Scroller>
+</s:BorderContainer>

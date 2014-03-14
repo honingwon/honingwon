@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="190" height="100%" title="资源库" enabled="true"
+		 initialize="panel2_initializeHandler(event)"
+		 >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[ 
+			import com.yans.GlobalAPI;
+			import com.yans.managers.consts.LoaderType;
+			import com.yans.managers.vo.LoaderResult;
+			import com.yans.maps.MapConfig;
+			import com.yans.maps.vo.DragVo;
+			
+			import mx.controls.Alert;
+			import mx.core.ByteArrayAsset;
+			import mx.core.DragSource;
+			import mx.core.UIComponent;
+			import mx.core.UITextField;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.managers.DragManager;
+			 
+			[Bindable]
+			private var itemName:String;
+			private var vo:DragVo;
+			[Bindable]
+			private var imgSource:String;
+			[Bindable]
+			public var xml:XML;
+			
+//			[Embed(source="asset/res.xml", mimeType="application/octet-stream")]
+//			private var xmlRes:Class;
+			
+//labelFunction="resTree_labelFunc"
+			
+			protected function resTree_itemFocusInHandler(event:ListEvent):void
+			{
+				var s:String = event.target.data;
+			}
+			
+			protected function resTree_itemClickHandler(event:ListEvent):void
+			{
+//				trace("itemClick:"+imgSource);
+			}
+			
+			private function mouseDownHandler(event:MouseEvent):void
+			{
+				var target:Tree = event.currentTarget as Tree;
+				
+				if(!target || !(event.target is UITextField) || !event.target.automationOwner ) return;
+				
+				var xml:XML = XML(event.target.automationOwner.data);
+				
+//				var xml:XML = XML(event.itemRenderer.data);
+				imgSource = xml.@data;
+				
+				
+//				trace(xml);
+				vo = new DragVo;
+				vo.id = xml.@id;
+				itemName = vo.name = xml.@name;
+				vo.path = xml.@data;
+				vo.type = xml.@type;
+				vo.intervalX = xml.@intervalX;
+				vo.intervalY = xml.@intervalY;
+				MapConfig.dragVo = vo;
+				
+//				if(vo.id > 0) {
+//					var d:DragSource = new DragSource;
+//					d.addData(vo, "format");
+//					DragManager.doDrag(target, d, event);
+//				}
+				 
+			}
+			
+			protected function resPreView_completeHandler(event:Event):void
+			{
+				resPreView.x = resPreView.parent.width >> 1;
+				resPreView.y = resPreView.parent.height >> 1;
+//				var bp:Bitmap=dupeImage(resPreView);
+//				bp.x = 20;
+//				resPreView.source=bp;
+				
+//				resPreView.data.x = resPreView.width >> 1;
+//				resPreView.data.y = resPreView.height >> 1;
+			}
+			  
+			
+//			protected function panel1_mouseDownHandler(event:MouseEvent):void
+//			{ 
+//				var target:Panel = event.currentTarget as Panel;
+//				if(vo && vo.id > 0) {
+//					var d:DragSource = new DragSource;
+//					d.addData(vo, "format");
+//					DragManager.doDrag(target, d, event);
+//				}
+//			}
+			
+			protected function panel2_initializeHandler(event:Event):void
+			{ 
+				GlobalAPI.loaderManager.urlLoader("asset/res.xml", function(result:LoaderResult):void {
+					if(result.type == LoaderType.URLLOADER) {
+						xml = new XML(result.data);
+					}
+				}, URLLoaderDataFormat.TEXT);
+//				xml = createXML(xmlRes);
+			}
+			
+			public static function createXML(asset:Class) : XML
+			{
+				var ba:ByteArrayAsset = ByteArrayAsset( new asset() ) ;
+				var source:String = ba.readUTFBytes( ba.length );
+				
+				try {
+					var xml:XML = new XML( source );
+				}
+				catch(error:Error)
+				{
+					throw new Error( "Class must embed an XML document containing valid mark-up. " + error.message );
+				}
+				return xml;
+			}
+
+		]]>
+	</fx:Script>
+	<s:Panel x="0" y="0" width="100%" height="160" title="{itemName}">
+		<mx:Image id="resPreView" source="{imgSource}" complete="resPreView_completeHandler(event)" />	
+	</s:Panel>
+	<mx:Tree x="0" y="162" dataProvider="{xml}"  labelField="@name" itemClick="resTree_itemClickHandler(event)" mouseDown="mouseDownHandler(event)"
+			 verticalScrollPolicy="on" showRoot="false" width="187" id="resTree" bottom="0" left="0" right="0" top="164">
+	</mx:Tree>
+	<s:Button x="106" y="-26" label="刷新" click="panel2_initializeHandler(event)"/>
+</s:Panel>

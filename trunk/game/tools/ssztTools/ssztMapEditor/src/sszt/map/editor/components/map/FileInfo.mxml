@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="34" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import com.yans.maps.MapConfig;
+			
+			import flashx.textLayout.elements.BreakElement;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IList;
+			import mx.core.DragSource;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			
+			import spark.events.IndexChangeEvent;
+			
+			protected function files_initializeHandler(event:FlexEvent):void
+			{
+				MapConfig.event.addEventListener(Event.CHANGE, fillMenu);
+				fillMenu(); 
+			}
+			
+			private function fillMenu(e:Event = null):void {
+				if(!MapConfig.files) return ;
+				var name:Array = [], len:int = MapConfig.files.length;
+				while(len--) {
+					name.push(MapConfig.files[len][0]);
+				}
+				files.dataProvider = new  ArrayCollection(name);
+			}
+			
+			protected function files_changeHandler(event:IndexChangeEvent):void
+			{
+				var len:int = MapConfig.files.length;
+				while(len--) {
+					if(MapConfig.files[len][0] == files.selectedItem) {
+						MapConfig.mapName = MapConfig.files[len][0];
+						MapConfig.mapID = MapConfig.files[len][1];
+						MapConfig.pathInfo = MapConfig.files[len][2]; 
+						return;
+					}
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label x="10" y="10" width="130" color="#FB0101" text="{MapConfig.mapID}" />
+	<s:Label x="157" y="10" width="486" height="14" color="#3DA9FD" text="{MapConfig.pathInfo}"/>
+	<s:DropDownList id="files" y="7" right="10" change="files_changeHandler(event)" initialize="files_initializeHandler(event)" />
+</s:SkinnableContainer>

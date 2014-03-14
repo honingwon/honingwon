@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="44" height="100%" title="工具"   >
+
+	<fx:Script>
+		<![CDATA[ 
+			import com.yans.maps.MapConfig;
+			import com.yans.maps.consts.EditMode;
+			
+			import sszt.map.editor.components.MapEditor;
+			
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			private var buttonList:Array = [sel, draw, del,ele];
+			private function setToggleButton(botton:ToggleButton):void {
+				for each(var b:ToggleButton in buttonList) {
+					if(b != botton) b.selected = false;
+				}
+				MapConfig.EDIT_MODE = EditMode.SELECT;
+			}
+			
+			protected function sel_clickHandler(event:MouseEvent):void
+			{ 
+				sel.selected = true;
+				draw.selected = false;
+				del.selected = false;
+				ele.selected = false;
+				MapConfig.EDIT_MODE = EditMode.SELECT;
+			}
+			
+			protected function draw_clickHandler(event:MouseEvent):void
+			{ 
+				sel.selected = false;
+				ele.selected = false;
+				draw.selected = true;
+				del.selected = false;
+				MapConfig.EDIT_MODE = EditMode.DRAW;
+//				MainAttPanel(this.parentDocument.mainAttPanel).currentState = "State1";
+			}
+
+
+			protected function del_clickHandler(event:MouseEvent):void
+			{ 
+				sel.selected = false;
+				draw.selected = false;
+				ele.selected = false;
+				del.selected = true;
+				MapConfig.EDIT_MODE = EditMode.DELETE;
+			}
+			protected function ele_clickHandler(event:MouseEvent):void
+			{ 
+				sel.selected = false;
+				draw.selected = false;
+				ele.selected = true;
+				del.selected = false;
+				MapConfig.EDIT_MODE = EditMode.ELE;
+			}
+			 
+			
+			 
+			
+		]]>
+	</fx:Script>
+
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:ToggleButton x="5" y="11" label="选" id="sel" selected="true" click="sel_clickHandler(event)" width="32"/>
+	<s:ToggleButton x="5" y="33" label="元" id="ele" click="ele_clickHandler(event)" width="32"/>
+	<s:ToggleButton x="5" y="56" label="画" id="draw" click="draw_clickHandler(event)" width="32"/>
+	<s:ToggleButton x="5" y="82" label="删" id="del" click="del_clickHandler(event)" width="32"/> 
+</s:Panel>

@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 name="动画编辑器"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 creationComplete="creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script >
+		<![CDATA[
+			import com.hurlant.eval.CompiledESC;
+			
+			import flash.display.Bitmap;
+			import flash.display.BitmapData;
+			import flash.display.Sprite;
+			import flash.events.Event;
+			import flash.events.FileListEvent;
+			import flash.events.MouseEvent;
+			import flash.filesystem.File;
+			import flash.filesystem.FileMode;
+			import flash.filesystem.FileStream;
+			import flash.geom.Point;
+			import flash.net.FileFilter;
+			import flash.utils.ByteArray;
+			import flash.utils.Dictionary;
+			import flash.utils.setTimeout;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IList;
+			import mx.collections.Sort;
+			import mx.collections.SortField;
+			import mx.controls.Alert;
+			import mx.core.Container;
+			import mx.core.UIComponent;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.managers.CursorManager;
+			import mx.managers.PopUpManager;
+			
+			import org.libspark.swfassist.io.ByteArrayOutputStream;
+			import org.libspark.swfassist.swf.io.SWFWriter;
+			import org.libspark.swfassist.swf.io.WritingContext;
+			import org.libspark.swfassist.swf.structures.SWF;
+			
+			import sszt.animeCombo.AnimeCombo;
+			import sszt.animeCombo.AnimeComboSwfMaker;
+			
+			
+			[Bindable]
+			private var piclist:ArrayCollection=new ArrayCollection([]); 
+			
+			
+			private var _lastNativePath:String="E:\\美术资源\\000001\\1";
+			
+			private var _imgLoader:ImageLoader;
+			
+			private var _bitmap:Bitmap;
+			
+			private var _resPoint:Sprite;
+			
+			
+			[Bindable] 
+			[Embed(source="assets/Icon.png")] 
+			private var Icon:Class; 
+			
+			
+			private var cursorID:int; 
+			
+			
+			private var oldx:Number;
+			private var oldy:Number;
+			private var _picContainer:Sprite;
+			
+			private var _actions:Dictionary;
+			
+			private var _pF:Array = [];
+			
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				
+				new CompiledESC();
+				
+				_bitmap = new Bitmap();
+				
+				_picContainer = new Sprite;
+				_picContainer.mouseChildren = false;
+				_picContainer.graphics.beginFill(0x000000,1);
+				_picContainer.graphics.drawRect(0,0,500,500);
+				_picContainer.graphics.endFill();
+				
+				_picContainer.graphics.lineStyle(1,0xff0000,1);
+				_picContainer.graphics.lineTo(500,0);
+				_picContainer.graphics.lineTo(500,500);
+				_picContainer.graphics.lineTo(0,500);
+				_picContainer.graphics.lineTo(0,0);
+				_picContainer.graphics.endFill();
+				picPreview.addChildAt(_picContainer,0);
+				
+				_picContainer.addChild(_bitmap);
+				
+				_resPoint = new Sprite;
+				
+				//	_resPoint.graphics.lineStyle(1,0x000000,1);
+				//	_resPoint.graphics.lineTo(-10,-10);
+				//	_resPoint.graphics.lineTo(10,-10);
+				//	_resPoint.graphics.lineTo(10,10);
+				//	_resPoint.graphics.lineTo(-10,10);
+				
+				_resPoint.graphics.beginFill(0xff0000,1);
+				_resPoint.graphics.drawCircle(0,0,5);
+				_resPoint.graphics.endFill();
+				_resPoint.x = 250;
+				_resPoint.y = 250;
+				
+				
+				_picContainer.addChild(_resPoint);
+				
+				_picContainer.addEventListener(MouseEvent.MOUSE_OVER,mouseOver);
+				_picContainer.addEventListener(MouseEvent.MOUSE_OUT,mouseOut);
+				
+				
+				//	_resPoint.addEventListener(
+			}
+			
+			
+			private function selectDirClick(e:Event):void
+			{
+				var dir:File = new File();
+				dir.nativePath = _lastNativePath;
+				dir.browseForDirectory("选择文件夹");
+				dir.addEventListener(Event.SELECT,  addDirFiles);
+			}
+			
+			
+			
+			private function selectFilesClick(e:Event):void
+			{
+				var file:File = new File();
+				file.nativePath = _lastNativePath;
+				file.browseForOpenMultiple("", [new FileFilter("Images", "*.png;*.jpg")]);
+				file.addEventListener(FileListEvent.SELECT_MULTIPLE, muFileSelectpd);
+			}
+			
+			
+			
+			private function addDirFiles(e:Event):void
+			{
+				var file:File = File(e.target);
+				_lastNativePath = file.nativePath;
+				savaPath.text = _lastNativePath;
+				if(file.isDirectory)
+				{
+					for each(var item:File in file.getDirectoryListing())
+					{
+						if(item.isDirectory)
+						{
+							for each(var item1:File in item.getDirectoryListing())
+							{
+								if(item1.name.search(/\.png|\.jpg/) != -1)
+								{
+									addFile(item1.name,item1.nativePath,item.type);
+								}
+							}
+						}
+						else
+						{
+							if(item.name.search(/\.png|\.jpg/) != -1)
+							{
+								addFile(item.name,item.nativePath,item.type);
+							}
+						}
+					}
+				}
+				
+				updatePicList();
+				
+			}
+			
+			private function muFileSelectpd(e:FileListEvent):void
+			{
+				if(e.files.length == 0)
+					return;
+				_lastNativePath = e.files[0].nativePath;
+				savaPath.text = _lastNativePath;
+				for(var i:uint = 0; i < e.files.length; i++)
+				{
+					addFile(e.files[i].name,e.files[i].nativePath,e.files[i].type);
+				}
+				updatePicList();
+			}
+			
+			
+			private function picItemClickHandler(e:ListEvent):void
+			{
+				if(_imgLoader != null)
+				{
+					_imgLoader.dispose();
+					_imgLoader.removeEventListener(ImageLoader.COMPLETE,selectIamgeCompleteHandler);
+					_imgLoader = null;
+				}		
+				var obj:Object = e.itemRenderer.data ;
+				_imgLoader = new ImageLoader(obj.filePath,0,"");
+				_imgLoader.addEventListener(ImageLoader.COMPLETE,selectIamgeCompleteHandler);
+				_imgLoader.load();
+			}
+			
+			private function selectIamgeCompleteHandler(e:Event):void
+			{
+				_bitmap.bitmapData =  _imgLoader.bitmapData;
+				_bitmap.x = 500 - _bitmap.width >>1;
+				_bitmap.y = 500 - _bitmap.height >>1;
+				
+				if(xoff.text == "0" && yoff.text == "0")
+				{
+					xoff.text = (_resPoint.x - _bitmap.x).toString();
+					yoff.text = (_resPoint.y - _bitmap.y).toString();
+				}
+			}
+			
+			private function updatePicList():void
+			{
+				updateCountTip();
+				updateActions();
+				
+				
+			}
+			
+			private function updateCountTip():void
+			{
+				tips.htmlText = "总共选择了"+ piclist.length +"个文件";
+			}
+			
+			private function updateActions():void
+			{
+				_actions = new Dictionary;
+				var sort:Sort = new Sort();
+				sort.fields = [new SortField("filePath",false)]; 
+				piclist.sort = sort;
+				
+				piclist.refresh();
+				
+				var action:String = "default";
+				var j:int = 0;
+				var fy:int;
+				var filename:String;
+				for (var i:int = 0 ; i< piclist.length ; ++i)
+				{
+					var path:String = piclist[i].filePath;
+					var newaction:String ;
+					newaction = getFolderName(path);
+					if(i == 0)
+					{
+						action = newaction;
+					}
+					if(action != newaction )
+					{
+						_actions[action] = {s:j,e:i-1};
+						j = i;
+						action = newaction;
+					}
+				}
+				_actions[action] = {s:j,e:i-1};
+				
+				actionTextArea.text ="";
+				for(var key:Object in _actions)
+				{
+					actionTextArea.text += key + "\n";
+				}
+			}
+			
+			
+			private function addFile(name:String,path:String,type:String):void
+			{
+				var obj:Object = {fileName:name,filePath:path,type:type};
+				piclist.addItem(obj);
+			}
+			
+			private function deleteFile(e:Event):void
+			{
+				for each(var index:int in picsGrid.selectedIndices)
+				{
+					piclist.removeItemAt(index);
+				}
+				updatePicList();
+			}
+			
+			private function deleteAllFile(e:Event):void
+			{
+				piclist = new ArrayCollection([]);
+				_pF = [];
+				updatePicList();
+			}
+			
+			private var _finish:int =0;
+			private var _alert:Alert;
+			private function compBtnClick(e:Event):void
+			{
+				if(piclist.length == 0)
+				{
+					Alert.show("请选择文件");
+					return;
+				}
+				
+				
+				if(fanmTxt.text == "")
+				{
+					Alert.show("请输入文件名");
+					return;
+				}
+				_alert = Alert.show("正在导出","提示");
+				_finish = 0;
+				updateActions();
+				var i:int = 0;
+				var dic:Dictionary = new Dictionary;
+				_pF = [];
+				
+				for each (var pic:Object in piclist)
+				{
+					var pngLoader:ImageLoader = new ImageLoader( pic.filePath,i,pic.type);
+					pngLoader.addEventListener(ImageLoader.COMPLETE, onComplete);
+					pngLoader.addEventListener(ImageLoader.ERROR, onError);
+					dic[i] = {loader:pngLoader,timer:Math.random() *10000 };
+					pngLoader.load();
+					i++;
+				}
+				for each( var obj:Object in dic)
+				{
+					//		setTimeout(obj.loader.load,obj.timer);
+				}
+			}
+			
+			
+			private function savaSelectPathClick(e:Event):void
+			{
+				var file:File = new File();
+				file.nativePath = _lastNativePath;
+				file.browseForDirectory("选择文件夹");
+				//	file.browseForSave("另存为");
+				//	file.browseForOpen("另存为", [new FileFilter("fanm", "*.fanm")]);
+				
+				file.addEventListener(Event.SELECT,  reviseSaveSelected);
+			}
+			
+			private function reviseSaveSelected(e:Event):void
+			{
+				savaPath.text = File(e.target).nativePath as String;
+			}
+			
+			
+			private function getFolderName(path:String):String
+			{
+				var list1:Array = path.split("\\");
+				return list1[list1.length-2];
+			}
+			
+			private function getFilePreName(path:String):String
+			{
+				var list:Array = path.split(".");
+				return list.shift();
+			}			
+						
+			
+			private function mouseOver(event:MouseEvent):void
+			{
+				
+				_picContainer.addEventListener(MouseEvent.MOUSE_DOWN,mouseDown);
+				_picContainer.addEventListener(MouseEvent.MOUSE_MOVE,mouseMove);
+				_picContainer.addEventListener(MouseEvent.MOUSE_UP,mouseUp);
+			}
+			private function mouseOut(event:MouseEvent):void
+			{
+				_picContainer.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDown);
+				_picContainer.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMove);
+				_picContainer.removeEventListener(MouseEvent.MOUSE_UP,mouseUp);
+			}
+			
+			private function mouseMove(event:MouseEvent):void
+			{
+				if(event.buttonDown)
+				{
+					var x:Number=event.stageX-oldx;//移动的x坐标
+					var y:Number=event.stageY-oldy;//移动的y坐标
+					oldx=event.stageX;  //把当时的坐标 给oldx oldy
+					oldy=event.stageY;
+					_resPoint.x = int(_resPoint.x+x);
+					_resPoint.y = int(_resPoint.y+y); //move 是移动函数
+					trace(_resPoint.x,_resPoint.y);
+					xoff.text = (_resPoint.x - _bitmap.x).toString();
+					yoff.text = (_resPoint.y - _bitmap.y).toString();
+				}
+			}
+			   
+			private function mouseDown(event:MouseEvent):void
+			{
+				
+				CursorManager.removeAllCursors();
+				cursorID = CursorManager.setCursor(Icon);
+				oldx = event.stageX; // 当鼠标按下时,就把当时的坐标 给oldx oldy
+				oldy = event.stageY;
+			}
+			
+			private function mouseUp(event:MouseEvent):void
+			{
+				CursorManager.removeAllCursors();
+				
+			}
+			
+			
+			private function onError(evt:Event):void {
+				var pngLoader:ImageLoader = evt.target as ImageLoader;
+				Alert.show("序列"+pngLoader.seq+"的文件加载出错了");
+			}
+			
+			private function onComplete(evt:Event):void
+			{
+//				bar.setProgress(_finish,piclist.length);
+				var pngLoader:ImageLoader = evt.target as ImageLoader;
+				
+				_pF[pngLoader.seq] = {bitmapData:pngLoader.bitmapData,type:pngLoader.type};
+				
+				_finish++;
+				trace(_finish,piclist.length);
+				if(_finish >= piclist.length)
+				{
+					writeFAnmFiles();
+				}
+			}
+			
+			private function writeFAnmFiles():void
+			{
+				var animeCombo:AnimeCombo = new AnimeCombo();
+				for(var key:Object in _actions)
+				{
+					animeCombo.actions.push(key);
+					animeCombo.actionsFrameSE.push(_actions[key]);
+				}
+				animeCombo.actionsFrameData = _pF;
+				animeCombo.directType = int(directType.selectedItem.data);
+				animeCombo.regPoint = new Point(int(xoff.text),int(yoff.text));
+				
+				var swf:SWF = AnimeComboSwfMaker.compData("zzstAnimeModel",animeCombo,int(qualityTxt.text));
+				var swfData:ByteArray = new ByteArray();
+				
+				new SWFWriter().writeSWF(new ByteArrayOutputStream(swfData), new WritingContext(), swf);
+				
+				var fullPathAndFileName:String = savaPath.text + "\\" + fanmTxt.text + ".swf";
+				var file:File = new File( fullPathAndFileName );
+				var stream:FileStream = new FileStream();
+				stream.open(file, FileMode.WRITE);
+				stream.position = 0;
+				stream.writeBytes( swfData );
+				stream.close();			
+				PopUpManager.removePopUp(_alert);
+			}
+			
+			
+			private function change(evt:Event):void
+			{
+				_resPoint.x = int(_bitmap.x + int(xoff.text));
+				_resPoint.y = int(_bitmap.y + int(yoff.text));
+			}
+			
+			[Bindable]			
+			private var directTypeList:IList = new ArrayCollection([{label:"五方", data:0},
+				{label:"二方", data:1},
+				{label:"一方", data:2}]);
+
+		]]>
+	</fx:Script>
+	
+	<s:VGroup gap="3" width="100%" height="100%">
+		<mx:Canvas width="100%" height="71"  >
+			<mx:Label x="10" y="5" text="文件名:"/> 
+			<mx:TextInput id="fanmTxt" x="73" y="4" width="117" text="scenePlayer_2"/>
+			<mx:Label x="6" y="39" text="注册点："/>
+			<mx:TextInput id="xoff" x="73" y="37" width="51" text="250" change="change(event)"/>
+			<mx:TextInput id="yoff" x="132" y="37" width="58" text="250" change="change(event)"/>
+			<mx:Label x="229" y="6" text="压缩比:"/>
+			<mx:TextInput id="qualityTxt" x="281" y="4" width="64" text="80"/>
+			<mx:Label x="372" y="2" text="另存为文件："/>
+			<mx:TextInput x="467" y="0" width="213" id="savaPath" text="d:\"  editable="false"/>
+			<mx:Button x="707" y="1" label="浏览"  click="savaSelectPathClick(event)"/>
+			<mx:Button x="370" y="30" label="开始处理" click="compBtnClick(event);"/>
+			<s:ComboBox x="276" y="38" width="73" id="directType" selectedIndex="0" dataProvider="{directTypeList}"/>
+			<s:Label x="236" y="45" text="方位:"/>
+		</mx:Canvas>
+		<s:HGroup width="100%" height="100%">
+				<mx:UIComponent width="500" height="500"  id="picPreview">
+				</mx:UIComponent>
+				
+			<mx:Canvas width="100%" height="100%">
+				<mx:Button width="93" label="添加目录" click="selectDirClick(event);"/>
+				<mx:Button x="103" y="0" width="93" label="批量添加文件" click="selectFilesClick(event);"/>
+				<mx:Button x="199" y="0" width="93" label="删除文件" click="deleteFile(event);"/>
+				<s:Button x="301" y="1" width="50" label="重置"  click="deleteAllFile(event);"/>
+				<mx:Label id="tips" x="354" y="0"/>
+				<mx:DataGrid id="picsGrid" x="-1" y="35" width="453" height="396"
+							 allowMultipleSelection="true" change="picItemClickHandler(event)"
+							 dataProvider="{piclist}" editable="false">
+					<mx:columns>
+						<mx:DataGridColumn headerText="文件路径" dataField="filePath" />
+						<mx:DataGridColumn headerText="文件名" dataField="fileName" width="100" />
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:TextArea id="actionTextArea" x="469" y="30" width="127" height="321" editable="false"/>
+				<mx:Label x="469" y="1" text="动作列表："/>
+				
+			</mx:Canvas>
+			
+			
+			
+		</s:HGroup>
+	</s:VGroup>	
+	
+</s:Group>

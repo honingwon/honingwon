@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="204"
+		 title="切割地图"
+		 >
+	
+	<fx:Script>
+		<![CDATA[
+			import avmplus.FLASH10_FLAGS;
+			
+			import com.yans.GlobalAPI;
+			import com.yans.maps.MapConfig;
+			
+			import sszt.map.editor.components.MapEditor;
+			
+			import mx.controls.Alert;
+			import mx.core.IFlexDisplayObject;
+			import mx.graphics.codec.JPEGEncoder;
+			import mx.managers.PopUpManager;
+			
+			import spark.components.Application;
+			
+			private var _file:File = new File();		//File.desktopDirectory.nativePath
+ 
+			protected function onBrowseMap(event:MouseEvent):void
+			{  
+				_file.addEventListener(Event.SELECT, onMapBrowsed);
+				_file.addEventListener(Event.CANCEL, onCanceled);
+				_file.browseForOpen("请选择地图文件");
+			}
+			
+			private function onMapBrowsed(e:Event):void {
+				MapConfig.pathInfo = map.text = _file.nativePath;
+				onCanceled(e);
+			}
+			
+			private function onCanceled(e:Event):void {
+				_file.removeEventListener(Event.CANCEL, onCanceled);
+				_file.removeEventListener(Event.SELECT, onMapBrowsed);
+				_file.removeEventListener(Event.SELECT, onMapSavePath);
+			}
+			
+			protected function onSaveMap(event:MouseEvent):void
+			{
+				_file.addEventListener(Event.SELECT, onMapSavePath);
+				_file.addEventListener(Event.CANCEL, onCanceled); 
+				_file.browseForDirectory("请选择保存路径");
+			}
+			
+			private function onMapSavePath(e:Event):void { 
+				path.text = _file.nativePath;
+				onCanceled(e);
+			}
+			
+			protected function onCutmap(event:MouseEvent):void
+			{ 
+//				var alert:Alert = Alert.show("正在切割地图,请稍等...", "请等待..");
+//				trace(MapConfig.map.width);
+				if(!MapConfig.map || !MapConfig.map.data) return;
+				
+				var source:BitmapData = MapConfig.map.data;// new BitmapData(MapConfig.map.width, MapConfig.map.height);
+				var target:BitmapData = null;  
+				var rect:Rectangle = null;
+				var byteArr:ByteArray = null;
+				var currentIndex:int = 0;
+				
+//				source.draw(img);
+				for(var i:int = 0; i < (MapConfig.map.width / MapConfig.IMAGE_CUT_SIZE) ; i++) {
+					for(var j:int = 0; j < (MapConfig.map.height / MapConfig.IMAGE_CUT_SIZE); j ++) {
+						var Cwidth:Number = 0, Cheight:Number = 0;
+						
+						if(j == Math.floor(MapConfig.map.height / MapConfig.IMAGE_CUT_SIZE)) {
+							Cheight = MapConfig.map.height - j * MapConfig.IMAGE_CUT_SIZE;
+						}
+						else {
+							Cheight = MapConfig.IMAGE_CUT_SIZE;
+						}
+						
+						if(i == Math.floor(MapConfig.map.width / MapConfig.IMAGE_CUT_SIZE)) {
+							Cwidth = MapConfig.map.width - i * MapConfig.IMAGE_CUT_SIZE;
+						}
+						else {
+							Cwidth = MapConfig.IMAGE_CUT_SIZE;
+						}
+						
+						rect = new Rectangle(i * MapConfig.IMAGE_CUT_SIZE, j * MapConfig.IMAGE_CUT_SIZE, Cwidth, Cheight);
+						target = new BitmapData(Cwidth, Cheight, true);
+						
+
+						target.copyPixels(source, rect, new Point(0, 0));
+						
+						byteArr = new JPEGEncoder(comBar.value).encode(target);
+						byteArr.position = 0;
+						
+						var fileName:String = j + "_" + i + ".jpg";// ++currentIndex + (rjpg.selected ? ".jpg" : ".png");
+						saveImg(fileName, byteArr);
+					}
+				}
+				
+				//缩略图
+				var w:Number, h:Number;
+				var targetW:Number = Number(thumbX.text);
+				var targetH:Number = Number(thumbY.text);
+				var rate:Number = targetW / source.width;
+				if(rate > targetH / source.height) {
+					rate = targetH / source.height;
+				}
+				w = source.width * rate;
+				h = source.height * rate;
+				
+				var bmptD:BitmapData = new BitmapData(w, h);
+				var m:Matrix = new Matrix();
+				m.scale(rate, rate);
+				bmptD.draw(MapConfig.mapImg, m);
+				
+				saveImg("map.jpg", new JPEGEncoder(comBar.value).encode(bmptD));
+				
+				target = null;  
+				rect = null; 
+				currentIndex = 0; 
+				Alert.show("保存成功");
+			}
+			
+			private function saveImg(fileName:String, byteArr:ByteArray):void {
+				if(!path.text) {
+					Alert.show("请选择保存路径");
+					return;
+				}
+				_file = new File(path.text);
+				if(_file.isDirectory && !_file.exists) {
+					_file.createDirectory();
+				}
+				var f:File = _file.resolvePath(fileName);
+				GlobalAPI.fileManager.writeFile(f.nativePath, byteArr);
+//				var fs:FileStream = new FileStream();
+//				fs.openAsync(f, FileMode.WRITE);
+//				fs.writeBytes(byteArr); 
+//				fs.close();
+//				
+//				fs = null;
+//				f = null; 
+			}
+			
+			protected function onClose(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private var _preview:PreviewCompressMap;
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				if(!MapConfig.map || !MapConfig.map.data) return;
+				
+				if(!_preview) _preview = PreviewCompressMap(PopUpManager.createPopUp(parentDocument as DisplayObject,PreviewCompressMap as Class,true)); 
+				
+				var source:BitmapData = MapConfig.map.data;
+				var target:BitmapData = null; 
+				
+				var rect:Rectangle = new Rectangle(0, 0, Math.min(Capabilities.screenResolutionX, source.width), Math.min(Capabilities.screenResolutionY, source.height));
+				target = new BitmapData(rect.width, rect.height, true);
+				
+				target.copyPixels(source, rect, new Point(0, 0));
+				
+				var byteArr:ByteArray = new JPEGEncoder(comBar.value).encode(target);
+//				byteArr.position = 0;
+//				var targetBD:BitmapData = new BitmapData(rect.width, rect.height, true);
+//				rect.width -= 1000;
+//				rect.height -= 810;
+//				targetBD.setPixels(rect, byteArr);
+				GlobalAPI.fileManager.writeFile(File.applicationDirectory.nativePath + "\\preview.jpg", byteArr);
+
+				PopUpManager.addPopUp(_preview, this);
+				_preview.reLoad();
+//				PopUpManager.addPopUp(_preview, stage);  
+				
+//				_preview.imgSource = new Bitmap(targetBD);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button x="27" y="36" label="选择地图" click="onBrowseMap(event)"/>
+	<s:Button x="27" y="65" label="保存路径" click="onSaveMap(event)"/>
+	<s:Button x="90" y="122" label="切  割" click="onCutmap(event)"/>
+	<s:Button x="248" y="122" label="关  闭" click="onClose(event)"/>
+	<s:TextInput x="105" y="36" width="274" id="map"/>
+	<s:TextInput x="105" y="64" width="274" id="path"/>
+	<s:HSlider id="comBar" x="105" y="94" width="274" maximum="100" minimum="0" stepSize="10" value="80"/>
+	<s:Label id="compress" x="33" y="93" text="压缩百分比"/>
+	<s:Label x="28" y="16" text="缩略限定宽高"/>
+	<s:TextInput id="thumbX" x="105" y="10" width="55" text="467"/>
+	<s:TextInput id="thumbY" x="180" y="10" width="60" text="327"/>
+	<s:Label x="167" y="16" text="X"/>
+	<s:Button x="170" y="122" label="预  览" click="button1_clickHandler(event)"/>
+</s:Panel>

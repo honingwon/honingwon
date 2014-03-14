@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="376" height="207" title="新建地图">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.yans.maps.MapConfig;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			
+//			public static var SELECTED:String = "selected";
+			private var _file:File = new File();		//File.desktopDirectory.nativePath
+			
+			private function selectBGHandler(e:MouseEvent):void
+			{
+				_file.addEventListener(Event.SELECT, fileSelectHandler);
+				_file.addEventListener(Event.CANCEL, fileCancelHandler);
+				_file.browseForOpen("请选择地图底层文件");
+			}
+			
+			private function fileSelectHandler(e:Event):void 
+			{ 
+				_file.removeEventListener(Event.SELECT, fileSelectHandler);
+				filePath.text = _file.nativePath;
+			}
+			
+			private function fileCancelHandler(e:Event):void
+			{
+				_file.removeEventListener(Event.SELECT, fileSelectHandler);
+				_file.removeEventListener(Event.CANCEL, fileCancelHandler);
+				trace( "Browse cancelled.");
+			}
+
+			protected function submit_clickHandler(event:MouseEvent):void
+			{
+//				if(check())
+//				{
+					
+//					this.parentApplication.pathInfo = filePath.text;
+//					this.parentApplication.mapname = mapName.text;
+//					this.parentApplication.mapid = mapID.text;
+//					this.parentApplication.flag = 0;
+//					dispatchEvent(new Event(SELECTED));
+					MapConfig.pathInfo = "";
+					MapConfig.addFile(mapName.text, mapID.text, filePath.text);
+					MapConfig.mapID = mapID.text;
+					MapConfig.mapName = mapName.text;
+					PopUpManager.removePopUp(this);
+//				}
+			}
+
+
+			protected function cancel_clickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function check():Boolean
+			{
+				if(mapName.text == "")
+				{
+					Alert.show("地图名称不能为空");
+					return false;
+				}
+				else if(mapID.text == "")
+				{
+					Alert.show("地图ID不能为空");
+					return false;
+				}
+				else if(filePath.text == "")
+				{
+					Alert.show("请选择背景图片");
+					return false;
+				}
+				return true;
+			}
+
+		]]>
+	</fx:Script>
+	<s:Label x="35" y="22" text="地图名称：" width="70" height="22"/>
+	<s:Label x="36" y="60" text="地图id：" width="70" height="16"/>
+	<s:Button x="31" y="95" label="选择背景" id="selectBG" click="selectBGHandler(event)"/>
+	<s:TextInput x="123" y="19" width="202" id="mapName"/>
+	<s:TextInput x="123" y="55" width="202" id="mapID"/>
+	<s:TextInput x="123" y="93" width="202" id="filePath"/>
+	<s:Button x="78" y="143" label="确定" id="submit" click="submit_clickHandler(event)"/>
+	<s:Button x="205" y="143" label="取消" id="cancel" click="cancel_clickHandler(event)"/>
+	
+</s:Panel>

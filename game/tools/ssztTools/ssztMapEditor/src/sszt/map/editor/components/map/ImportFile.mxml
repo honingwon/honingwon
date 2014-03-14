@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="402" height="190" title="导入地图文件">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.yans.GlobalAPI;
+			import com.yans.maps.MapConfig;
+			import com.yans.maps.consts.ItemType;
+			import com.yans.views.Item;
+			import com.yans.views.ItemDataVo;
+			import com.yans.views.MapDataVo;
+			
+			import flash.filesystem.File;
+			
+			import mx.controls.Image;
+			import mx.managers.PopUpManager;
+			
+			import spark.core.SpriteVisualElement;
+			
+			private var _file:File = new File();
+			
+			protected function btnBGMap_clickHandler(event:MouseEvent):void
+			{
+				_file.addEventListener(Event.SELECT, fileSelectHandler);
+				_file.addEventListener(Event.CANCEL, fileCancelHandler);
+				_file.browseForOpen("请选择地图底层文件",[new FileFilter("jpg", "*.jpg")]);
+			}
+			
+			private function fileSelectHandler(e:Event):void 
+			{ 
+				_file.removeEventListener(Event.SELECT, fileSelectHandler);
+				tiBGMap.text = _file.nativePath;
+			}
+			
+			private function fileCancelHandler(e:Event):void
+			{
+				_file.removeEventListener(Event.SELECT, fileSelectHandler);
+				_file.removeEventListener(Event.CANCEL, fileCancelHandler);
+				trace( "Browse cancelled.");
+			}
+			
+			protected function btnDataFile_clickHandler(event:MouseEvent):void
+			{
+				_file.addEventListener(Event.SELECT, fileDataSelectHandler);
+				_file.addEventListener(Event.CANCEL, fileDataCancelHandler);
+				_file.browseForOpen("请选择地图数据文件",[new FileFilter("txt", "*.txt")]);
+			}
+			
+			private function fileDataSelectHandler(e:Event):void
+			{
+				_file.removeEventListener(Event.SELECT, fileDataSelectHandler);
+				tiDataFile.text = _file.nativePath;
+			}
+			
+			private function fileDataCancelHandler(e:Event):void
+			{
+				_file.removeEventListener(Event.SELECT, fileDataSelectHandler);
+				_file.removeEventListener(Event.CANCEL, fileDataCancelHandler);
+//				trace( "Browse cancelled.2");
+			}
+			
+			protected function submit_clickHandler(event:MouseEvent):void
+			{
+//				this.parentApplication.pathInfo = tiBGMap.text;
+				importData();
+//				this.parentApplication.imgContainer.initSpriteLayer();
+//				this.parentApplication.imgContainer.importMapData();
+//				this.parentApplication.flag2 = 1;
+				PopUpManager.removePopUp(this);
+			}
+			
+			private var urlloader:URLLoader;
+			private var xml:XML;
+			private function importData():void {
+				
+				GlobalAPI.fileManager.readFile(tiDataFile.text, function(e:ByteArray):void {
+					
+					e.uncompress();
+					MapConfig.map = new MapDataVo;
+					MapConfig.map.id = e.readUnsignedInt();
+					MapConfig.mapID = MapConfig.map.id.toString();
+					MapConfig.map.name = MapConfig.mapName = e.readUTF();
+					MapConfig.map.width = e.readUnsignedInt();
+					MapConfig.map.height = e.readUnsignedInt();
+					MapConfig.map.indexXLength = e.readUnsignedShort();
+					MapConfig.map.indexYLength = e.readUnsignedShort();
+					
+					trace("开始读取地图数据", MapConfig.map.id, MapConfig.map.name, MapConfig.map.width, MapConfig.map.height, MapConfig.map.indexXLength, MapConfig.map.indexYLength);
+					
+					MapConfig.map.source = []; 
+					var output:String = "", item:ItemDataVo;
+					for(var i:int = 0; i < MapConfig.map.indexYLength; i++) {
+						output = "";
+						if(null == MapConfig.map.source[i]) MapConfig.map.source[i] = [];
+						for(var j:int = 0; j < MapConfig.map.indexXLength; j++) {
+							
+							item = new ItemDataVo();
+							item.indexX = j;
+							item.indexY = i;
+							item.x = (j * MapConfig.TILE_SIZE);
+							item.y = (i * MapConfig.TILE_SIZE);
+							item.setType(e.readUnsignedByte());
+							MapConfig.map.source[i][j] = item; 
+							output += item.getType() + " ";
+						}
+//						trace(output);
+					}
+					MapConfig.reflesh = true;
+					MapConfig.pathInfo = "";
+					MapConfig.pathInfo = tiBGMap.text;
+					
+					var path:String = tiDataFile.text;
+//					var fileName:String = path.substring(path.lastIndexOf("\\i"), path.length);
+					path = path.replace("data.txt", "obj.xml");
+					GlobalAPI.fileManager.readTextFile(path, function(eContent:String):void {
+						
+						var xml:XML = new XML(eContent);
+						var item:Item, obj:Object;
+						for each(var x:XML in xml.point) {
+							item = new Item;
+							item.init(Number(x.@id), Number(x.@type), String(x.@path), [Number(x.@x), Number(x.@y)]);
+//							if(item.type == ItemType.JUMP_POINT) {
+//								item.vo.targetMapID = x.@targetid;
+//							}
+							obj = { 
+								id:item.id,
+								type:item.type,
+//								indexX:Number(x.@ix),
+//								indexY:Number(x.@iy),
+								item:item
+							};
+							MapConfig.map.items.push(obj);
+						}
+						
+						
+						MapConfig.mapContainer.init(MapConfig.map);
+					}); 
+					
+					
+					
+				});
+				 
+				
+			}
+			
+			private function completeHandler(e:Event):void
+			{
+				xml = XML(urlloader.data);
+				var xmllist:XMLList = xml.elements();
+				
+				for(var i:int = 0; i < xmllist.length(); i++)
+				{
+					var image:Image = new Image();
+					var xl:XMLList = this.parentApplication.resLib.xml.member.mem.(@type==xmllist[i].@type);
+					image.source = xl[0].@data.toXMLString();// xmllist[i].@type// XMLList(this.parentApplication.curNPC.path).toXMLString();
+					image.name = xmllist[i].@type + "_" + xmllist[i].@id;
+					image.x = xmllist[i].@x;
+					image.y = xmllist[i].@y;
+					image.width = 160;
+					image.height = 160;
+					this.parentApplication.imgContainer._gridLayer.addChild(image);
+					
+				}
+			}
+			
+			protected function cancel_clickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Button x="10" y="21" width="128" height="31" click="btnBGMap_clickHandler(event)" label="背景地图"/>
+	<s:Button x="10" y="60" width="128" height="31" click="btnDataFile_clickHandler(event)" label="地图文件"/>
+	<s:TextInput id="tiBGMap" x="146" y="21" width="244" height="31"/>
+	<s:TextInput id="tiDataFile" x="146" y="60" width="244" height="31"/>
+	<s:Button id="submit" x="61" y="114" width="103" height="34" click="submit_clickHandler(event)" label="确定"/>
+	<s:Button id="cancel" x="224" y="113" width="103" height="34" click="cancel_clickHandler(event)" label="取消"/>
+	
+</s:Panel>

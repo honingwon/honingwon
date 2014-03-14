@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="146" title="属性">
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[ 
+			import com.yans.maps.consts.TileType;
+			import com.yans.maps.vo.DragVo;
+			import com.yans.maps.MapConfig;
+			
+			import spark.events.TextOperationEvent;
+			private function showGrid(e:Event):void
+			{ 
+				MapConfig.showGrid = showgrid.selected;
+			}
+			
+			private function showThing(e:Event):void
+			{ 
+				MapConfig.showThing = showthing.selected;
+			}
+			
+			private function selectRect(e:Event):void
+			{ 
+				MapConfig.TILE_TYPE = TileType.RECT;
+			}
+			
+			private function selectPara(e:Event):void
+			{ 
+				MapConfig.TILE_TYPE = TileType.DIAMOND;
+			}
+
+			protected function walkArea_changeHandler(event:Event):void
+			{
+				var drawMode:int = 0;
+				if(walkArea.selected) drawMode |= MapConfig.WALKABLE;			//可行
+				if(halfAlpha.selected) drawMode |= MapConfig.HALF_TRANSPARENT;	//半透明
+				if(safeArea.selected) drawMode |= MapConfig.SAFE_PLACE;			//安全区域
+				if(stallArea.selected) drawMode |= MapConfig.STALL_PLACE;		//摆摊区
+				MapConfig.DRAW_MODE = drawMode; 
+				
+			}
+			 
+			
+			
+			
+			
+		]]>
+	</fx:Script>
+	<s:Label x="10" y="10" text="显示方式"/>
+	<s:CheckBox id="showgrid" x="79" y="10" label="显示网格" change="showGrid(event)" selected="true"
+				enabled="true"/>
+	<s:CheckBox id="showthing" x="79" y="33" label="显示物品" selected="true"
+				change="showThing(event)" enabled="true"/>
+	<s:Label x="175" y="10" text="绘制方式"/>
+	<s:RadioButton id="rect"  x="248" y="10" label="矩形" change="selectRect(event)"
+				   enabled="true" selected="true"/>
+	<s:RadioButton id="Para"  x="248" y="35" label="菱形" change="selectPara(event)"
+				   enabled="true"/>
+	<s:CheckBox id="walkArea"  x="406" y="10" label="可走区"
+				change="walkArea_changeHandler(event)" enabled="false" selected="true"/>
+	<s:CheckBox id="safeArea"  x="406" y="35" label="安全区"
+				change="walkArea_changeHandler(event)"/>
+	<s:CheckBox id="halfAlpha"  x="489" y="10" label="半透"
+				change="walkArea_changeHandler(event)"/>
+	<s:TextInput id="areaName" x="9" y="57" text="{MapConfig.gridTip}"
+				  width="522"/>
+	<s:CheckBox id="stallArea"  x="489" y="35" label="摆摊区"
+				click="walkArea_changeHandler(event)"/>
+	<s:Label  x="10" y="91" text="缩放"/>
+	<s:TextInput  x="37" y="87" text="{(MapConfig.scale * 100).toFixed(2)}"/>
+	
+</s:Panel>

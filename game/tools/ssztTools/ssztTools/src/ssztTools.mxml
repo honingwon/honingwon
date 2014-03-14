@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="1000" height="800"
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
+					   >
+	<fx:Script>
+		<![CDATA[
+			import com.yans.GlobalAPI;
+			
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			import mx.events.IndexChangedEvent;
+			
+			import spark.components.NavigatorContent;
+			import spark.effects.animation.Animation;
+			
+			import sszt.ani.components.AnimationEditor;
+			import sszt.ani.player.components.AnimationPlayer;
+			import sszt.map.editor.components.MapEditor;
+			import sszt.sti.SWFToImagesEditor;
+			
+			
+			private function onAddToStage(e:Event):void {
+				this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+				GlobalAPI.setup(this.stage); 
+				
+//				menuXML = GlobalAPI.fileManager.createXML(menuDataProvider);
+				//				tabs.selectedIndex = 7;
+//				getConfig();
+				
+				if(tabs.length ==0) {
+					var componentsList:Vector.<Class> = new Vector.<Class>;
+					//configer, frxz2Picer, swfViewer, framesMaker, mapEditor, compresser, smztPicStealer, protocolReader, tester
+					componentsList.push(MapEditor);//
+					componentsList.push(AnimationEditor);
+					componentsList.push(AnimationPlayer);
+					componentsList.push(SWFToImagesEditor);
+					var nag:NavigatorContent;
+					for each(var ccl:Class in componentsList) {
+						var el:Object = new ccl(); 
+						nag = new NavigatorContent();
+						nag.label = el.name;
+						nag.addElement(el as IVisualElement);
+						tabs.addItem(nag);
+					}					
+				}
+			}
+			
+//			protected function tabs_changeHandler(event:IndexChangedEvent):void {
+//				setConfig();
+//			}
+//			private static const CONFIG_FILENAME:String = "ssztToolsConfig.data";
+//			private function setConfig():void {
+//				var config:Object = {
+//					selectedIndex: tabs.selectedIndex
+//				};
+//				GlobalAPI.fileManager.writeTextFile(File.applicationStorageDirectory.resolvePath(CONFIG_FILENAME).nativePath, JSON.stringify(config));
+//			}
+//			
+//			private function getConfig():void {
+//				GlobalAPI.fileManager.readTextFile(File.applicationStorageDirectory.resolvePath(CONFIG_FILENAME).nativePath, function(str:String):void {
+//					if(str) {
+//						var config:Object = JSON.parse(str);
+//						if(config) {
+//							if(config.selectedIndex) {
+//								try {
+//									if(tabs.childDescriptors.length > int(config.selectedIndex)) {
+//										tabs.selectedIndex = int(config.selectedIndex);
+//									}	
+//								} 
+//								catch(error:Error) {
+//								}
+//							}
+//						}
+//					}
+//				});
+//				
+//			}
+			
+			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(!this.stage) this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+				else onAddToStage(null); 
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	
+	<mx:TabNavigator id="tabs" x="5" y="7" left="0" right="0" bottom="0" top="0"  />
+</s:WindowedApplication>

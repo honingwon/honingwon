@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" name="SWF转图片"
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 creationComplete="windowedapplication1_creationCompleteHandler(event)"
+		 >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.filesystem.File;
+			import flash.filesystem.FileMode;
+			import flash.filesystem.FileStream;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.graphics.codec.PNGEncoder;
+			
+			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+			private function selectFileClick(e:Event):void
+			{
+				var file:File = new File();
+				file.browseForOpen("选择文件", [new FileFilter("swf", "*.swf")]);
+				file.addEventListener(Event.SELECT, fileSelectpd);
+			}
+			
+			private function fileSelectpd(e:Event):void
+			{
+				swfPathTxt.text = e.currentTarget.nativePath;
+				
+			}
+			
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var p:PkgLoader = new PkgLoader(swfPathTxt.text,loadComplete);
+				p.addEventListener(LoaderEvent.LOAD_ERROR, this.loadErrorHandler);
+				p.loadSync();
+			}
+			
+			private function loadErrorHandler(evt:LoaderEvent):void
+			{
+				
+				
+			}
+			private var _source:MovieClip;
+			private var _frameCount:int;
+			private var _tmpDatas:Array;
+			private var _matrix:Matrix;
+			
+			private function loadComplete(loader1:PkgLoader):void
+			{
+				this._source = (loader1.loader.content as MovieClip);
+				this._frameCount = this._source.totalFrames;
+				this._tmpDatas = [];
+				this._matrix = new Matrix();
+				
+				
+				var bound:Rectangle;
+				var bd:BitmapData;
+				var fileData:PacckageFileData;
+				var func:Function;
+				for (var i:int = 1 ; i <= _frameCount ; ++i ) {
+					this._source.gotoAndStop(i);
+					bound = this._source.getBounds(this._source);
+					if (bound.height == 0 || bound.width == 0)
+					{
+						this._tmpDatas.push(null);
+					} 
+					else 
+					{
+						bd = new BitmapData(300, 300, true, 0);
+						this._matrix.tx = 0;
+						this._matrix.ty = 0;
+						bd.draw(this._source, this._matrix);
+						
+						fileData = new PacckageFileData(bd, bound.x, bound.y);
+						this._tmpDatas.push(fileData);
+					}
+					//					
+					//					if (this._createCount > this._frameCount){
+					//						LoaderManager.tickManager.removeTick(this);
+					//						if (this._manager){
+					//							this._manager.pathComplete(this);
+					//						};
+					//						this._datas = {
+					//							datas:this._tmpDatas,
+					//								path:this.path
+					//						};
+					//						if (this._pckgLoader){
+					//							this._pckgLoader.setQuoteDispose();
+					//							this._pckgLoader = null;
+					//							this._source = null;
+					//						};
+					//						for each (func in this.callbacks) {
+					//							if (func != null){
+					//								(func(this._datas));
+					//							};
+					//						};
+					//						this.callbacks.length = 0;
+					//						break;
+					//					}
+					//					this._currentSize = (this._currentSize + (bound.width + bound.height));
+					//					if (this._currentSize > 4000) break;
+					//					i++;
+				}
+				
+				var savaPath:String;
+				var file:File;
+				for(var frame:int=0 ; frame < _tmpDatas.length ;++frame )
+				{
+					savaPath = swfPathTxt.text.split(".")[0];
+					file = new File( savaPath+"\\"+(10000+frame).toString() + ".png");
+					var p:PacckageFileData = _tmpDatas[frame] as PacckageFileData; 
+					savaFile(file ,p.getBD());
+				}
+				Alert.show("成功导出");
+				
+			}
+			
+			
+			private function savaFile(tmpFile:File,tmpBmp:BitmapData):void
+			{
+				var fs:FileStream = new FileStream();
+				fs.open( tmpFile, FileMode.WRITE);
+				
+				var pn:PNGEncoder = new PNGEncoder();
+				var data:ByteArray = pn.encode( tmpBmp);
+				fs.writeBytes( data);
+				fs.close();
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:TextInput id="swfPathTxt" x="39" y="34" width="297"/>
+	<s:Button x="344" y="35" label="选择" click="selectFileClick(event);"/>
+	<s:Button x="445" y="36" label="导出" click="button1_clickHandler(event)"/>
+	
+</s:Group>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 name="资源浏览器"
+		 width="100%" 
+		 height="100%"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.filesystem.File;
+			
+			import mx.events.ColorPickerEvent;
+			import mx.events.FlexEvent;
+			
+			import spark.core.SpriteVisualElement;
+			
+			import sszt.core.manager.LayerManager;
+			import sszt.loader.LoaderManager;
+			import sszt.loader.fanm.FanmLoaderManager;
+			import sszt.tick.TickManager;
+			
+			private var _fanmLoaderManager:FanmLoaderManager;
+			private var _tick:TickManager;
+			private var _anmContainer:Sprite;
+			
+			private var sp:SpriteVisualElement;
+			private var _anmSprite:AnmSprite;
+			private var _bgContainer:Bitmap;
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				_anmContainer = new Sprite;
+				content.addChild(_anmContainer);
+				
+				var layermanager:LayerManager = new LayerManager(_anmContainer);
+				
+				_tick = new TickManager(layermanager);
+				LoaderManager.tickManager = _tick;
+				this._fanmLoaderManager = new FanmLoaderManager();
+				_tick.addTick(_fanmLoaderManager);
+				
+				sp = new SpriteVisualElement;
+				container.addElement(sp);
+				_bgContainer = new Bitmap;
+				sp.addChild(_bgContainer);
+			}
+			
+			private function onMapClick(e:MouseEvent):void 
+			{
+				var p2:Point = new Point(e.currentTarget.mouseX, e.currentTarget.mouseY);
+				if(_anmSprite)
+				{
+					_anmSprite.x = p2.x;
+					_anmSprite.y = p2.y;
+				}
+			}
+			protected function loadResource(event:MouseEvent):void 
+			{
+				var file:File = new File();
+				file.nativePath = "d:\\";
+				file.browseForOpen("", [new FileFilter("swf", "*.swf")]);
+				file.addEventListener(Event.SELECT, fileSelect);
+			}
+			
+			private function fileSelect(e:Event):void
+			{
+				if(e.currentTarget == null)
+					return;
+				if(_anmSprite && sp.contains(_anmSprite))
+				{
+					sp.removeChild(_anmSprite);
+					_anmSprite.dispose();
+					_anmSprite = null;
+				}
+				_anmSprite = new AnmSprite(_fanmLoaderManager,_tick,slider);
+				_anmSprite.x = 250;
+				_anmSprite.y = 250;
+				
+				
+				var f:int =  num_speed.value;
+				_anmSprite.framRate = f;
+				_anmSprite.load(e.currentTarget.nativePath);
+				sp.addChild(_anmSprite);
+			}
+			
+			
+			protected function colorpicker1_changeHandler(event:ColorPickerEvent):void {
+				container.setStyle("backgroundColor", event.color);
+			}
+			
+			
+			protected function play(event:MouseEvent):void
+			{
+				if(_anmSprite )
+				{
+					_anmSprite.state = 1;
+				}
+			}
+			
+			protected function stop(event:MouseEvent):void
+			{
+				if(_anmSprite )
+				{
+					_anmSprite.state = 0;
+				}
+			}
+			
+			protected function slider_changeHandler(event:Event):void {
+				if(_anmSprite )
+				{
+					_anmSprite.setFrameValue( slider.value);
+				}
+			}
+			protected function select_map(event:MouseEvent):void {
+				var file:File = new File();
+				file.nativePath = "d:\\";
+				file.browseForOpen("", [new FileFilter("jpg", "*.jpg")]);
+				file.addEventListener(Event.SELECT, fileSelectpd);
+			}
+			protected function clear_map(event:MouseEvent):void {
+				_bgContainer.bitmapData = null;
+				
+			}
+			protected function num_speed_changeHandler(event:Event):void {
+				var f:int =  num_speed.value;
+				if(_anmSprite)
+				{
+					_anmSprite.framRate = f;
+				}
+			}
+			
+			private function fileSelectpd(e:Event):void
+			{
+				if(e.currentTarget == null)
+					return;
+				var load:ImageLoader = new ImageLoader(e.currentTarget.nativePath);
+				load.addEventListener(ImageLoader.COMPLETE,bgCompleteHandler);
+				load.load();
+			}
+			
+			private function bgCompleteHandler(e:Event):void
+			{
+				var t:ImageLoader = e.target as ImageLoader;
+				_bgContainer.bitmapData = t.bitmapData;
+			}
+			private function frame(e:Event):void
+			{
+				if(_anmSprite)
+				{
+					_anmSprite.nextFrame();
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:UIComponent id="content" />
+	<s:BorderContainer id="container" left="10" right="10" click="onMapClick(event)" top="40" bottom="40"  borderStyle="solid" verticalCenter="0" >
+	</s:BorderContainer>
+	<s:Button x="10" y="10" label="加  载" click="loadResource(event)"  />
+	<s:Label x="454" y="14.5" text="背景色:"/>
+	<mx:ColorPicker x="499" y="10" change="colorpicker1_changeHandler(event)"
+					selectedColor="#222222"/>
+	<s:Button x="187" y="11" label="播放" click="play(event)"/>
+	<s:Button x="268" y="11" label="停止" click="stop(event)"/>
+	<s:HSlider id="slider" maximum="1" left="10" right="10" bottom="15" change="slider_changeHandler(event)" />
+	<s:Button x="541" y="10" width="55" label="背景" click="select_map(event)"/>
+	<s:Button x="611" y="10" width="71" label="清除背景" click="clear_map(event)"/>
+	<s:NumericStepper id="num_speed" x="374" y="9" change="num_speed_changeHandler(event)"  maximum="100" minimum="0" value="3"/>
+	<s:Label x="343" y="16.5" text="帧频"/>
+	<s:Button x="109" y="11" label="逐帧" click="frame(event)"/>
+	
+</s:Group>

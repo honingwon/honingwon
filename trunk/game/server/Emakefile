@@ -1,0 +1,23 @@
+{
+	[
+		'src/db/erlydb/*',
+		'src/db/emongo/*',
+		'src/db/mysql/*',
+		'src/db/json/*',
+		'src/test/*',
+		'src/db/*',
+		'src/proto/*',
+		'src/pp/*',
+		'src/mod/*',
+		'src/lib/*',
+		'src/misc/*',
+		'src/fsm/*',
+		'src/data/*',
+		'src/*'	
+	
+	]
+	,[
+		{i, "include"}
+		,{outdir, "ebin"}
+	]
+}.

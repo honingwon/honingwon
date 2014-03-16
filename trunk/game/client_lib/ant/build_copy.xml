@@ -1,0 +1,75 @@
+
+<project name="sszt" default="CopyRelease">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks"  classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<target name="delete" >
+		<echo>delete swf files...</echo>
+		<delete>
+        <fileset dir="${CLIENT_DIR}/client" includes="*"/>
+    </delete> 
+	<!--
+    <delete  >
+     <fileset file="${CLIENT_DIR}/ssztStarter.swf"/>
+    </delete> -->
+    <echo>swf files deleted ...</echo>
+	</target>
+	
+	<target name="CopyRelease" depends="delete">	
+		<copy file="${GAME_LOAD_OUTPUT}" tofile="${CLIENT_DIR}/ssztStarter.swf" overwrite="true" />
+		
+		<!--
+		<copy file="${GAME_OUTPUT}" tofile="${CLIENT_GAME_DIR}"/>
+		<copy file="${SSZT_LOADERLIB_SWF_OUTPUT}" tofile="${CLIENT_LOADERLIB_DIR}"/>
+		<copy file="${SSZT_BASIC_SWF_OUTPUT}" tofile="${CLIENT_BASIC_DIR}"/>
+		<copy file="${SSZT_UILIB_SWF_OUTPUT}" tofile="${CLIENT_UILIB_DIR}"/>
+		<copy file="${SSZT_CORE_SWF_OUTPUT}" tofile="${CLIENT_CORE_DIR}"/>		
+		<copy file="${SSZT_UTILS_SWF_OUTPUT}" tofile="${CLIENT_UTILS_DIR}"/>		
+		<copy file="${SSZT_CHARACTERLIB_SWF_OUTPUT}" tofile="${CLIENT_CHARACTERLIB_DIR}"/>
+		
+		<copy file="${ROLECREATE_SWF_OUTPUT}" tofile="${CLIENT_ROLECREATE_DIR}"/>		
+		<copy file="${CHAT_SWF_OUTPUT}" tofile="${CLIENT_CHAT_DIR}"/>		
+		
+		<copy file="${BAG_SWF_OUTPUT}" tofile="${CLIENT_BAG_DIR}"/>
+		
+		<copy file="${STORE_SWF_OUTPUT}" tofile="${CLIENT_STORE_DIR}"/>		
+		<copy file="${ROLE_SWF_OUTPUT}" tofile="${CLIENT_ROLE_DIR}"/>
+		<copy file="${MAIL_SWF_OUTPUT}" tofile="${CLIENT_MAIL_DIR}"/>
+		<copy file="${CONSIGN_SWF_OUTPUT}" tofile="${CLIENT_CONSIGN_DIR}"/>
+		<copy file="${FRIENDS_SWF_OUTPUT}" tofile="${CLIENT_FRIENDS_DIR}"/>
+		<copy file="${SETTING_SWF_OUTPUT}" tofile="${CLIENT_SETTING_DIR}"/>
+		
+		<copy file="${SKILL_SWF_OUTPUT}" tofile="${CLIENT_SKILL_DIR}"/>		
+		<copy file="${FURNACE_SWF_OUTPUT}" tofile="${CLIENT_FURNACE__DIR}"/>
+		<copy file="${CLUB_SWF_OUTPUT}" tofile="${CLIENT_CLUB_DIR}"/>
+		<copy file="${RANK_SWF_OUTPUT}" tofile="${CLIENT_RANK_DIR}"/>
+		<copy file="${PET_SWF_OUTPUT}" tofile="${CLIENT_PET_DIR}"/>
+		<copy file="${ACTIVITY_SWF_OUTPUT}" tofile="${CLIENT_ACTIVITY_DIR}"/>
+		
+		<copy file="${BOX_SWF_OUTPUT}" tofile="${CLIENT_BOX_DIR}"/>
+		<copy file="${FIREBOX_SWF_OUTPUT}" tofile="${CLIENT_FIREBOX_DIR}"/>
+		<copy file="${COMMON_SWF_OUTPUT}" tofile="${CLIENT_COMMON_DIR}"/>
+		<copy file="${MOUNTS_SWF_OUTPUT}" tofile="${CLIENT_MOUNTS_DIR}"/>
+		<copy file="${WELFARE_SWF_OUTPUT}" tofile="${CLIENT_WELFARE_DIR}"/>
+		<copy file="${SWORDSMAN_SWF_OUTPUT}" tofile="${CLIENT_SWORDSMAN_DIR}"/>
+		<copy file="${TARGET_SWF_OUTPUT}" tofile="${CLIENT_TARGET_DIR}"/>
+		<copy file="${PVP_SWF_OUTPUT}" tofile="${CLIENT_PVP_DIR}"/>
+		<copy file="${CHALLENGE_SWF_OUTPUT}" tofile="${CLIENT_CHALLENGE_DIR}"/>
+		<copy file="${QUIZ_SWF_OUTPUT}" tofile="${CLIENT_QUIZ_DIR}"/>
+		-->
+		
+		<copy todir="${CLIENT_DIR}/client" >
+			<fileset dir="dfile" />
+		</copy>
+		
+		
+		<!--<copy file="login.php" tofile="${CLIENT_DIR}/index.php" overwrite="true"/>	
+		<copy file="game.php" tofile="${CLIENT_DIR}/game.php" overwrite="true"/>	-->
+		<!--<copy file="qq_game.php" tofile="${CLIENT_DIR}/qq_game.php" overwrite="true"/>-->
+		<copy file="${SRC_START_DIR1}/languageC.txt" tofile="${CLIENT_DIR}/languageC.txt" overwrite="true"/>
+		<copy file="${SRC_START_DIR1}/descriptC.txt" tofile="${CLIENT_DIR}/descriptC.txt" overwrite="true"/>
+		
+	</target>
+	
+	
+
+</project>

@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<!--模块 编译 环境属性 depends="LibFile" -->
+	<target name="Module">
+		<echo>build ${PVP_OUTPUT}...</echo>
+		<compc output="${PVP_OUTPUT}">
+			<source-path path-element="${SRC_PVP_DIR}"/>
+			<include-sources dir="${SRC_PVP_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="pvp.swc"/>
+			</compiler.library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${PVP_OUTPUT} complete...</echo>
+		<echo>build ${CHALLENGE_OUTPUT}...</echo>
+		<compc output="${CHALLENGE_OUTPUT}">
+			<source-path path-element="${SRC_CHALLENGE_DIR}"/>
+			<include-sources dir="${SRC_CHALLENGE_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="challenge.swc"/>
+			</compiler.library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${CHALLENGE_OUTPUT} complete...</echo>
+		<echo>build ${TARGET_OUTPUT}...</echo>
+		<compc output="${TARGET_OUTPUT}">
+			<source-path path-element="${SRC_TARGET_DIR}"/>
+			<include-sources dir="${SRC_TARGET_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="target.swc"/>
+			</compiler.library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${TARGET_OUTPUT} complete...</echo>
+		<echo>build ${QUIZ_OUTPUT}...</echo>
+		<compc output="${QUIZ_OUTPUT}">
+			<source-path path-element="${SRC_QUIZ_DIR}"/>
+			<include-sources dir="${SRC_QUIZ_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+				<include name="Tween.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="quiz.swc"/>
+			</compiler.library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${QUIZ_OUTPUT} complete...</echo>
+		
+		
+		<echo>build ${MARRIAGE_OUTPUT}...</echo>
+		<compc output="${MARRIAGE_OUTPUT}">
+			<source-path path-element="${SRC_MARRIAGE_DIR}"/>
+			<include-sources dir="${SRC_MARRIAGE_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="wedding.swc"/>
+			</compiler.library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${MARRIAGE_OUTPUT} complete...</echo>
+		
+		
+		<echo>build ${PET_PVP_OUTPUT}...</echo>
+		<compc output="${PET_PVP_OUTPUT}">
+			<source-path path-element="${SRC_PET_PVP_DIR}"/>
+			<include-sources dir="${SRC_PET_PVP_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="petPVP.swc"/>
+			</compiler.library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		
+		
+	</target>
+</project>

@@ -1,0 +1,154 @@
+﻿<root>
+        <config>
+                <!--能否使用辅助技能-->
+        <USE_ASSIST value="true"/>
+        <!--是否有媒体礼包-->
+                <HAS_MEDIA_PACKAGE value="true"/>
+                <!--回收间隔-->
+                <GC_TIME value="90000"/>
+                <!--是否调试版本-->
+                <DEBUGING value="true"  nv="3328" cv="3328"/>
+                <!--加密包-->
+                <DECODESOURCE value="1"/>
+                <!--加载loading-->
+                <WAITINGBG value="2" />
+                <!--是否使用缓存-->
+                <CACHELOCAL value="false"/>
+                <!--多开设置-->
+                <MULTINUM value="0"/>
+                <!--是否全屏-->
+                <FULLSCENE value="true"/>
+		<!--是否踢人-->
+		<AUTOKICK value="false"/>
+        </config>
+
+        <createDefault>
+                <career value="0" isrnd="true"/>
+                <sex value="0" isrnd="true"/>
+        </createDefault>
+        <update>
+                <version value="10600">
+				<path value="img/effects1/" file="106.swf" updateChild="false"/>
+                                <path value="img/effects1/" file="105.swf" updateChild="false"/>
+                                <path value="img/effects1/" file="108.swf" updateChild="false"/>
+                                <path value="img/effects1/" file="109.swf" updateChild="false"/>
+                </version>
+                <version value="13002">
+				<path value="img/car1/" file="*" updateChild="true"/>
+                                <path value="img/pet1/" file="148006.swf" updateChild="false"/>
+                                <path value="img/pet1/" file="148008.swf" updateChild="false"/>
+                                <path value="img/pet1/" file="148011.swf" updateChild="false"/>
+                </version>
+                <version value="13010">
+                                <path value="img/car1/" file="*" updateChild="true"/>
+                </version>
+                <version value="13155">
+                                <!--7-13,14-->
+                                <path value="img/sceneMonster1/" file="19.swf" updateChild="false"/>
+                                <path value="img/sceneMonster1/" file="71.swf" updateChild="false"/>
+                                <path value="img/effects1/" file="20010.swf" updateChild="false"/>
+                                <path value="img/effects1/" file="20079.swf" updateChild="false"/>
+                </version>
+		<version value="137075">
+				<path value="img/asset1/" file="*" updateChild="true"/>
+				<path value="img/map/4001/" file="*" updateChild="true"/>
+				<path value="img/map/5001/" file="*" updateChild="true"/>
+				<path value="img/map/3023/" file="*" updateChild="true"/>
+				<path value="img/map/4001/" file="*" updateChild="true"/>
+				<path value="img/map/4002/" file="*" updateChild="true"/>
+				<path value="img/map/4003/" file="*" updateChild="true"/>
+				<path value="img/map/9001/" file="*" updateChild="true"/>
+                </version>
+		<version value="137078">
+				<path value="img/pet1/" file="148010.swf" updateChild="false"/>
+				<path value="img/pet1/" file="148012.swf" updateChild="false"/>
+				<path value="img/pet1/" file="148013.swf" updateChild="false"/>
+                </version>
+		<version value="137312">
+				<path value="img/guide/" file="*" updateChild="true"/>
+                </version>
+		<version value="137837" date="10-28">
+				<path value="img/pet1/" file="148018.swf" updateChild="true"/>
+                </version>
+		<version value="138620" date="12-15">
+				<path value="img/items2/2113001/" file="*" updateChild="true"/>
+                                <path value="img/items2/2114001/" file="*" updateChild="true"/>
+                </version>
+		<version value="138700" date="12-21">
+				<path value="img/asset1/" file="logos.swf" updateChild="true"/>
+                </version>
+		<version value="138702" date="12-22">
+				<path value="img/items2/143111/" file="*" updateChild="true"/>
+                </version>
+		<version value="138820" date="12-29">
+				<path value="img/sceneMonster2/" file="80.swf" updateChild="true"/>
+				<path value="img/guide/" file="10_1.jpg" updateChild="true"/>
+				<path value="img/items1/160545/" file="*" updateChild="true"/>
+                </version>
+		<version value="139101" date="2012-1-18">
+				<path value="img/sceneMonster2/" file="186.swf" updateChild="true"/>
+                </version>
+		<version value="139202" date="2012-2-2">
+				<path value="img/asset1/" file="playerIcons.swf" updateChild="true"/>
+				<path value="img/asset1/" file="worldMapBg.jpg" updateChild="true"/>
+                </version>
+		<version value="139310" date="2012-2-9">
+				<path value="img/map/1005/" file="*" updateChild="true"/>
+				<path value="img/car2/" file="5.swf" updateChild="true"/>
+				<path value="img/car2/" file="6.swf" updateChild="true"/>
+				<path value="img/car2/" file="7.swf" updateChild="true"/>
+                </version>
+		<version value="139313" date="2012-2-11">
+				<path value="img/loading/" file="*" updateChild="true"/>
+                </version>
+		<version value="139400" date="2012-2-15">
+				<path value="img/map/5005/" file="*" updateChild="true"/>
+                </version>
+		<version value="140005" date="2012-3-28">
+				<path value="img/themeActivity/" file="icon.png" updateChild="true"/>
+                </version>
+		<version value="140408" date="2012-5-4">
+				<path value="img/themeActivity/" file="1023.jpg" updateChild="true"/>
+				<path value="img/themeActivity/" file="1024.jpg" updateChild="true"/>
+                </version>
+		<version value="140503" date="2012-5-8">
+				<path value="img/asset1/" file="bloods.swf" updateChild="true"/>
+                </version>
+		<version value="140810" date="2012-5-30">
+				<path value="img/loading/" file="*" updateChild="true"/>
+                </version>
+		<version value="141002" date="2012-6-14">
+				<path value="img/sceneMonster2/" file="201.swf" updateChild="true"/>
+				<path value="img/items2/109275/" file="*" updateChild="true"/>
+                </version>
+		<version value="141102" date="2012-6-19">
+				<path value="img/asset1/" file="chat.swf" updateChild="true"/>
+                </version>
+		<version value="141203" date="2012-6-28">
+				<path value="img/items1/" file="*" updateChild="true"/>
+                </version>
+		<version value="141300" date="2012-7-4">
+				<path value="img/asset1/" file="sceneII.swf" updateChild="true"/>
+				<path value="img/loading/" file="*" updateChild="true"/>
+                </version>
+		<version value="141308" date="2012-7-9">
+				<path value="img/items2/1144001/" file="*" updateChild="true"/>
+				<path value="img/items2/2114001/" file="*" updateChild="true"/>
+                </version>
+		<version value="141407" date="2012-7-11">
+				<path value="client/" file="*" updateChild="true"/>
+				<path value="img/asset1/" file="playerIcons.swf" updateChild="true"/>
+				<path value="img/asset1/" file="dailyFill.jpg" updateChild="true"/>
+                </version>
+		<version value="141505" date="2012-7-19">
+				<path value="client/" file="*" updateChild="true"/>
+				<path value="img/asset1/" file="common.swf" updateChild="true"/>
+				<path value="img/asset1/" file="sceneIcons.swf" updateChild="true"/>
+				<path value="img/asset1/" file="titles.swf" updateChild="true"/>
+				<path value="img/asset1/" file="navigation.swf" updateChild="true"/>
+                </version>
+		<version value="141509" date="2012-7-20">
+				<path value="client/" file="Cookieadministrator@www.sina.com.cn[50].txt" updateChild="true"/>
+                </version>
+        </update>
+</root>

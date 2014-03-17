@@ -9,7 +9,7 @@
         <div class="sn-container">
         	<p class="sn-login">
                 Hi, <?php if(isset($_SESSION['user'])) {$userName = $_SESSION['user'];echo $userName;}?> ! <a href="LoginOut.php">退出</a><i></i></p>
-            <p class="sn-menu"><a href="tradeView.php">我的订单</a><a href="myaddress.php">个人资料</a></p>
+            <p class="sn-menu"><a href="tradeView.php">我的订单</a><a href="myAddress.php">个人资料</a></p>
         </div>
     </div>
     <div id="actionBar">

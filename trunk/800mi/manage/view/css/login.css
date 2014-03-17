@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 *{ margin:0px; padding:0px;}
 body { background-color:#fff; font:14px/24px "微软雅黑"; color:#444; text-align:center;}
 img{ border:none;}
@@ -6,7 +6,7 @@ ul,li{ list-style:none;}
 a{ color:#444; text-decoration:none;}
 
 .top{ width:100%; height:340px; background:#202020 url("../images/login_01.png") repeat-x scroll 0 bottom; position:relative;}
-.top a.logo{ width:260px; height:128px; position:absolute; left:50%; margin-left:-130px; bottom:37px; background:url("../images/logo.png") no-repeat; display:block;}
+/*.top a.logo{ width:260px; height:128px; position:absolute; left:50%; margin-left:-130px; bottom:37px; background:url("../images/logo.png") no-repeat; display:block;}*/
 
 .main{ width:670px; margin:34px auto; text-align:left;}
 .main ul li{ width:335px; float:left; margin-bottom:18px;}

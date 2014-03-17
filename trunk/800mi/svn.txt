@@ -1,0 +1,4 @@
+
+wanghy = cljauejaaleniAp
+
+svn://112.124.108.232/game/web/shop

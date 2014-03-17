@@ -112,7 +112,7 @@ class AccountProvider
     	}
     	$check = "SELECT account_id FROM bm_account WHERE account = '" . $account . "';";
  		if(sql_fetch_one_cell($check) != "") return new ExcuteResult(ResultStateLevel::EXCEPTION,"账号[".$account."]已存在",$account);
- 		$password = md5("a00000");
+ 		$password = md5("a123456");
  		$sql = "insert into bm_account (account,account_pasword,account_name,account_type,account_money,account_level,account_state,add_time,account_remark)";
     	$sql.= "values ('$account','$password','$name','$type','0','$level','0',UNIX_TIMESTAMP(),'$reamark')";
     	$r = sql_insert($sql);
@@ -193,8 +193,8 @@ class AccountProvider
     		return new ExcuteResult(ResultStateLevel::ERROR,"The accounts have been logged out, please re-login account","-1"); 
     	}
     	if(empty($accountID)) return new ExcuteResult(ResultStateLevel::EXCEPTION,"不存在此账号",NULL);
-    	$password = md5("a00000");
-    	$sql = "UPDATE bm_account SET account_id = '".$password."' WHERE  account_id = $accountID";
+    	$password = md5("a123456");
+    	$sql = "UPDATE bm_account SET account_pasword = '".$password."' WHERE  account_id = $accountID";
     	$r = sql_query($sql);
  		if($r != 0){
     		return new ExcuteResult(ResultStateLevel::SUCCESS,"",1);
@@ -245,9 +245,9 @@ class AccountProvider
     		$o = Array();
     		$accountMDL = new AccountMDL($r[0],$r[1],$r[2],$r[3],$r[4],
     										$r[5],$r[6],$r[7],$r[8],$r[9]);
-    		if($accountMDL->bm_Password == md5("a00000"))
-    			return "0";
-    	    else
+//    		if($accountMDL->bm_Password == md5("a00000"))
+//    			return "0";
+//    	    else
     	    	return "1";
     	}
     	else{

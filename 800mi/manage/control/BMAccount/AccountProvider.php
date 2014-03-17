@@ -112,7 +112,7 @@ class AccountProvider
     	}
     	$check = "SELECT bm_AccountID FROM bm_account WHERE bm_Account = '" . $account . "'";
  		if(sql_check($check)) return new ExcuteResult(ResultStateLevel::EXCEPTION,"账号已存在",$account);
- 		$password = md5("a00000");
+ 		$password = md5("a123456");
  		$sql = "insert into bm_account (bm_Account,bm_Password,bm_AccountName,bm_Phone,bm_Email,bm_QQ,bm_Address,bm_AccountType,bm_AccountState,bm_ARemark)";
     	$sql.= "values ('$account','$password','$name','$phone','$mail','$QQ','$adress','$type',0,'$reamark')";
     	$r = sql_insert($sql);

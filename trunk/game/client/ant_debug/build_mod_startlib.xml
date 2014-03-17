@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<target name="Module">
+		<echo>build ${GAME_STARTLIB_OUTPUT}...</echo>
+		<compc output="${GAME_STARTLIB_OUTPUT}">
+			<source-path path-element="${SRC_STARTLIB_DIR}"/>
+			<include-sources dir="${SRC_STARTLIB_DIR}" includes="*"/>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="CreateRole.swc"/>
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</compiler.library-path>
+			<compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztCacheLib.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztUILib.swc"/>
+				<include name="ssztUtils.swc"/>
+				<include name="ssztScene.swc"/>
+				<include name="ssztSceneLib.swc"/>
+				<include name="ssztTask.swc"/>
+				<include name="ssztNavigation.swc"/>
+				<include name="ssztCore.swc"/>
+				<include name="Tween.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${GAME_STARTLIB_OUTPUT} complete...</echo>
+	</target>
+</project>

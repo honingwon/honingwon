@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.club.components.clubMain.pop.sec.FacilityPanel"/>
+    <classEntry path="sszt.club.components.clubMain.pop.items.MClubCacheSelectBtn"/>
+    <classEntry path="sszt.club.components.clubMain.pop.sec.src.AppointmentView"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreAppliedItemRecordsPanel"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreExamineAndVerifyPanel"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreRecordsPanel"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreAppliedItemRecord"/>
+    <classEntry path="sszt.club.socketHandlers.ClubStoreAppliedItemRecordsSocketHandler"/>
+    <classEntry path="sszt.club.socketHandlers.ClubStoreExamineAndVerifySocketHandler"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreAppliedItemPopup"/>
+    <classEntry path="sszt.club.socketHandlers.ClubStoreApplyforItemSocketHandler"/>
+    <classEntry path="sszt.club.datas.storeInfo.AppliedItemRecordInfo"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreAppliedItemCell"/>
+    <classEntry path="sszt.club.socketHandlers.ClubStoreCancelItemRequestSocketHandler"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreExamineAndVerifyRecord"/>
+    <classEntry path="sszt.club.datas.storeInfo.ExamineAndVerifyRecordInfo"/>
+    <classEntry path="sszt.club.socketHandlers.ClubStoreDealItemRequestSocketHandler"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreRecord"/>
+    <classEntry path="sszt.club.datas.storeInfo.ClubStoreRecordInfo"/>
+    <classEntry path="sszt.club.socketHandlers.ClubRemoveMemeberReturnInfoSocketHandler"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreApplyView"/>
+    <classEntry path="sszt.club.components.clubMain.pop.store.ClubStoreExamineView"/>
+    <classEntry path="sszt.club.components.clubMain.pop.camp.ClubBossPanel"/>
+    <classEntry path="sszt.club.components.clubMain.pop.camp.ClubCollectionPanel"/>
+    <classEntry path="sszt.club.mediators.ClubCampMediator"/>
+    <classEntry path="sszt.club.datas.camp.ClubCollectionItemInfo"/>
+    <classEntry path="sszt.club.datas.camp.ClubCampInfo"/>
+    <classEntry path="sszt.club.events.ClubCampInfoUpdateEvent"/>
+    <classEntry path="sszt.club.socketHandlers.ClubCampCallSocketHandler"/>
+    <classEntry path="sszt.club.socketHandlers.ClubCampCallRemainingTimesSockectHandler"/>
+    <classEntry path="sszt.club.components.clubMain.pop.camp.ClubBossIntroView"/>
+    <classEntry path="sszt.club.components.clubMain.pop.camp.ClubCollectionIntroView"/>
+    <classEntry path="sszt.club.components.clubMain.pop.items.ClubCollectionItemView"/>
+    <classEntry path="sszt.club.components.clubMain.pop.lottery.ClubLotteryPanel"/>
+    <classEntry path="sszt.club.socketHandlers.ClubLotterySocketHandler"/>
+    <classEntry path="sszt.club.socketHandlers.ClubLotteryGetTimesSocketHandler"/>
+    <classEntry path="sszt.club.datas.lottery.ClubLotteryInfo"/>
+    <classEntry path="sszt.club.events.ClubLotteryInfoUpdateEvent"/>
+    <classEntry path="sszt.club.components.clubMain.pop.lottery.ClubLotteryCell"/>
+    <classEntry path="sszt.club.components.clubMain.pop.ActivityRaidResultPanel"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

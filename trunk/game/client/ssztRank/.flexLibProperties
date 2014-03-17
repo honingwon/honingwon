@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.rank.data.RankItemInfo"/>
+    <classEntry path="sszt.rank.components.views.individual.VeinsRankView"/>
+    <classEntry path="sszt.rank.components.views.individual.GenguRankView"/>
+    <classEntry path="sszt.rank.components.views.individual.AchieveRankView"/>
+    <classEntry path="sszt.rank.socketHandlers.DuplicateRankSocketHanders"/>
+    <classEntry path="sszt.rank.components.views.copy.SingleDefenceRankView"/>
+    <classEntry path="sszt.rank.components.views.copy.MultiClimbingTowerRankView"/>
+    <classEntry path="sszt.rank.components.itemView.copy.MultiClimbingTowerRankItemView"/>
+    <classEntry path="sszt.rank.components.itemView.copy.SingleDefenceRankItemView"/>
+    <classEntry path="sszt.rank.data.item.OtherRankItem"/>
+    <classEntry path="sszt.rank.components.views.activity.PVPRankView"/>
+    <classEntry path="sszt.rank.components.views.club.ClubRank1View"/>
+    <classEntry path="sszt.rank.components.views.pet.PetFightRankView"/>
+    <classEntry path="sszt.rank.components.views.pet.PetStairRankView"/>
+    <classEntry path="sszt.rank.components.views.pet.PetGrowRankView"/>
+    <classEntry path="sszt.rank.components.views.pet.PetQualityRankView"/>
+    <classEntry path="sszt.rank.components.views.mount.MountFightRankView"/>
+    <classEntry path="sszt.rank.components.views.mount.MountStairRankView"/>
+    <classEntry path="sszt.rank.components.views.mount.MountGrowRankView"/>
+    <classEntry path="sszt.rank.components.views.mount.MountQualityRankView"/>
+    <classEntry path="sszt.rank.components.itemView.mount.MountFightRankItemView"/>
+    <classEntry path="sszt.rank.components.views.pet.RankPetView"/>
+    <classEntry path="sszt.rank.components.views.mount.RankMountView"/>
+    <classEntry path="sszt.rank.components.itemView.pet.PetFightRankItemView"/>
+    <classEntry path="sszt.rank.components.itemView.pvp.PVPRankItemView"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

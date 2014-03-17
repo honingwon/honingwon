@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.swordsman.components.ReleaseSwordsman"/>
+    <classEntry path="sszt.swordsman.components.ReceiveSwordsman"/>
+    <classEntry path="sszt.swordsman.components.ISwordsmanPanelView"/>
+    <classEntry path="sszt.swordsman.components.CommonTop"/>
+    <classEntry path="sszt.swordsman.components.CommonBottom"/>
+    <classEntry path="sszt.swordsman.components.IPanel"/>
+    <classEntry path="sszt.swordsman.components.CommonMiddle"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

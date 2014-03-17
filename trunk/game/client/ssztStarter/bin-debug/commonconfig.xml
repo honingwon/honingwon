@@ -1,0 +1,36 @@
+<root>
+        <config>
+                <!--能否使用辅助技能-->
+        <USE_ASSIST value="true"/>
+        <!--是否有媒体礼包-->
+                <HAS_MEDIA_PACKAGE value="true"/>
+                <!--回收间隔-->
+                <GC_TIME value="90000"/>
+                <!--是否调试版本-->
+                <DEBUGING value="true" nv="3328" cv="3328"/>
+                <!--加密包-->
+                <DECODESOURCE value="1"/>
+                <!--加载loading-->
+                <WAITINGBG value="2" />
+                <!--是否使用缓存-->
+                <CACHELOCAL value="false"/>
+                <!--多开设置-->
+                <MULTINUM value="0"/>
+                <!--是否全屏-->
+                <FULLSCENE value="true"/>
+		<!--是否踢人-->
+		<AUTOKICK value="false"/>
+        </config>
+
+        <createDefault>
+                <career value="0" isrnd="true"/>
+                <sex value="0" isrnd="true"/>
+        </createDefault>
+        <update>
+
+<version value="3328">
+
+	<path value="client/" file="*" updateChild="true"/>
+</version>
+</update>
+</root>

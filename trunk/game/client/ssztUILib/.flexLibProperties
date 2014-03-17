@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.ui.mcache.btns.MCacheAssetBtn1"/>
+    <classEntry path="sszt.ui.mcache.btns.tabBtns.MCacheTabBtn1"/>
+    <classEntry path="sszt.ui.button.MAssetButton1"/>
+    <classEntry path="sszt.ui.progress.ProgressBar1"/>
+    <classEntry path="sszt.ui.mcache.icon.MCacheIcon1"/>
+    <classEntry path="sszt.ui.container.MNPCPanel"/>
+    <classEntry path="sszt.ui.container.MPanelExtra"/>
+    <classEntry path="sszt.ui.container.MPanel3"/>
+    <classEntry path="sszt.ui.container.MAlert2"/>
+    <classEntry path="sszt.ui.button.MCheckBox"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

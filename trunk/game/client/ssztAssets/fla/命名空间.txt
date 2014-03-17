@@ -1,0 +1,9 @@
+资源命名空间使用说明:
+1.使用驼峰式命名法
+2.例:
+uilib: 		ssztui.ui
+common: 	ssztui.common
+bag:		ssztui.bg
+chat:		ssztui.chat
+role:		ssztui.role
+navigation:	ssztui.navigation

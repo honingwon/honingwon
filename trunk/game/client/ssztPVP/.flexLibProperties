@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.pvp.PVPFacade"/>
+    <classEntry path="sszt.pvp.PVPModule"/>
+    <classEntry path="sszt.pvp.components.PVP1Panel"/>
+    <classEntry path="sszt.pvp.components.PVPCluePanel"/>
+    <classEntry path="sszt.pvp.components.PVPResultPanel"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

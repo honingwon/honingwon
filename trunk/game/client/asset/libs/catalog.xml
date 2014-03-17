@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+  <versions>
+    <swc version="1.2" />
+    <flex version="3.0.0" build="477" />
+  </versions>
+  <features>
+    <feature-script-deps />
+    <feature-files />
+  </features>
+  <libraries>
+    <library path="library.swf">
+      <script name="org/puremvc/as3/multicore/interfaces/INotifier" mod="1218755509241" signatureChecksum="3451868172" >
+        <def id="org.puremvc.as3.multicore.interfaces:INotifier" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/observer/Notifier" mod="1218755509084" signatureChecksum="3905728010" >
+        <def id="org.puremvc.as3.multicore.patterns.observer:Notifier" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IFacade" type="s" /> 
+        <dep id="Error" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.facade:Facade" type="e" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/ICommand" mod="1218755509225" signatureChecksum="1943289398" >
+        <def id="org.puremvc.as3.multicore.interfaces:ICommand" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/command/MacroCommand" mod="1218755509131" signatureChecksum="2351604966" >
+        <def id="org.puremvc.as3.multicore.patterns.command:MacroCommand" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Notifier" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:ICommand" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IMediator" mod="1218755509209" signatureChecksum="815507987" >
+        <def id="org.puremvc.as3.multicore.interfaces:IMediator" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/mediator/Mediator" mod="1218755509053" signatureChecksum="1317541077" >
+        <def id="org.puremvc.as3.multicore.patterns.mediator:Mediator" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Notifier" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/INotification" mod="1218755509225" signatureChecksum="413236863" >
+        <def id="org.puremvc.as3.multicore.interfaces:INotification" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/observer/Notification" mod="1218755509100" signatureChecksum="769305474" >
+        <def id="org.puremvc.as3.multicore.patterns.observer:Notification" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IController" mod="1218761020788" signatureChecksum="955282620" >
+        <def id="org.puremvc.as3.multicore.interfaces:IController" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/command/SimpleCommand" mod="1218755509131" signatureChecksum="1990161561" >
+        <def id="org.puremvc.as3.multicore.patterns.command:SimpleCommand" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Notifier" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:ICommand" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IModel" mod="1218761038178" signatureChecksum="3716246771" >
+        <def id="org.puremvc.as3.multicore.interfaces:IModel" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IProxy" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/core/Model" mod="1218760707428" signatureChecksum="620624337" >
+        <def id="org.puremvc.as3.multicore.core:Model" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IModel" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IProxy" type="s" /> 
+        <dep id="Error" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IProxy" type="e" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/core/Controller" mod="1218760666397" signatureChecksum="844377110" >
+        <def id="org.puremvc.as3.multicore.core:Controller" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IController" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IView" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:ICommand" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.core:View" type="e" /> 
+        <dep id="Error" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Observer" type="e" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IFacade" mod="1218760982163" signatureChecksum="578360152" >
+        <def id="org.puremvc.as3.multicore.interfaces:IFacade" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IProxy" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/facade/Facade" mod="1218760762209" signatureChecksum="949176213" >
+        <def id="org.puremvc.as3.multicore.patterns.facade:Facade" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IFacade" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IView" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IController" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IProxy" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IModel" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.core:Model" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Notification" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.core:View" type="e" /> 
+        <dep id="Error" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.core:Controller" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="e" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IObserver" mod="1218755509225" signatureChecksum="1060141061" >
+        <def id="org.puremvc.as3.multicore.interfaces:IObserver" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IProxy" mod="1218755509241" signatureChecksum="563442787" >
+        <def id="org.puremvc.as3.multicore.interfaces:IProxy" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/interfaces/IView" mod="1218761064959" signatureChecksum="152942236" >
+        <def id="org.puremvc.as3.multicore.interfaces:IView" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IObserver" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="s" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/core/View" mod="1218760685725" signatureChecksum="3292684811" >
+        <def id="org.puremvc.as3.multicore.core:View" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IView" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IObserver" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Observer" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="s" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IObserver" type="e" /> 
+        <dep id="Error" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Observer" type="e" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IMediator" type="e" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/proxy/Proxy" mod="1218755508959" signatureChecksum="1987571487" >
+        <def id="org.puremvc.as3.multicore.patterns.proxy:Proxy" /> 
+        <dep id="org.puremvc.as3.multicore.patterns.observer:Notifier" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IProxy" type="i" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotifier" type="i" /> 
+        <dep id="AS3" type="n" /> 
+      </script>
+      <script name="org/puremvc/as3/multicore/patterns/observer/Observer" mod="1218755509100" signatureChecksum="3265437700" >
+        <def id="org.puremvc.as3.multicore.patterns.observer:Observer" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:IObserver" type="i" /> 
+        <dep id="Object" type="i" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="org.puremvc.as3.multicore.interfaces:INotification" type="s" /> 
+      </script>
+      <digests>
+        <digest type="SHA-256" signed="false" value="97dea6b709f2b46bb0d27988877c97a12d0c0d3480b39864cd876e10921cbbad"   />
+      </digests>
+    </library>
+  </libraries>
+  <files>
+  </files>
+</swc>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<!--模块 编译 环境属性 depends="LibFile" -->
+	<target name="Module">
+		<echo>build ${MARRIAGE_OUTPUT}...</echo>
+		<compc output="${MARRIAGE_OUTPUT}">
+			<source-path path-element="${SRC_MARRIAGE_DIR}"/>
+			<include-sources dir="${SRC_MARRIAGE_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="wedding.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${MARRIAGE_OUTPUT} complete...</echo>
+	</target>
+</project>

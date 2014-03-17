@@ -1,0 +1,78 @@
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks"  classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+
+ 
+	<target name="Module">
+
+		<echo>build ${GAME_OUTPUT}...</echo>
+		<mxmlc file="${GAME_FILE}" output="${GAME_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_STARTLIB_DIR}"/>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" />
+			</compiler.library-path>	
+			<compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztScene.swc" /> 				
+				<include name="ssztSceneLib.swc" /> 
+				<include name="ssztNavigation.swc" /> 
+				<include name="ssztTask.swc" /> 	
+				<include name="Tween.swc" /> 				
+			</compiler.library-path>	
+			<external-library-path dir="${DIR}" append="true">				
+				<include name="ssztCore.swc" />
+				<include name="ssztInterface.swc" />
+				<include name="ssztUILib.swc" />	
+				<include name="ssztBasic.swc" />				
+		</external-library-path>
+		 <compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${GAME_OUTPUT} complete...</echo>
+		
+		<echo>build ${GAME_STARTLIB_OUTPUT}...</echo>
+		<compc output="${GAME_STARTLIB_OUTPUT}">
+			<source-path path-element="${SRC_STARTLIB_DIR}"/>
+			
+			<include-sources dir="${SRC_STARTLIB_DIR}" includes="RoleAlert.as,RoleBtn.as,SocketProxy.as" /> 
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="CreateRole.swc" />				
+			</compiler.library-path>			
+			 <compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc" />
+				<include name="ssztCacheLib.swc" />	
+				<include name="ssztBasic.swc" />				
+			</compiler.library-path>	
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${GAME_STARTLIB_OUTPUT} complete...</echo>
+		
+	
+		 <echo>build ${GAME_LOAD_OUTPUT}...</echo>
+		<mxmlc file="${GAME_LOAD_FILE}" output="${GAME_LOAD_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_START_DIR}"/>
+			
+			<compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztStartLib.swc" />
+				
+
+			</compiler.library-path>			
+		 <compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc" />
+				<include name="ssztCacheLib.swc" />	
+				<include name="ssztBasic.swc" />				
+	    </compiler.library-path>		
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${GAME_LOAD_OUTPUT} complete...</echo>
+  	
+
+
+		
+	   
+    
+  	</target>
+	
+
+</project>

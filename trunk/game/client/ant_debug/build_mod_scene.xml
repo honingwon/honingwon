@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Scene">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<target name="Scene">
+		<echo>build ${SCENELIB_OUTPUT}...</echo>
+		<compc output="${SCENELIB_OUTPUT}">
+			<source-path path-element="${SRC_SCENELIB_DIR}"/>
+			<include-sources dir="${SRC_SCENELIB_DIR}" includes="*"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+				<include name="ssztBasic.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SCENELIB_OUTPUT} complete...</echo>
+		<echo>build ${SCENE_OUTPUT}...</echo>
+		<compc output="${SCENE_OUTPUT}">
+			<source-path path-element="${SRC_SCENE_DIR}"/>
+			<include-sources dir="${SRC_SCENE_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztSceneLib.swc"/>
+				<include name="Tween.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="duplicate.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SCENE_OUTPUT} complete...</echo>
+	</target>
+</project>

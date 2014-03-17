@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.pet.component.PetListView"/>
+    <classEntry path="sszt.pet.component.PetSkillView"/>
+    <classEntry path="sszt.pet.component.PetListItemView"/>
+    <classEntry path="sszt.pet.event.PetEvent"/>
+    <classEntry path="sszt.pet.data.PetStateType"/>
+    <classEntry path="sszt.pet.data.PetsInfo"/>
+    <classEntry path="sszt.pet.component.PetShowPanel"/>
+    <classEntry path="sszt.pet.component.popup.PetUpgradeQualityPanel"/>
+    <classEntry path="sszt.pet.component.popup.PetUpgradeQualityLevelPanel"/>
+    <classEntry path="sszt.pet.data.PetUpgradeQualityPanelType"/>
+    <classEntry path="sszt.pet.component.cells.DanCell"/>
+    <classEntry path="sszt.pet.util.PetUtil"/>
+    <classEntry path="sszt.pet.data.PetAttrAttackType"/>
+    <classEntry path="sszt.pet.component.popup.PetRefreshSkillBooksPanel"/>
+    <classEntry path="sszt.pet.component.items.PetSkillBookItemView"/>
+    <classEntry path="sszt.pet.component.cells.PetSkillBookCell"/>
+    <classEntry path="sszt.pet.data.PetRefreshSkillBooksInfo"/>
+    <classEntry path="sszt.pet.socketHandler.PetGetSkillBookListSocketHandler"/>
+    <classEntry path="sszt.pet.socketHandler.PetRefreshSkillBooksSocketHandler"/>
+    <classEntry path="sszt.pet.socketHandler.PetGetSkillBookItemSocketHandler"/>
+    <classEntry path="sszt.pet.component.PetInheritView"/>
+    <classEntry path="sszt.pet.component.cells.PetCell"/>
+    <classEntry path="sszt.pet.component.cells.PetCellBig"/>
+    <classEntry path="sszt.pet.component.popup.PetInheritSecondaryPetsView"/>
+    <classEntry path="sszt.pet.component.popup.PetXisuPanel"/>
+    <classEntry path="sszt.pet.component.PetStairsView"/>
+    <classEntry path="sszt.pet.component.IPetView"/>
+    <classEntry path="sszt.pet.component.PetInfoView"/>
+    <classEntry path="sszt.pet.component.cells.bagSkillCell"/>
+    <classEntry path="sszt.pet.component.PetXisuView"/>
+    <classEntry path="sszt.pet.component.items.XisuItemView"/>
+    <classEntry path="sszt.pet.component.cells.PetEquipCell"/>
+    <classEntry path="sszt.pet.component.cells.PetEquipCellEmpty"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

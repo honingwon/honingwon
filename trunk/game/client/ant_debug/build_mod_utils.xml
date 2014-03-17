@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<!--模块 编译 环境属性 depends="LibFile" -->
+	<target name="Module">
+		<echo>build ${SSZT_UTILS_OUTPUT}...</echo>
+		<compc output="${SSZT_UTILS_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_UTILS_DIR}"/>
+			<include-sources dir="${SRC_SSZT_UTILS_DIR}" includes="*"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztBasic.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_UTILS_OUTPUT} complete...</echo>
+	</target>
+</project>

@@ -1,0 +1,79 @@
+
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks"  classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	
+	<target name="Scene" >		
+		<echo>build ssztScenelib swc...</echo>
+		<compc output="${SCENELIB_OUTPUT}">
+			<source-path path-element="${SRC_SCENELIB_DIR}"/>
+			<include-sources dir="${SRC_SCENELIB_DIR}" includes="*" /> 
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztInterface.swc" />
+				<include name="ssztUILib.swc" /> 
+				<include name="ssztBasic.swc" />           	
+			</external-library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ssztScenelib swc complete...</echo>
+		
+		<echo>build ssztScene swc...</echo>
+		<compc output="${SCENE_OUTPUT}">
+			<source-path path-element="${SRC_SCENE_DIR}"/>
+			<include-sources dir="${SRC_SCENE_DIR}" includes="*" /> 
+			
+			<compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztSceneLib.swc" />
+			</compiler.library-path>
+			
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 	       
+			</compiler.library-path>
+			
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztInterface.swc" />
+				<include name="ssztUILib.swc" /> 
+				<include name="ssztBasic.swc" />
+				<include name="Tween.swc" />				          	
+			</external-library-path>
+			<compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ssztScene swc complete...</echo>
+		
+	</target>
+ 
+	<target name="Module" depends="Scene">
+		<echo>build webStarter swf...</echo>
+		<mxmlc file="${START_FILE}" output="${START_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_START_DIR}"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztBasic.swc" />
+				<include name="ssztCore.swc" />	
+		</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 	
+				<include name="as3corelib.swc" />       
+			</compiler.library-path>
+
+		 <compiler.library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc" />
+				<include name="ssztCacheLib.swc" />				
+				<include name="ssztRoleCreate.swc" />
+				<include name="ssztChoiseRole.swc" />
+				<include name="ssztScene.swc" />							
+				<include name="ssztUILib.swc" /> 
+
+	    </compiler.library-path>
+		
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build webStarter swf complete...</echo>
+  	</target>
+	
+
+</project>

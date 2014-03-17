@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.store.component.PayPanel"/>
+    <classEntry path="sszt.store.component.GoodCell"/>
+    <classEntry path="sszt.store.component.QStoreView"/>
+    <classEntry path="sszt.store.component.SilverStoreView"/>
+    <classEntry path="sszt.store.component.BindSilverStoreView"/>
+    <classEntry path="sszt.store.component.QuickBuyPanel"/>
+    <classEntry path="sszt.store.component.QuickBuyItem"/>
+    <classEntry path="sszt.store.component.MyMoneyView"/>
+    <classEntry path="sszt.store.component.RefreshableStore"/>
+    <classEntry path="sszt.store.component.RefreshableItemView"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

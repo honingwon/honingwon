@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<target name="Module">
+		<echo>build ${GAME_START_OUTPUT}...</echo>
+		<mxmlc file="${GAME_START_FILE}" output="${GAME_START_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false">
+			<source-path path-element="${SRC_START_DIR1}"/>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</compiler.library-path>
+			<compiler.library-path dir="${DIR}" append="true" includes="*.swc">
+			</compiler.library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="CreateRole.swc"/>
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+				<include name="as3corelib.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+		<echo>build ${GAME_START_OUTPUT} complete...</echo>
+	</target>
+</project>

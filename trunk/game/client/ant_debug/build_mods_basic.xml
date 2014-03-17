@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Libs">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<target name="delete">
+		<echo>delete swf files...</echo>
+		<!--<delete>
+        <fileset dir="${RELEASE_DIR}" includes="*"/>
+    </delete> -->
+		<echo>swf files deleted ...</echo>
+	</target>
+	<!--类库 编译 环境属性-->
+	<target name="Libs" depends="delete">
+		<echo>build ${SSZT_TWEEN_OUTPUT}...</echo>
+		<compc output="${SSZT_TWEEN_OUTPUT}">
+			<source-path path-element="${SRC_TWEEN_DIR}"/>
+			<include-sources dir="${SRC_TWEEN_DIR}" includes="*"/>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_TWEEN_OUTPUT} complete...</echo>
+		<echo>build ${INTERFACE_OUTPUT}...</echo>
+		<compc output="${INTERFACE_OUTPUT}">
+			<source-path path-element="${SRC_INTERFACE_DIR}"/>
+			<include-sources dir="${SRC_INTERFACE_DIR}" includes="*"/>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${INTERFACE_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_BASIC_OUTPUT}...</echo>
+		<compc output="${SSZT_BASIC_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_BASIC_DIR}"/>
+			<include-sources dir="${SRC_SSZT_BASIC_DIR}" includes="*"/>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_BASIC_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_UILIB_OUTPUT}...</echo>
+		<compc output="${SSZT_UILIB_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_UILIB_DIR}"/>
+			<include-sources dir="${SRC_SSZT_UILIB_DIR}" includes="*"/>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="uilib4.swc"/>
+				<include name="uilib.swc"/>
+			</compiler.library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztBasic.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_UILIB_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_CORE_OUTPUT}...</echo>
+		<compc output="${SSZT_CORE_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_CORE_DIR}"/>
+			<include-sources dir="${SRC_SSZT_CORE_DIR}" includes="*"/>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="as3corelib.swc"/>
+				<include name="MonsterDebugger.swc"/>
+			</compiler.library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_CORE_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_CACHELIB_OUTPUT}...</echo>
+		<compc output="${SSZT_CACHELIB_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_CACHELIB_DIR}"/>
+			<include-sources dir="${SRC_SSZT_CACHELIB_DIR}" includes="*"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_CACHELIB_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_LOADERLIB_OUTPUT}...</echo>
+		<compc output="${SSZT_LOADERLIB_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_LOADERLIB_DIR}"/>
+			<include-sources dir="${SRC_SSZT_LOADERLIB_DIR}" includes="*"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztBasic.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_LOADERLIB_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_UTILS_OUTPUT}...</echo>
+		<compc output="${SSZT_UTILS_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_UTILS_DIR}"/>
+			<include-sources dir="${SRC_SSZT_UTILS_DIR}" includes="*"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztBasic.swc"/>
+			</external-library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_UTILS_OUTPUT} complete...</echo>
+		<echo>build ${SSZT_CHARACTERLIB_OUTPUT}...</echo>
+		<compc output="${SSZT_CHARACTERLIB_OUTPUT}">
+			<source-path path-element="${SRC_SSZT_CHARACTERLIB_DIR}"/>
+			<include-sources dir="${SRC_SSZT_CHARACTERLIB_DIR}" includes="*"/>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztInterface.swc"/>
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztLoaderLib.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="characterAsset.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SSZT_CHARACTERLIB_OUTPUT} complete...</echo>
+	</target>
+</project>

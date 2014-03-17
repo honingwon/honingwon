@@ -1,0 +1,9 @@
+cmd
+build_mods_basic.bat
+build_mod_scene.bat
+build_mods_a.bat
+build_mods_b.bat
+build_mods_c.bat
+build_mod_startlib.bat
+build_mod_starter.bat
+pause

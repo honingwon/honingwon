@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.quiz.QuizModule"/>
+    <classEntry path="sszt.quiz.QuizFacade"/>
+    <classEntry path="sszt.quiz.mediator.QuizMediator"/>
+    <classEntry path="sszt.quiz.event.QuizMediatorEvent"/>
+    <classEntry path="sszt.quiz.component.QuizStartRemindingPanel"/>
+    <classEntry path="sszt.quiz.component.QuizPanel"/>
+    <classEntry path="sszt.quiz.command.QuizStartCommand"/>
+    <classEntry path="sszt.quiz.command.QuizEndCommand"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

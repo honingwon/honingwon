@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.common.vip.component.sec.VipCard1"/>
+    <classEntry path="sszt.common.vip.component.sec.VipCard2"/>
+    <classEntry path="sszt.common.vip.component.sec.VipCard3"/>
+    <classEntry path="sszt.common.vip.component.cell.VipCardCell"/>
+    <classEntry path="sszt.common.vip.component.cell.Vip3ItemCell"/>
+    <classEntry path="sszt.common.vip.component.pop.BuyVipPanel"/>
+    <classEntry path="sszt.common.vip.component.cell.VipAwardCell"/>
+    <classEntry path="sszt.common.npcStore.components.ListItem"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

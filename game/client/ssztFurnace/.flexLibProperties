@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.furnace.components.BaseFurnacePanel"/>
+    <classEntry path="sszt.furnace.components.QuenchingTabPanel"/>
+    <classEntry path="sszt.furnace.socketHandlers.FurnaceQuenchingSocketHandler"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.role.components.FightUpgradePanel"/>
+    <classEntry path="sszt.role.components.FightUpgradeView"/>
+    <classEntry path="sszt.role.components.VeinsOthersPanel"/>
+    <classEntry path="sszt.role.socketHandlers.VeinsInfoSocketHandler"/>
+    <classEntry path="sszt.role.components.ExchangePanel"/>
+    <classEntry path="sszt.role.components.ExchangeItemView"/>
+    <classEntry path="sszt.role.components.ExchangeCell"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

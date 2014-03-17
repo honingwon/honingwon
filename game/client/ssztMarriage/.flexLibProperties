@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.marriage.MarriageModule"/>
+    <classEntry path="sszt.marriage.MarriageFacade"/>
+    <classEntry path="sszt.marriage.mediator.MarriageMediator"/>
+    <classEntry path="sszt.marriage.event.MarriageMediatorEvent"/>
+    <classEntry path="sszt.marriage.command.MarriageStartCommand"/>
+    <classEntry path="sszt.marriage.command.MarriageEndCommand"/>
+    <classEntry path="sszt.marriage.componet.MarriageUIStateList"/>
+    <classEntry path="sszt.marriage.componet.MarriageEntrancePanel"/>
+    <classEntry path="sszt.marriage.componet.WeddingHostPanel"/>
+    <classEntry path="sszt.marriage.componet.WeddingGuestPanel"/>
+    <classEntry path="sszt.marriage.componet.WeddingInvitationPanel"/>
+    <classEntry path="sszt.marriage.componet.WeddingCheckCashGiftPanel"/>
+    <classEntry path="sszt.marriage.componet.WeddingInvitationCardView"/>
+    <classEntry path="sszt.marriage.event.WeddingUIEvent"/>
+    <classEntry path="sszt.marriage.componet.MarryRefuseView"/>
+    <classEntry path="sszt.marriage.componet.WeddingBlessingPanel"/>
+    <classEntry path="sszt.marriage.componet.MarryTargetPanel"/>
+    <classEntry path="sszt.marriage.componet.item.WeddingCashGiftItemView"/>
+    <classEntry path="sszt.marriage.componet.item.WeddingInvitationItemView"/>
+    <classEntry path="sszt.marriage.socketHandlers.MarriageSetSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.MarryRequestSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.WeddingPresentGiftSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.WeddingGiftListUpdateSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.WeddingGetGiftSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.WeddingPresentCandiesSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.WeddingLeaveSocketHandler"/>
+    <classEntry path="sszt.marriage.componet.item.CloseView"/>
+    <classEntry path="sszt.marriage.componet.item.WeddingClassItem"/>
+    <classEntry path="sszt.marriage.socketHandlers.MarryEchoSocketHandler"/>
+    <classEntry path="sszt.marriage.mediator.MarriageManageMediator"/>
+    <classEntry path="sszt.marriage.socketHandlers.WeddingEndSocketHandler"/>
+    <classEntry path="sszt.marriage.componet.MarriageManagePanel"/>
+    <classEntry path="sszt.marriage.socketHandlers.MarriageRelationListSocketHandler"/>
+    <classEntry path="sszt.marriage.data.MarriageRelationItemInfo"/>
+    <classEntry path="sszt.marriage.data.MarriageRelationList"/>
+    <classEntry path="sszt.marriage.event.MarriageRelationEvent"/>
+    <classEntry path="sszt.marriage.socketHandlers.DivorceSocketHandler"/>
+    <classEntry path="sszt.marriage.socketHandlers.MarriageRelationChangeSocketHandler"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

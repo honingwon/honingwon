@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<!--模块 编译 环境属性 depends="LibFile" -->
+	<target name="Module">
+		<echo>build ${NAVIGATION_OUTPUT}...</echo>
+		<compc output="${NAVIGATION_OUTPUT}">
+			<source-path path-element="${SRC_NAVIGATION_DIR}"/>
+			<include-sources dir="${SRC_NAVIGATION_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+				<include name="ssztBasic.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="navigation.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${NAVIGATION_OUTPUT} complete...</echo>
+		<echo>build ${BAG_OUTPUT}...</echo>
+		<compc output="${BAG_OUTPUT}">
+			<source-path path-element="${SRC_BAG_DIR}"/>
+			<include-sources dir="${SRC_BAG_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="bag.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${BAG_OUTPUT} complete...</echo>
+		<echo>build ${CHAT_OUTPUT}...</echo>
+		<compc output="${CHAT_OUTPUT}">
+			<source-path path-element="${SRC_CHAT_DIR}"/>
+			<include-sources dir="${SRC_CHAT_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="chat.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${CHAT_OUTPUT} complete...</echo>
+		<echo>build ${SKILL_OUTPUT}...</echo>
+		<compc output="${SKILL_OUTPUT}">
+			<source-path path-element="${SRC_SKILL_DIR}"/>
+			<include-sources dir="${SRC_SKILL_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="skill.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${SKILL_OUTPUT}complete...</echo>
+		<echo>build ${TASK_OUTPUT}...</echo>
+		<compc output="${TASK_OUTPUT}">
+			<source-path path-element="${SRC_TASK_DIR}"/>
+			<include-sources dir="${SRC_TASK_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="task.swc"/>
+				<include name="followTaskPanel.swc"/>
+				<include name="npcTask.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${TASK_OUTPUT} complete...</echo>
+		<echo>build ${ROLE_OUTPUT}...</echo>
+		<compc output="${ROLE_OUTPUT}">
+			<source-path path-element="${SRC_ROLE_DIR}"/>
+			<include-sources dir="${SRC_ROLE_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+				<include name="Tween.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="role.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${ROLE_OUTPUT}complete...</echo>
+		<echo>build ${FIREBOX_OUTPUT}...</echo>
+		<compc output="${FIREBOX_OUTPUT}">
+			<source-path path-element="${SRC_FIREBOX_DIR}"/>
+			<include-sources dir="${SRC_FIREBOX_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="furnace.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${FIREBOX_OUTPUT}complete...</echo>
+		<echo>build ${FURNACE_OUTPUT}...</echo>
+		<compc output="${FURNACE_OUTPUT}">
+			<source-path path-element="${SRC_FURNACE_DIR}"/>
+			<include-sources dir="${SRC_FURNACE_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="furnace.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${FURNACE_OUTPUT}complete...</echo>
+		<echo>build ${CLUB_OUTPUT}...</echo>
+		<compc output="${CLUB_OUTPUT}">
+			<source-path path-element="${SRC_CLUB_DIR}"/>
+			<include-sources dir="${SRC_CLUB_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="club.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${CLUB_OUTPUT} complete...</echo>
+		<echo>build ${BOX_OUTPUT}...</echo>
+		<compc output="${BOX_OUTPUT}">
+			<source-path path-element="${SRC_BOX_DIR}"/>
+			<include-sources dir="${SRC_BOX_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="box.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${BOX_OUTPUT} complete...</echo>
+		<echo>build ${MAIL_OUTPUT}...</echo>
+		<compc output="${MAIL_OUTPUT}">
+			<source-path path-element="${SRC_MAIL_DIR}"/>
+			<include-sources dir="${SRC_MAIL_DIR}" includes="*"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc"/>
+			</external-library-path>
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc"/>
+				<include name="ssztBasic.swc"/>
+				<include name="ssztInterface.swc"/>
+				<include name="ssztUILib.swc"/>
+			</external-library-path>
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="mail.swc"/>
+			</compiler.library-path>
+			<compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+		<echo>build ${MAIL_OUTPUT} complete...</echo>
+	</target>
+</project>

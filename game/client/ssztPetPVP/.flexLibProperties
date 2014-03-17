@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.petpvp.PetPVPModule"/>
+    <classEntry path="sszt.petpvp.components.PetPVPMainPanel"/>
+    <classEntry path="sszt.petpvp.data.PetPVPInfo"/>
+    <classEntry path="sszt.petpvp.PetPVPFacade"/>
+    <classEntry path="sszt.petpvp.events.PetPVPMediatorEvent"/>
+    <classEntry path="sszt.petpvp.commands.PetPVPCommandStart"/>
+    <classEntry path="sszt.petpvp.mediator.PetPVPMediator"/>
+    <classEntry path="sszt.petpvp.components.PetPVPRankView"/>
+    <classEntry path="sszt.petpvp.components.PetPVPGiftView"/>
+    <classEntry path="sszt.petpvp.components.PetPVPChallengeListView"/>
+    <classEntry path="sszt.petpvp.components.PetPVPPetDetailView"/>
+    <classEntry path="sszt.petpvp.data.PetPVPPetDetailInfo"/>
+    <classEntry path="sszt.petpvp.events.PetPVPInfoEvent"/>
+    <classEntry path="sszt.petpvp.components.item.PetPVPRankItemView"/>
+    <classEntry path="sszt.petpvp.components.cell.PetCell"/>
+    <classEntry path="sszt.petpvp.components.cell.PetCellBig"/>
+    <classEntry path="sszt.petpvp.events.PetPVPUIEvent"/>
+    <classEntry path="sszt.petpvp.socketHandlers.SetPetPVPSocketHandlers"/>
+    <classEntry path="sszt.petpvp.socketHandlers.PetPVPStartChallengingSocketHandler"/>
+    <classEntry path="sszt.petpvp.socketHandlers.PetPVPChallengeTimesUpdateSocketHandler"/>
+    <classEntry path="sszt.petpvp.data.PetPVPChallengeResultInfo"/>
+    <classEntry path="sszt.petpvp.components.PetPVPFailurePanel"/>
+    <classEntry path="sszt.petpvp.socketHandlers.PetPVPStartChallengingWithClearCDSocketHandler"/>
+    <classEntry path="sszt.petpvp.socketHandlers.PetPVPMyPetsInfoUpdateSocketHandler"/>
+    <classEntry path="sszt.petpvp.socketHandlers.PetPVPRankInfoUpdateSocketHandler"/>
+    <classEntry path="sszt.petpvp.socketHandlers.PetPVPGetDailyRewardSocketHandler"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.task.components.container.TAccordion"/>
+    <classEntry path="sszt.task.components.container.accordionItems.TAccordionGroup"/>
+    <classEntry path="sszt.task.components.container.accordionItems.TAccordionGroupTitleView"/>
+    <classEntry path="sszt.task.components.container.accordionItems.TAccordionGroupItemView"/>
+    <classEntry path="sszt.task.components.sec.TaskList.TaskAcceptableDetailView"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,54 @@
+
+<project name="sszt" default="copy">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks"  classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<target name="delete" >
+		<echo>delete swf files...</echo>
+	<!--	<delete>
+        <fileset dir="${RELEASE_DIR}" includes="*"/> 
+    </delete>-->
+    <echo>swf files deleted ...</echo>
+	</target>
+	
+	<!--类库 编译 环境属性--> 
+	<target name="Module" depends="delete">
+		
+		<echo>build ${GAME_START_OUTPUT}...</echo>
+		
+	<mxmlc file="${GAME_START_FILE1}" output="${GAME_START_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_START_DIR}"/>
+	
+			<compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 	       
+			</compiler.library-path>			
+		 <compiler.library-path dir="${DIR}" append="true" includes="*.swc">
+				
+	    </compiler.library-path>		    
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="CreateRole.swc" />
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+				<include name="as3corelib.swc" /> 	 	       
+			</compiler.library-path>			
+	    <compiler.debug>true</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+		
+		<echo>build ${GAME_START_OUTPUT} complete...</echo>
+	</target>
+	
+	<target name="copy" depends="Module">
+		<echo>copy swf files...</echo>
+			<copy file="${GAME_START_OUTPUT}" tofile="${CLIENT_DIR}/ssztStarter.swf" overwrite="true" />
+			
+		
+			<copy file="${SRC_START_DIR}/languageList.txt" tofile="${CLIENT_DIR}/languageList.txt" overwrite="true"/>		
+			<copy file="${SRC_START_DIR}/name.txt" tofile="${CLIENT_DIR}/name.txt" overwrite="true"/>	
+			<copy file="${SRC_START_DIR}/languageList.txt" tofile="E:/project/sszt/client_23/game/languageList.txt" overwrite="true"/>		
+			<copy file="${SRC_START_DIR}/name.txt" tofile="E:/project/sszt/client_23/game/name.txt" overwrite="true"/>	
+			<copy file="index_debug.php" tofile="${CLIENT_DIR}/index.php" overwrite="true"/>	
+    <echo>swf files copy ...</echo>
+	</target>
+	 
+	
+
+</project>

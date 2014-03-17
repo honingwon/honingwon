@@ -1,0 +1,121 @@
+
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks"  classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	
+ 
+	<!--模块 编译 环境属性 depends="LibFile" --> 
+	<target name="Module" >
+	
+		<echo>build ${NAVIGATION_OUTPUT}...</echo>
+		<mxmlc file="${NAVIGATION_FILE}" output="${NAVIGATION_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_NAVIGATION_DIR}"/>			
+				 
+			<external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztInterface.swc" />
+				<include name="ssztUILib.swc" /> 
+				<include name="ssztBasic.swc" />
+				     	
+			</external-library-path>
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="navigation.swc" />
+				
+	    </compiler.library-path>
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${NAVIGATION_OUTPUT} complete...</echo>
+    
+		<echo>build ${BAG_OUTPUT}...</echo>
+		<mxmlc file="${BAG_FILE}" output="${BAG_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_BAG_DIR}"/>			
+			<external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />
+				<include name="ssztUILib.swc" />    
+    	
+			</external-library-path>
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="bag.swc" />
+	    </compiler.library-path>
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${BAG_OUTPUT} complete...</echo>
+    
+    <echo>build ${CHAT_OUTPUT}...</echo>
+		<mxmlc file="${CHAT_FILE}" output="${CHAT_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_CHAT_DIR}"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />      
+      	
+	    </external-library-path>
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="chat.swc" />
+	    </compiler.library-path>
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${CHAT_OUTPUT} complete...</echo>
+   
+     <echo>build ${TASK_OUTPUT}...</echo>
+		<mxmlc file="${TASK_FILE}" output="${TASK_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_TASK_DIR}"/>
+			<external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" /> 
+	    </external-library-path>
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="task.swc" />
+				<include name="followTaskPanel.swc" />
+	    </compiler.library-path>
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${TASK_OUTPUT} complete...</echo>
+   
+	<echo>build ${SKILL_OUTPUT}...</echo>
+		<mxmlc file="${SKILL_FILE}" output="${SKILL_OUTPUT}" compatibility-version="3.0" locale="en_US" static-link-runtime-shared-libraries="false" >
+			<source-path path-element="${SRC_SKILL_DIR}"/>
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="skill.swc" />
+	    </compiler.library-path>
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</mxmlc>
+    <echo>build ${SKILL_OUTPUT}complete...</echo>
+
+	</target>
+	
+	
+	
+
+</project>

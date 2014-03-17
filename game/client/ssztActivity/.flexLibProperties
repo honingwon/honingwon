@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.activity.data.ActivityRewardsType"/>
+    <classEntry path="sszt.activity.components.ActivityPvPTabPanel"/>
+    <classEntry path="sszt.activity.components.itemView.PvPItemView"/>
+    <classEntry path="sszt.activity.socketHandlers.BossInfoSocketHandler"/>
+    <classEntry path="sszt.openActivity.components.IndexItemView"/>
+    <classEntry path="sszt.openActivity.components.PayTagView"/>
+    <classEntry path="sszt.openActivity.components.item.ChestItemView"/>
+    <classEntry path="sszt.openActivity.components.ConsumTagView"/>
+    <classEntry path="sszt.openActivity.components.LevelTagView"/>
+    <classEntry path="sszt.openActivity.components.item.LevelGiftItemView"/>
+    <classEntry path="sszt.activity.components.panels.ActivityBossPanel"/>
+    <classEntry path="sszt.activity.components.DailyTagView"/>
+    <classEntry path="sszt.activity.components.panels.ActivityLevelPrompt"/>
+    <classEntry path="sszt.activity.components.panels.ActivityStartRemainingPanel"/>
+    <classEntry path="sszt.openActivity.components.item.PurpleItemView"/>
+    <classEntry path="sszt.sevenActivity.components.DetailShowPanel"/>
+    <classEntry path="sszt.sevenActivity.socketHandlers.SevenActivityGetReward2SocketHandler"/>
+    <classEntry path="sszt.exchange.GetCopperPanel"/>
+    <classEntry path="sszt.midAutumnActivity.MidAutumnActivityModule"/>
+    <classEntry path="sszt.midAutumnActivity.command.MidAutumnActivityStartCommand"/>
+    <classEntry path="sszt.midAutumnActivity.command.MidAutumnActivityEndCommand"/>
+    <classEntry path="sszt.midAutumnActivity.event.MidAutumnActivityMediatorEvent"/>
+    <classEntry path="sszt.midAutumnActivity.mediator.MidAutumnActivityMediator"/>
+    <classEntry path="sszt.midAutumnActivity.components.MidAutumnActivityPanel"/>
+    <classEntry path="sszt.midAutumnActivity.components.OnlineRewardView"/>
+    <classEntry path="sszt.midAutumnActivity.components.ExchangeView"/>
+    <classEntry path="sszt.midAutumnActivity.components.StoreView"/>
+    <classEntry path="sszt.midAutumnActivity.components.item.BigCell"/>
+    <classEntry path="sszt.midAutumnActivity.components.item.ShopItem"/>
+    <classEntry path="sszt.midAutumnActivity.components.ExchangePanel"/>
+    <classEntry path="sszt.midAutumnActivity.components.item.ExchangeItem"/>
+    <classEntry path="sszt.midAutumnActivity.components.BossFlopView"/>
+    <classEntry path="sszt.activity.components.panels.EntrustmentPanel"/>
+    <classEntry path="sszt.activity.components.panels.EntrustmentExtraPanel"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

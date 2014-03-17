@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.welfare.WelfareModule"/>
+    <classEntry path="sszt.welfare.component.WelfarePanel"/>
+    <classEntry path="sszt.welfare.command.WelfareStartCommand"/>
+    <classEntry path="sszt.welfare.command.WelfareEndCommand"/>
+    <classEntry path="sszt.welfare.mediator.WelfareMediator"/>
+    <classEntry path="sszt.welfare.event.WelfareMediatorEvent"/>
+    <classEntry path="sszt.welfare.event.WelfareEvent"/>
+    <classEntry path="sszt.welfare.component.ContinuousLoginRewardView"/>
+    <classEntry path="sszt.welfare.socket.LoginRewardReceiveSocketHandler"/>
+    <classEntry path="sszt.welfare.socket.LoginRewardExchangeSocketHandler"/>
+    <classEntry path="sszt.welfare.socket.LoginRewardLoginDaySocketHandler"/>
+    <classEntry path="sszt.welfare.component.view.ShowAllRewards"/>
+    <classEntry path="sszt.welfare.component.cell.RewardItem"/>
+    <classEntry path="sszt.welfare.component.cell.RewardItemCell"/>
+    <classEntry path="sszt.welfare.component.UpdatePostView"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

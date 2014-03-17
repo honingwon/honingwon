@@ -1,0 +1,311 @@
+
+<project name="sszt" default="Module">
+	<property file="build.properties"/>
+	<taskdef resource="flexTasks.tasks"  classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	
+ 
+	<!--模块 编译 环境属性 depends="LibFile" --> 
+	<target name="Module" >
+	
+    
+    <echo>build ${COMMON_OUTPUT}...</echo>
+	 <compc output="${COMMON_OUTPUT}">
+			<source-path path-element="${SRC_COMMON_DIR}"/>
+			<include-sources dir="${SRC_COMMON_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+				
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" /> 
+				
+				
+	    </external-library-path>
+	    <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="vip.swc" />  
+	    </compiler.library-path>
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${COMMON_OUTPUT} complete...</echo>
+    
+    
+    <echo>build ${FRIENDS_OUTPUT}...</echo>
+	 <compc output="${FRIENDS_OUTPUT}">
+			<source-path path-element="${SRC_FRIENDS_DIR}"/>
+			<include-sources dir="${SRC_FRIENDS_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />   
+				<include name="Tween.swc" />                	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="friend.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${FRIENDS_OUTPUT} complete...</echo>
+    
+    
+      <echo>build ${MOUNTS_OUTPUT}...</echo>
+	 <compc output="${MOUNTS_OUTPUT}">
+			<source-path path-element="${SRC_MOUNTS_DIR}"/>
+			<include-sources dir="${SRC_MOUNTS_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="pet.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${MOUNTS_OUTPUT} complete...</echo>
+    
+    
+     <echo>build ${CONSIGN_OUTPUT}...</echo>
+	 <compc output="${CONSIGN_OUTPUT}">
+			<source-path path-element="${SRC_CONSIGN_DIR}"/>
+			<include-sources dir="${SRC_CONSIGN_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="consign.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${CONSIGN_OUTPUT} complete...</echo>
+    
+    
+      <echo>build ${SETTING_OUTPUT}...</echo>
+	 <compc output="${SETTING_OUTPUT}">
+			<source-path path-element="${SRC_SETTING_DIR}"/>
+			<include-sources dir="${SRC_SETTING_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="setting.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${SETTING_OUTPUT} complete...</echo>
+    
+    
+      <echo>build ${STORE_OUTPUT}...</echo>
+	 <compc output="${STORE_OUTPUT}">
+			<source-path path-element="${SRC_STORE_DIR}"/>
+			<include-sources dir="${SRC_STORE_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="store.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${STORE_OUTPUT} complete...</echo>
+        
+    <echo>build ${ROLECREATE_OUTPUT}...</echo>
+	 <compc output="${ROLECREATE_OUTPUT}">
+			<source-path path-element="${SRC_ROLECREATE_DIR}"/>
+			<include-sources dir="${SRC_ROLECREATE_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="CreateRole.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${ROLECREATE_OUTPUT} complete...</echo>
+    
+    
+    <echo>build ${RANK_OUTPUT}...</echo>
+	 <compc output="${RANK_OUTPUT}">
+			<source-path path-element="${SRC_RANK_DIR}"/>
+			<include-sources dir="${SRC_RANK_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="rank.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${RANK_OUTPUT} complete...</echo>
+    
+    
+     <echo>build ${PET_OUTPUT}...</echo>
+	 <compc output="${PET_OUTPUT}">
+			<source-path path-element="${SRC_PET_DIR}"/>
+			<include-sources dir="${SRC_PET_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="pet.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${PET_OUTPUT} complete...</echo>
+    
+     <echo>build ${ACTIVITY_OUTPUT}...</echo>
+	 <compc output="${ACTIVITY_OUTPUT}">
+			<source-path path-element="${SRC_ACTIVITY_DIR}"/>
+			<include-sources dir="${SRC_ACTIVITY_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />               	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="activity.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${ACTIVITY_OUTPUT} complete...</echo>
+    
+	 <echo>build ${WELFARE_OUTPUT}...</echo>
+	 <compc output="${WELFARE_OUTPUT}">
+			<source-path path-element="${SRC_WELFARE_DIR}"/>
+			<include-sources dir="${SRC_WELFARE_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />   
+				<include name="Tween.swc" />		            	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="store.swc" />
+				<include name="vip.swc" />
+				<include name="welfare.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${WELFARE_OUTPUT} complete...</echo>
+	
+	
+	 <echo>build ${SWORDSMAN_OUTPUT}...</echo>
+	 <compc output="${SWORDSMAN_OUTPUT}">
+			<source-path path-element="${SRC_SWORDSMAN_DIR}"/>
+			<include-sources dir="${SRC_SWORDSMAN_DIR}" includes="*" /> 	
+	
+		 <external-library-path dir="${ASSETS_DIR}" append="true">  
+				<include name="PureMVC_AS3_MultiCore_1_0_5.swc" /> 
+			</external-library-path>   
+			<external-library-path dir="${DIR}" append="true">
+				<include name="ssztCore.swc" />
+				<include name="ssztBasic.swc" />	
+				<include name="ssztInterface.swc" />  
+				<include name="ssztUILib.swc" />   	            	
+	    </external-library-path>
+	     <compiler.library-path dir="${ASSETS_DIR}" append="true">
+				<include name="swordsman.swc" />
+	    </compiler.library-path>
+
+	    <compiler.debug>false</compiler.debug>
+			<compiler.optimize>true</compiler.optimize>
+		</compc>
+    <echo>build ${SWORDSMAN_OUTPUT} complete...</echo>
+	
+	
+	
+	
+	
+	
+	</target>
+	
+	
+	
+
+</project>

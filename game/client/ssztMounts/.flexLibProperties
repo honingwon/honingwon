@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.mounts.component.MountsPanel"/>
+    <classEntry path="sszt.mounts.data.MountsInfo"/>
+    <classEntry path="sszt.mounts.component.MountsFeedPanel"/>
+    <classEntry path="sszt.mounts.component.popup.UpgradeQualityLevelPanel"/>
+    <classEntry path="sszt.mounts.component.popup.UpgradeQualityPanel"/>
+    <classEntry path="sszt.mounts.component.UpgradeQualityPanelType"/>
+    <classEntry path="sszt.mounts.component.cells.DanCell"/>
+    <classEntry path="sszt.mounts.component.DanCellType"/>
+    <classEntry path="sszt.mounts.component.MountsRefreshSkillBooksPanel"/>
+    <classEntry path="sszt.mounts.component.items.MountsSkillBookItemView"/>
+    <classEntry path="sszt.mounts.socketHandler.MountsRefreshSkillBooksSocketHandler"/>
+    <classEntry path="sszt.mounts.socketHandler.MountsGetSkillBookItemSocketHandler"/>
+    <classEntry path="sszt.mounts.data.MountsRefreshSkillBooksInfo"/>
+    <classEntry path="sszt.mounts.component.cells.MountsSkillBookCell"/>
+    <classEntry path="sszt.mounts.socketHandler.MountsGetSkillBookListSocketHandler"/>
+    <classEntry path="sszt.mounts.component.items.MountsFeedQuickStoreItem"/>
+    <classEntry path="sszt.mounts.component.MountShowPanel"/>
+    <classEntry path="sszt.mounts.component.cells.MountsShowMountSkillCell"/>
+    <classEntry path="sszt.mounts.component.IMountsView"/>
+    <classEntry path="sszt.mounts.component.MountsInfoView"/>
+    <classEntry path="sszt.mounts.component.MountsStairsView"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

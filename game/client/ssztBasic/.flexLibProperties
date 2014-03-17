@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.constData.ActionType"/>
+    <classEntry path="sszt.constData.ShopID"/>
+    <classEntry path="sszt.events.PetModuleEvent"/>
+    <classEntry path="sszt.constData.BossType"/>
+    <classEntry path="sszt.constData.MapType"/>
+    <classEntry path="sszt.events.QuizModuleEvent"/>
+    <classEntry path="sszt.constData.ClubCampCallType"/>
+    <classEntry path="sszt.constData.moduleViewType.ActivityModuleViewType"/>
+    <classEntry path="sszt.constData.WeddingType"/>
+    <classEntry path="sszt.constData.WeddingCandiesType"/>
+    <classEntry path="sszt.constData.WeddingCashGiftType"/>
+    <classEntry path="sszt.constData.MarryRelationType"/>
+    <classEntry path="sszt.events.PetPVPModuleEvent"/>
+    <classEntry path="sszt.constData.PetStateType"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.template.components.Target"/>
+    <classEntry path="sszt.template.components.Achievement"/>
+    <classEntry path="sszt.target.components.TargetReward"/>
+    <classEntry path="sszt.target.components.CompleteTarget"/>
+    <classEntry path="sszt.target.components.TargetItemView"/>
+    <classEntry path="sszt.target.components.TargetType"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="sszt.chat.components.MChatAssetBtn"/>
+    <classEntry path="sszt.chat.data.ChatMountData"/>
+    <classEntry path="sszt.chat.components.clubChat.ClubChatIconView"/>
+    <classEntry path="sszt.chat.components.clubChat.ClubPlayerView"/>
+    <classEntry path="sszt.chat.components.clubChat.ClubChatPanel"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

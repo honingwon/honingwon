@@ -15,6 +15,8 @@
     <div id="actionBar">
     	<ul class="nav-main clear">
             <li class="select"><a href="index.php">首页</a></li>
+			<li><a href="add.php">添加商品</a></li>
+			<li><a href="type.php?op=1&lv=1">商品类型管理</a></li>
             <!--<li><a href="store.php">超市进货</a></li>
             <li><a href="sell.html">活动区</a></li>-->
         </ul>

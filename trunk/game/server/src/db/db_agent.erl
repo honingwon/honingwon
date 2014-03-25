@@ -22,6 +22,7 @@
 		 mp_save_user_table/3, 
 		 get_role_id_by_name/1, 
 		 get_role_ids_by_condition/1,
+		 get_role_id_by_userName/2,
 		 get_info_by_user/1, 
 		 get_info_by_id/1,
 		 get_site_and_username_by_userid/1,
@@ -140,6 +141,10 @@ get_role_id_by_name(NickName) ->
 
 get_role_ids_by_condition(Where_List) ->
 	?DB_MODULE:select_all(t_users, "id,nick_name", Where_List).
+
+%% 根据用户帐号与服务器id查询ID
+get_role_id_by_userName(UserName, ServerId) ->
+	?DB_MODULE:select_row(t_users, "id,nick_name", [{user_name, UserName},{server_id, ServerId}], [], [1]).
 
 %% 根据id查询角色昵称
 get_nick_by_id(Id) ->

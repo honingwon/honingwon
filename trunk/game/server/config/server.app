@@ -10,7 +10,7 @@
         {start_phases, []},  
   		{env, [   		
  			{mysql_config, 	  [
-						{host, "127.0.0.1"},
+						{host, "192.168.3.5"},
 						{password, "123456"},
 						{user, "root"},
 						{port, 3306},					
@@ -18,7 +18,7 @@
 						{encode, utf8}
 				  		]},
 			{mysql_template_config, [
-						{host, "127.0.0.1"},
+						{host, "192.168.3.5"},
 						{port, 3306},
 						{user, "root"},
 						{password, "123456"},
@@ -26,7 +26,7 @@
 						{encode, utf8}
 				  		]},		
 			{mysql_admin_config, [
-						{host, "127.0.0.1"},
+						{host, "192.168.3.5"},
 						{port, 3306},
 						{user, "root"},
 						{password, "123456"},

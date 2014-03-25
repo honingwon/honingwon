@@ -1,0 +1,94 @@
+﻿<root>
+	<config>
+		<!--网站地址-->
+	<SITE value = "http://192.168.3.25/webgameroot/client_res/resource/" />
+		<SITE_CLIENT value="http://192.168.3.25/webgameroot/client_res/game/" />
+		<WEBSERVICE_PATH value = "http://192.168.3.25/webgameroot/client_res/game/" />
+		<REGISTERTMP_PATH value="http://web.game.com/" />
+		
+		<!--选F地址-->
+		<SELECTSERVER_PATH value="http://web.game.com/select_server.html"/>
+		<!--官网地址-->
+		<OFFICAL_PATH value="http://web.game.com"/>
+      		<!--论坛地址-->
+       		<BBS value="http://bbs.youjia.cn/forum-487-1.html" />
+		
+		<!--注册地址,登陆地址-->
+		<REGISTER_PATH value = "http://web.game.com" />
+		<LOGIN_PATH value="http://web.game.com"/>
+	
+		<!--角色列表BGP-->
+                <backupIp value=""/>
+		<backupPort value=""/>
+                <!--游戏BGP-->
+                <backupIp2 value=""/>
+		<backupPort value=""/>
+		<!--服务器列表(合服用)-->
+		<SERVER_ID_LIST value="178"/>
+	
+
+		<!--充值地址-->
+		<FILL_PATH value="http://www.frozenpeak.net/?gamename=sszt&gameserver=S1&username={user}" isOpen="true"/>
+		
+		<!--策略配置-->
+		<POLICY_FILES>
+			<file value="http://192.168.3.25/webgameroot/client_res/game/crossdomain.xml" />
+		</POLICY_FILES>
+		
+		<!--防沉迷地址-->		
+		<ADLSPATH value = ""/>
+		<!--防沉迷配置(1不限制，2弹窗提示)-->                 
+        <ENTHRAL_TYPE value = "2"/>
+
+		<!--统计地址-->
+		<STAT_PATH value="http://web.game.com"/>
+        <STAT1_PATH value="http://web.game.com"/>
+		
+		 <!-- 开通黄钻/续费黄钻 地址  -->
+        <PAY_YELLOW_PATH value="http://pay.qq.com/qzone/index.shtml?aid=game100722626.op" />
+         <!-- 开通年费黄钻/续费年费黄钻 地址  -->
+        <PAY_YELLOW_YEAR_PATH value="http://pay.qq.com/qzone/index.shtml?aid=game100722626.yop&paytime=year" />
+                
+        <!--是否有媒体礼包-->
+		<HAS_MEDIA_PACKAGE value="true"/>
+		
+        <!--收藏网站名-->
+		<FAVORITENAME value="4399盛世遮天最好玩的Q版游戏"/>
+        <!--游戏名字-->
+        <GAMENAME value="盛世遮天"/>
+        <!--资源前缀-->
+        <ASSET_PRE value=""/>
+		<!--语言版本-->
+		<LANGUAGE value="cn"/>
+		<!--字体配置-->
+		<FONT value="宋体" size="12"/>
+		<!--当前进度-->
+		<CURRENTPROGRESS value="当前进度"/>
+
+		<!--是否有类型2媒体礼包-->
+		<HAS_MEDIA_PACKAGE_TWO value="true"/>
+		<!--类型2媒体礼包激活码地址-->
+		<LUCKCODE_TWO value = ""/>
+		<!--幸运礼包激活码地址-->
+		<LUCKCODE value=""/>
+		<!--开服日期-->
+		<OPEN_SERVER_DATE value="2012-07-23-08-30-35"/>
+		<!--客服QQ-->
+		<QQ_SERVER value="1071734879"/>
+		<!--QQ群-->
+		<QQ_GROUP value="157095000,91593764"/>
+		<!--激活码地址-->
+		<ACTIVITYCODE value=" "/>
+		<!--七天嘉年华是否显示-->
+		<IS_SHOWSEVENACTIVITY value="1"/>
+		<USE_CARD_PATH value="http://192.168.3.25/useCard.php"/>
+		<!--黄钻功能是否开启-->
+		<FUNCTION_YELLOW_ENABLED value="false" />
+		<!--好友邀请功能是否开启-->
+		<FUNCTION_FRIEND_INVITE_ENABLED value="false" />
+		<!--平台类型(1:4399,2:91wan,3:360,4:duowan,5:kuaiwan,6:ispeak)-->
+		<PLAT value="1"/>
+		<FILL_PATH2 value="http://open.3737k.com/pay.phtml"/>
+	</config>
+	
+</root>

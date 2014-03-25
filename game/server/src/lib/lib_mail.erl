@@ -57,7 +57,8 @@
 		 send_box_items_to_mail/1,
 		 send_items_to_mail/6,
 		 send_mail_multiple/6,
-		 send_mail_multiple_item/5
+		 send_mail_multiple_item/5,
+		 send_mail_multiple_item_by_userName/5
 		 ]).
 
 %% ----------------------------------
@@ -560,7 +561,36 @@ send_mail_multiple_item(ItemInfo,MoneyInfo,UserInfo,Title, Content) ->
 		 end,
 	lists:foreach(F, NameList).
 
-
+send_mail_multiple_item_by_userName(ItemInfo,MoneyInfo,UserInfo,Title, Content) ->
+	[YuanBao,Bind_YuanBao,Copper,Bind_Copper] = string:tokens(MoneyInfo, ","),
+	NameList = string:tokens(UserInfo, ","),
+	ItemList = case string:tokens(ItemInfo, ",") of
+				   ["null"] ->
+					   [];
+				   I ->
+					   I
+			   end,
+	F = fun(UInfo) ->
+				 [UserName,ServerId] = string:tokens(UInfo, "|"),
+				 case db_agent:get_role_id_by_userName(UserName,ServerId) of
+					 [] ->
+						 skip;						
+					 [User_id,Nick_Name] ->
+						 F1 = fun(Info, ItemList) ->
+									 [Template_id,Amount,Is_Bind] = string:tokens(Info, "|"),
+									  
+									 Template = data_agent:item_template_get(list_to_integer(Template_id)),
+									 Item = item_util:create_new_item(Template,list_to_integer(Amount), -100, tool:to_integer(User_id), list_to_integer(Is_Bind), 0),
+									 NewItem = item_util:add_item_and_get_id(Item),
+									 [NewItem|ItemList]
+							 end,
+						 ItemList1 = lists:foldl(F1, [], ItemList),
+						 
+						 lib_mail:send_sys_mail(?GM_NICK, ?GM_ID,  tool:to_list(Nick_Name), User_id, ItemList1, ?Mail_Type_GM,
+												Title, Content,  list_to_integer(Copper), list_to_integer(Bind_Copper), list_to_integer(YuanBao), list_to_integer(Bind_YuanBao))
+				 end
+		 end,
+	lists:foreach(F, NameList).
 
 
 send_sys_mail(Id,NickName,Title, Content) ->

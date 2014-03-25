@@ -140,7 +140,7 @@ init_data() ->
 
 get_reward(PlayerStatus,_ID) ->
 	Now = misc_timer:now_seconds(), 
-	DiffDates = util:get_diff_days(config:get_service_start_time(), Now) + 1,
+	DiffDates = util:get_diff_days(PlayerStatus#ets_users.register_date, Now) + 1,%%config:get_service_start_time(),
 	ID = DiffDates,
 			case ID of
 				1 ->
@@ -218,7 +218,7 @@ get_reward1(PlayerStatus,ID) ->
 			Value = 1 bsl ID,
 			if
 				PlayerStatus#ets_users.seven_award2_id band Value =:= 0 ->
-					case lists:keyfind({1,PlayerStatus#ets_users.career}, 1, TemplateInfo#ets_activity_seven_template.awards) of
+					case lists:keyfind({PlayerStatus#ets_users.career,1}, 1, TemplateInfo#ets_activity_seven_template.awards) of
 						{_,TemplateId} ->
 							gen_server:cast(PlayerStatus#ets_users.other_data#user_other.pid_item,
 									{'activity_seven_add_item',
@@ -292,7 +292,7 @@ get_reward1(PlayerStatus,ID) ->
 %% 全民奖励
 get_day_reward(PlayerStatus) ->
 	Now = misc_timer:now_seconds(), 
-	DiffDates = util:get_diff_days(config:get_service_start_time(), Now) + 1,
+	DiffDates = util:get_diff_days(PlayerStatus#ets_users.register_date, Now) + 1,%%config:get_service_start_time(),
 	ID = DiffDates,
 			case ID of
 				1 ->

@@ -696,15 +696,15 @@ handle(?PP_PLAYER_YELLOW_GET_REWARD,PlayerStatus,[Type]) ->
 %%7天活动列表
 handle(?PP_ACTIVE_SEVEN,PlayerStatus,[]) ->
 %% 	List = mod_activity_seven:get_info(),
-	{ok,Bin} = pt_20:write(?PP_ACTIVE_SEVEN,[PlayerStatus#ets_users.seven_award_id,PlayerStatus#ets_users.seven_award2_id]),
+	{ok,Bin} = pt_20:write(?PP_ACTIVE_SEVEN,[PlayerStatus#ets_users.register_date,PlayerStatus#ets_users.seven_award_id,PlayerStatus#ets_users.seven_award2_id]),
 	lib_send:send_to_sid(PlayerStatus#ets_users.other_data#user_other.pid_send,Bin),
 	ok;
 
 %%7天活动获取奖励
 handle(?PP_ACTIVE_SEVEN_GETREWARD,PlayerStatus,[ID]) ->
-	case  list_activity_seven:get_reward(PlayerStatus,ID) of
+	case  lib_activity_seven:get_reward(PlayerStatus,ID) of
 		{ok,NewPlayerStatus} ->
-			{ok,Bin} = pt_20:write(?PP_ACTIVE_SEVEN,[NewPlayerStatus#ets_users.seven_award_id,NewPlayerStatus#ets_users.seven_award2_id]),
+			{ok,Bin} = pt_20:write(?PP_ACTIVE_SEVEN,[NewPlayerStatus#ets_users.register_date,NewPlayerStatus#ets_users.seven_award_id,NewPlayerStatus#ets_users.seven_award2_id]),
 			{ok,Bin1} = pt_20:write(?PP_ACTIVE_SEVEN_GETREWARD,[1]),
 			lib_send:send_to_sid(PlayerStatus#ets_users.other_data#user_other.pid_send,<<Bin/binary,Bin1/binary>>),
 			{update, NewPlayerStatus};
@@ -727,7 +727,7 @@ handle(?PP_ACTIVE_SEVEN_GET_ALL_REWARD,PlayerStatus,[_ID]) ->
 				true ->
 					NewPlayerStatus1 = NewPlayerStatus
 			end,
-			{ok,Bin} = pt_20:write(?PP_ACTIVE_SEVEN,[NewPlayerStatus#ets_users.seven_award_id,NewPlayerStatus#ets_users.seven_award2_id]),
+			{ok,Bin} = pt_20:write(?PP_ACTIVE_SEVEN,[NewPlayerStatus1#ets_users.register_date,NewPlayerStatus1#ets_users.seven_award_id,NewPlayerStatus1#ets_users.seven_award2_id]),
 			{ok,Bin1} = pt_20:write(?PP_ACTIVE_SEVEN_GET_ALL_REWARD,[1]),
 			lib_send:send_to_sid(NewPlayerStatus1#ets_users.other_data#user_other.pid_send,<<Bin/binary,Bin1/binary>>),
 			{update,NewPlayerStatus1};

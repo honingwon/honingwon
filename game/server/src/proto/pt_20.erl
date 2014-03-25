@@ -557,8 +557,8 @@ write(?PP_PLAYER_YELLOW_GET_REWARD, [Re,Type]) ->
 %% 		end,
 %% 	Data = tool:to_binary([F(X) || X <- List]),
 %%    {ok, pt:pack(?PP_ACTIVE_SEVEN, <<GetValue:32,Size:8,Data/binary>>)};
-write(?PP_ACTIVE_SEVEN, [GetValue,GetValue2]) ->
-   {ok, pt:pack(?PP_ACTIVE_SEVEN, <<GetValue:32,GetValue2:32>>)};
+write(?PP_ACTIVE_SEVEN, [RegistTiem,GetValue,GetValue2]) ->
+   {ok, pt:pack(?PP_ACTIVE_SEVEN, <<RegistTiem:32,GetValue:32,GetValue2:32>>)};
 
 write(?PP_ACTIVE_SEVEN_GETREWARD, [Re]) ->
   {ok, pt:pack(?PP_ACTIVE_SEVEN_GETREWARD, <<Re:8>>)};

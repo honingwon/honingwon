@@ -172,6 +172,10 @@ treate_http_command(Cmd, Param, Socket) ->
 				[ItemInfo,MoneyInfo,UserInfo,Title, Content] = string:tokens(Parm, "="),
 				lib_mail:send_mail_multiple_item(http_lib:url_decode(ItemInfo),http_lib:url_decode(MoneyInfo),http_lib:url_decode(UserInfo),http_lib:url_decode(Title),http_lib:url_decode( Content)),
 				gen_tcp:send(Socket, <<"success">>);
+			["admin_send_gift2", Parm] ->
+				[ItemInfo,MoneyInfo,UserInfo,Title, Content] = string:tokens(Parm, "="),
+				lib_mail:send_mail_multiple_item_by_userName(http_lib:url_decode(ItemInfo),http_lib:url_decode(MoneyInfo),http_lib:url_decode(UserInfo),http_lib:url_decode(Title),http_lib:url_decode( Content)),
+				gen_tcp:send(Socket, <<"success">>);
 			["send_sys_mail",Parm] ->
 				[Search,Title, Content] = string:tokens(Parm, "="),
 				[AccountString,Action,Min_lev,Max_lev] = string:tokens(http_lib:url_decode(Search), "$"),

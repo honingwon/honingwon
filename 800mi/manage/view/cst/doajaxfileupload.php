@@ -45,7 +45,11 @@
 			//for security reason, we force to remove all uploaded file
 			//@unlink($_FILES['fileToUpload']);		
 			
-			move_uploaded_file($_FILES[$fileElementName]["tmp_name"], "upload/" . $fileName .".jpg");
+			if(!move_uploaded_file($_FILES[$fileElementName]["tmp_name"], "upload/" . $fileName .".jpg"))
+			{
+					echo "{error:move_uploaded_file".$_FILES[$fileElementName]["tmp_name"]."}";
+			}
+			
 	}		
 	echo "{";
 	echo				"error: '" . $error . "',\n";

@@ -91,6 +91,7 @@
             <input type="password" class="input pwd" name="password" id="password"/>            
             <p class="rememb"><label><input type="checkbox" />记住 (两周免登录)</label><span id="msg" class="error"></span></p>
             <p class="btn"><button type="submit" onclick ="return btnSubmit();" name="Submit" value="登录">登录</button></p>
+			<p style="padding:5px 0 0"><a href="reg.php">免费注册</a></p>
         </div>
     </div></form>
 </div>

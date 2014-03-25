@@ -64,7 +64,7 @@
 
 							<input size='25' class="text" type="hidden" name="picUrl" id="picUrl" />
 							<span id="fileToUploadWrapper">
-								<input name="fileToUpload" id="fileToUpload" style="width:150px" type="file" /> 
+								<input name="fileToUpload" id="fileToUpload" style="width:150px" type="file"  accept="image/jpg"/> 
 								<button id="doUpload">上传</button>
 							</span>
 							<span class="ui-form-explain"></span>

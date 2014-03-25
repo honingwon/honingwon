@@ -142,8 +142,11 @@ package sszt.scene.components.ActivityIcon
 		private function setData():void
 		{
 			_activeData = GlobalData.activeStartInfo.activeTimeInfo[_activeId];
-			_actvieWillOpenTime = _activeData.time;
-			show(_activeData.state,_actvieWillOpenTime,true);
+			if(_activeData)
+			{
+				_actvieWillOpenTime = _activeData.time;
+				show(_activeData.state,_actvieWillOpenTime,true);
+			}
 		}
 		
 		private function overHandler(e:MouseEvent):void

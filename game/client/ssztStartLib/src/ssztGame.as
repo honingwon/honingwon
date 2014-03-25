@@ -307,6 +307,7 @@ package
 			GlobalData.fillPath2 = String(_config.config.FILL_PATH2.@value);
 			GlobalData.QQ_GRUOP = String(_config.config.QQ_GROUP.@value);
 			GlobalData.QQ_SERVER = String(_config.config.QQ_SERVER.@value);
+			GlobalData.useCardPath = String(_config.config.USE_CARD_PATH.@value);
 			GlobalData.canUseAssist = String(_commonConfig.config.USE_ASSIST.@value) == "true";
 			GlobalData.hasMediaPackage = String(_config.config.HAS_MEDIA_PACKAGE.@value) == "true";
 			GlobalData.hasMediaPackageTwo = String(_config.config.HAS_MEDIA_PACKAGE_TWO.@value) == "true";

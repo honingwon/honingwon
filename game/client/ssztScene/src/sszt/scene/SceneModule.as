@@ -14,12 +14,14 @@ package sszt.scene
 	import sszt.core.manager.LanguageManager;
 	import sszt.core.module.BaseModule;
 	import sszt.core.socketHandlers.GetGameReleaseTimeSocketHandler;
+	import sszt.core.socketHandlers.activity.SevenActivityInfoSocketHandler;
 	import sszt.core.socketHandlers.bag.PetItemPlaceUpdateSocketHandler;
 	import sszt.core.socketHandlers.cityCraft.CityCraftAuctionStateSocketHandler;
 	import sszt.core.socketHandlers.common.GetLoginDataSocketHandler;
 	import sszt.core.socketHandlers.marriage.WeddingInfoUpdateSocketHandler;
 	import sszt.core.utils.SetModuleUtils;
 	import sszt.core.view.entrustment.EntrustmentAttentionView;
+	import sszt.events.ActivityEvent;
 	import sszt.events.CommonModuleEvent;
 	import sszt.events.NavigationModuleEvent;
 	import sszt.events.SceneModuleEvent;
@@ -464,6 +466,7 @@ package sszt.scene
 			ShowQuickIconTimer.getInstance().startTimer(0);
 			
 			GetGameReleaseTimeSocketHandler.send();
+			SevenActivityInfoSocketHandler.send();
 //			TitleGuidePanel.getInstance().show();
 			
 //			shenMoGuideIconView = new ShenMoGuideIconView();
@@ -588,6 +591,7 @@ package sszt.scene
 			
 			ModuleEventDispatcher.addSceneEventListener(SceneModuleEvent.SHOW_CLIMBING_TOWER,showClimbingTowerHandler);
 			ModuleEventDispatcher.addCommonModuleEventListener(CommonModuleEvent.RELEASE_TIME_GOT,releaseTimeGotHandler);
+			ModuleEventDispatcher.addModuleEventListener(ActivityEvent.SEVEN_ACTIVITY_INFO,seventActivityInfoHandler);
 			ModuleEventDispatcher.addSceneEventListener(SceneModuleEvent.SHOW_RESOURCE_WAR_ENTRANCE_PANEL,showResourceWarEntranceHandler);
 			ModuleEventDispatcher.addSceneEventListener(SceneModuleEvent.SHOW_PVP_FIRST_ENTRANCE_PANEL,showPvpFirstEntranceHandler);
 			ModuleEventDispatcher.addSceneEventListener(SceneModuleEvent.SHOW_GUILD_PVP_ENTER_PANEL,showGuildPVPEntranceHandler);
@@ -602,6 +606,7 @@ package sszt.scene
 		override protected function removeEvent():void
 		{
 			super.removeEvent();
+			ModuleEventDispatcher.removeModuleEventListener(ActivityEvent.SEVEN_ACTIVITY_INFO,seventActivityInfoHandler);
 			ModuleEventDispatcher.removeSceneEventListener(SceneModuleEvent.SHOW_NPC_DIALOG,showNpcDialogHandler);
 			ModuleEventDispatcher.removeSceneEventListener(SceneModuleEvent.SHOW_GROUP_PANEL,showGroupPanelHandler);
 			ModuleEventDispatcher.removeSceneEventListener(SceneModuleEvent.SHOW_NEARLY_PANEL,showNearlyPanelHandler);
@@ -715,6 +720,20 @@ package sszt.scene
 			var seconds:Number = nowTime - releaseTime;
 			var secondPerDay:Number = 24*60*60;
 			var t:Number = seconds/secondPerDay;//GlobalData.functionYellowEnabled && 
+			if(Math.ceil(seconds/secondPerDay) <= 8 && GlobalData.isShowSevenActivity == 1)
+			{
+				//SevenActivityView.getInstance().show(0,null,true);
+			}
+		}
+		
+		private function seventActivityInfoHandler(e:Event):void
+		{
+			ModuleEventDispatcher.removeModuleEventListener(ActivityEvent.SEVEN_ACTIVITY_INFO,seventActivityInfoHandler);
+			var time:Number = GlobalData.sevenActInfo.firstLoginTime;//秒
+			var nowTime:Number = GlobalData.systemDate.getSystemDate().time/1000;//秒
+			var seconds:Number = nowTime - time;
+			var secondPerDay:Number = 24*60*60;
+			var t:Number = seconds/secondPerDay;
 			if(Math.ceil(seconds/secondPerDay) <= 8 && GlobalData.isShowSevenActivity == 1)
 			{
 				SevenActivityView.getInstance().show(0,null,true);

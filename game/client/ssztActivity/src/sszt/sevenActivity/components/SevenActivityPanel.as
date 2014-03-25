@@ -132,10 +132,10 @@ package sszt.sevenActivity.components
 		
 		private function initData():void
 		{
-			if(!GlobalData.sevenActInfo.isInit)
-			{
+//			if(!GlobalData.sevenActInfo.isInit)
+//			{
 				SevenActivityInfoSocketHandler.send();
-			}
+//			}
 		}
 		
 		public function update(times:int,dt:Number = 0.04):void
@@ -223,6 +223,7 @@ package sszt.sevenActivity.components
 			{
 				_itemTile.disposeItems();
 			}
+			_itemList = [];
 		}
 		
 		override public function dispose():void

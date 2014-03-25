@@ -711,5 +711,19 @@ package sszt.core.data.bag
 				
 			}
 		}
+		
+		public function getTotalStrengthenLevel():int
+		{
+			var equipList:Array = _itemList.slice(0,30);
+			var ret:int = 0;
+			for each(var i:ItemInfo in equipList)
+			{
+				if(i != null && i.place >= 0 )
+				{
+					ret += i.strengthenLevel;
+				}
+			}
+			return ret;
+		}
 	}
 }

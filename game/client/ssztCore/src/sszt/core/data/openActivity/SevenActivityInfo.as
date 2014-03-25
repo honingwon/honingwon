@@ -2,16 +2,24 @@ package sszt.core.data.openActivity
 {
 	import flash.utils.Dictionary;
 	
+	import sszt.core.data.GlobalData;
 	import sszt.core.data.activity.SevenActivityItemInfo;
 
 	public class SevenActivityInfo
 	{
+		//废弃
 		public var isInit:Boolean;
+		//废弃
 		private var _activityInfo:Array;
+		//废弃
+		private var _activityDic:Dictionary = new Dictionary();		
+		
+		//第一次登录游戏的时间
+		public var firstLoginTime:int;
+		//橙装奖励领取状态
 		public var gotState:int;
-		
-		private var _activityDic:Dictionary = new Dictionary();
-		
+		//全民奖励领取
+		public var gotState2:int;			
 		
 		public function get activityInfo():Array
 		{
@@ -53,15 +61,11 @@ package sszt.core.data.openActivity
 		public function getDay():int
 		{
 			var ret:int =8;//8代表第八天或以后
-			var sevenActivityItemInfo:SevenActivityItemInfo;
-			for each(sevenActivityItemInfo in _activityDic)
-			{
-				if(!sevenActivityItemInfo.isEnd) 
-				{
-					ret = sevenActivityItemInfo.id;
-					break;
-				}
-			}
+			var nowTime:Number = GlobalData.systemDate.getSystemDate().time/1000;//秒
+			var seconds:Number = nowTime - firstLoginTime;
+			var secondPerDay:Number = 24*60*60;
+			var t:Number = seconds/secondPerDay;
+			ret = Math.ceil(t);
 			return ret;
 		}
 	}

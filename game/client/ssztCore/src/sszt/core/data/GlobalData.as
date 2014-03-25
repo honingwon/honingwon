@@ -566,5 +566,7 @@ package sszt.core.data
 		 * 宠物背包数据 
 		 */		
 		public static var petBagInfo:PetBagInfo = new PetBagInfo();
+		
+		public static var useCardPath:String;
 	}
 }

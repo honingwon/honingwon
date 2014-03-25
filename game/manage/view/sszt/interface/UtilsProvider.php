@@ -1076,6 +1076,36 @@ class UtilsProvider
     	else
     	  return new ExcuteResult(ResultStateLevel::EXCEPTION,"执行出错",NULL);
     }
+    public static function dataMentods_sendCardItem($cardTypeId,$account,$serverId)
+    {
+    	$sql = 'SELECT a.bm_ItemID,a.cd_CardItemNum,b.cd_CardTypeName FROM cd_cardaffixitem a,cd_cardtype b WHERE b.cd_CardTypeID = '.$cardTypeId.' AND a.cd_CardTypeID = b.cd_CardTypeID AND b.cd_CardTypeState = 1;';
+    	$result_sql_applyItem = sql_fetch_one($sql);
+    	if($result_sql_applyItem == ""){
+    		return new ExcuteResult(ResultStateLevel::ERROR,$sql,NULL); 
+    	}
+    	$sendPropItem = $result_sql_applyItem[0];
+    	$sendPropItemNum = $result_sql_applyItem[1];
+    	$sendTitile = $result_sql_applyItem[2];
+    	$sendDesc = $result_sql_applyItem[2];
+    	///////////////获取接口调用信息
+    	$serverAry = self::getServerInfoTOhttprequest("/admin_send_gift2",$serverId);
+    	if(count($serverAry) <= 0)
+			return new ExcuteResult(ResultStateLevel::ERROR,"获取服务器发送域名信息失败",NULL); 
+		
+		$sendPropItem = $sendPropItem.'|'.$sendPropItemNum.'|1';
+		$account = $account.'|'.$serverId;
+	    /**网关请求发送**/
+		$request_result = self::mentodsAdminSendGift($account,"","0,0,0,0",$sendPropItem,$serverAry[0],$sendTitile,$sendDesc,"");
+		if($request_result != "")
+		{
+			return new ExcuteResult(ResultStateLevel::ERROR,$request_result,NULL); 
+		}
+		else
+		{
+			//成功  修改卡密使用情况	
+			return new ExcuteResult(ResultStateLevel::SUCCESS,"",1);					
+		}
+    }
     
     /**
      * 审核通过

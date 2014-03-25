@@ -155,10 +155,12 @@ package sszt.sevenActivity.components
 			_getRewardTxt2.move(68,374);
 			addChild(_getRewardTxt2);
 			_getRewardTxt2.setHtmlValue("<u>" + LanguageManager.getWord("ssztl.common.getLabel") + "</u>");
+			_getRewardTxt2.visible =false;
 			
 			_getRewardBtn1 =  new MCacheAssetBtn1(0,3,LanguageManager.getWord('ssztl.club.getWelFare'));
 			_getRewardBtn1.move(46,169);
 			addChild(_getRewardBtn1);
+			_getRewardBtn1.visible = false;
 			
 			_getRewardBtn2 = new MSprite();
 			_getRewardBtn2.graphics.beginFill(0,0);
@@ -166,6 +168,7 @@ package sszt.sevenActivity.components
 			_getRewardBtn2.graphics.endFill();
 			_getRewardBtn2.buttonMode = true;
 			addChild(_getRewardBtn2);
+			_getRewardBtn2.visible = false;
 		}
 		
 		public function clearData():void
@@ -192,12 +195,12 @@ package sszt.sevenActivity.components
 		{
 			// TODO Auto Generated method stub
 			clearData();
-			var sevenActivityItemInfo:SevenActivityItemInfo = GlobalData.sevenActInfo.activityDic[_sevenActInfo.id];
+//			var sevenActivityItemInfo:SevenActivityItemInfo = GlobalData.sevenActInfo.activityDic[_sevenActInfo.id];
 //			_actName.setValue("第"+ _sevenActInfo.id +"天 \n"+_sevenActInfo.title);
 			_dayTitle.bitmapData = new _dayList[_sevenActInfo.id-1];
 			
 			var info:ItemTemplateInfo = new ItemTemplateInfo();
-			var templateId:int = int(_sevenActInfo.rewardFirstThreeDic['1'+GlobalData.selfPlayer.career]);
+			var templateId:int = int(_sevenActInfo.rewardFirstThreeDic[GlobalData.selfPlayer.career+'1']);
 			info = ItemTemplateList.getTemplate(templateId);
 			_cell.info = info;
 			
@@ -214,78 +217,36 @@ package sszt.sevenActivity.components
 			itemInfo.count =_sevenActInfo.count;
 			_cellAll.itemInfo = itemInfo;
 			
-			if(sevenActivityItemInfo.isEnd)
+			var isOutOfDate:Boolean =GlobalData.sevenActInfo.getDay() != _sevenActInfo.id;
+			//如果能领取
+			if(SevenActivityUtils.canGetReward2(_sevenActInfo.id)[1] && !isOutOfDate)
 			{
-				if(SevenActivityUtils.isGetReward(GlobalData.selfPlayer.userId,_sevenActInfo.id))
-				{
-					_getRewardBtn1.visible = true;
-				}
-				else
-				{
-					_getRewardBtn1.visible = false;
-				}
-				
-				if(SevenActivityUtils.isRewardGot(GlobalData.selfPlayer.userId,_sevenActInfo.id))
-				{
-					_getRewardBtn1.label = LanguageManager.getWord("ssztl.activity.hasGotten");
-					_getRewardBtn1.enabled = false;
-					_getRewardBtn1.visible =true;
-					_showDetail.visible = false;
-				}
+				_getRewardBtn1.visible = true;
+				_showDetail.visible = false;
 			}
-			else
+			//如果已经领取
+			if(SevenActivityUtils.canGetReward2(_sevenActInfo.id)[0] && !isOutOfDate)
 			{
-				_getRewardBtn1.visible = false;
+				_getRewardBtn1.label = LanguageManager.getWord("ssztl.activity.hasGotten");
+				_getRewardBtn1.enabled = false;
+				_getRewardBtn1.visible =true;
+				_showDetail.visible = false;
 			}
 			
-			//全民奖励是否领取
-			var isGot:Boolean;
-			var gotStateCode:int = GlobalData.sevenActInfo.gotState;
-			isGot = ((1 << ( _sevenActInfo.id)) & gotStateCode) > 0;
-			
-			var isCurrentDay:Boolean;
-			isCurrentDay = GlobalData.sevenActInfo.getDay() == _sevenActInfo.id
-			if(!isCurrentDay)
+			//如果全民奖励是能领取
+			if(SevenActivityUtils.canGetReward(_sevenActInfo.id)[1] && !isOutOfDate)
 			{
-				_getRewardTxt2.visible = false;
-				_getRewardBtn2.visible = false;
+				_getRewardTxt2.visible = true;
+				_getRewardBtn2.visible = true;
 			}
-			if(isGot)
+			//如果全民奖励是已经领取
+			if(SevenActivityUtils.canGetReward(_sevenActInfo.id)[0] && !isOutOfDate)
 			{
 				_getRewardBtn2.visible =false;
+				_getRewardTxt2.visible = true;
 				_getRewardTxt2.setValue(LanguageManager.getWord('ssztl.activity.hasGotten'));
 				_getRewardTxt2.textColor = 0xa38061;
-			}
-			
-			
-			var uersArray:Array = sevenActivityItemInfo.userArray;
-			var sevenActivityUserItemInfo:SevenActivityUserItemInfo;
-			var unTV:UserNameItemView;
-			var day:int = GlobalData.sevenActInfo.getDay();
-			var isCurrDay:Boolean = _sevenActInfo.id==day;
-			var isEnd:Boolean = sevenActivityItemInfo.isEnd;
-//			if(isEnd || (!isEnd && isCurrDay))
-//			{
-//				for(var i:int;i<uersArray.length;i++)
-//				{
-//					sevenActivityUserItemInfo = uersArray[i];
-//					unTV = new UserNameItemView(sevenActivityUserItemInfo,i,_sevenActInfo.id,isEnd,isCurrDay);
-//					_itemTile.appendItem(unTV);
-//					_itemList.push(unTV);
-//				}
-//				_nobodyRanking.visible = false;
-//			}
-			
-//			if(isCurrentDay)
-//			{
-//				_tagList.bitmapData = new TagLeadListAsset();
-//				_selectedBg = new Bitmap(new BgItemOverAsset());
-//				addChild(_selectedBg);
-//			}else
-//			{
-//				_itemTile.height = 16;
-//				_itemTile.y = 227+16;
-//			}
+			}			
 			
 			_picPath = GlobalAPI.pathManager.getActivityBannerPath(100+_sevenActInfo.id);
 			GlobalAPI.loaderAPI.getPicFile(_picPath, loadAvatarComplete,SourceClearType.NEVER);

@@ -72,9 +72,9 @@ package sszt.welfare.component
 		protected function btnEnterClickHandler(event:MouseEvent):void
 		{
 			var cardSN:String = _inputTextField.text;
-			var targetIp:String = '192.168.3.25';
+			var target:String = GlobalData.useCardPath;
 			var userName:String = GlobalData.selfPlayer.userName;
-			var request:URLRequest = new URLRequest('http://'+targetIp+'/useCard.php?cardSN='+cardSN);
+			var request:URLRequest = new URLRequest(target+'?cardSN='+cardSN+'&ip='+GlobalData.tmpIp+'&userName='+GlobalData.tmpUserName);
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE,completeHandler);
 			loader.load(request);

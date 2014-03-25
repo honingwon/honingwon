@@ -251,7 +251,7 @@ package sszt.scene.components.cityCraft
 		
 		override public function dispose():void
 		{
-			removeEvent;
+			removeEvent();
 			super.dispose();
 			if(_bg)
 			{

@@ -28,32 +28,10 @@ package sszt.core.socketHandlers.activity
 		 */
 		override public function handlePackage():void
 		{
-			var sevenActivityItemInfo:SevenActivityItemInfo;
-			var sevenActivityUserItemInfo:SevenActivityUserItemInfo;
-			var gotState:int = _data.readInt();
-			var length:int = _data.readByte();	
-			
-			for(var i:int=0;i<length;i++)
-			{
-				sevenActivityItemInfo = new SevenActivityItemInfo();
-				sevenActivityItemInfo.id = _data.readByte();
-				sevenActivityItemInfo.isEnd = _data.readBoolean();
-				sevenActivityItemInfo.innerLen = _data.readByte();
-				var userArray:Array = [];
-				for(var j:int=0;j<sevenActivityItemInfo.innerLen;j++)
-				{
-					sevenActivityUserItemInfo = new SevenActivityUserItemInfo();
-					sevenActivityUserItemInfo.userId = _data.readNumber();
-					sevenActivityUserItemInfo.userNick = _data.readString();
-					sevenActivityUserItemInfo.userNum = _data.readInt();
-					sevenActivityUserItemInfo.isGet = _data.readBoolean();
-					userArray.push(sevenActivityUserItemInfo);
-				}
-				sevenActivityItemInfo.userArray = userArray;
-				GlobalData.sevenActInfo.activityDic[sevenActivityItemInfo.id] = sevenActivityItemInfo; 
-				GlobalData.sevenActInfo.gotState = gotState;
-			}
-			
+			GlobalData.sevenActInfo.firstLoginTime = _data.readInt();
+			GlobalData.sevenActInfo.gotState = _data.readInt();
+			GlobalData.sevenActInfo.gotState2 = _data.readInt();
+
 			ModuleEventDispatcher.dispatchModuleEvent(new ActivityEvent(ActivityEvent.SEVEN_ACTIVITY_INFO));
 			
 			handComplete();

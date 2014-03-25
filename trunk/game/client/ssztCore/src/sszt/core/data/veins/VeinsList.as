@@ -65,6 +65,16 @@ package sszt.core.data.veins
 			return null;
 		}
 		
+		public function getTotalGengu():int
+		{
+			var ret:int = 0;
+			for each(var i:VeinsInfo in _list)
+			{
+				ret += i.genguLv;
+			}
+			return ret;
+		}
+		
 		public function getAcupointLvByAcupointType(type:int):int
 		{
 			for each(var i:VeinsInfo in _list)
